@@ -32,4 +32,6 @@ public class ChoppingBoard : Workspace, IInteractable
             ingredientItem.ChangeState(IngredientState.Chopped);
         }
     }
+
+    protected override void UpdateVisual() { }
 }

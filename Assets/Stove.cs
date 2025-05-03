@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Stove : Workspace
 {
-    [Header("Stove")]
-    [SerializeField] private GameObject startingPot;
+    [Header("Cooking Pot")]
+    [SerializeField] private Renderer insidePotRenderer;
+    private Material insidePotDefaultMaterial;
 
     private void Start()
     {
-        AddItem(startingPot);
+        insidePotDefaultMaterial = insidePotRenderer.material;
     }
 
     public override bool CanProcessItem(GameObject item)
@@ -30,15 +31,29 @@ public class Stove : Workspace
         if (storedItems.Count == 0)
             return;
 
-        // Get the ingredient
-        CookingPot pot = storedItems[0].GetComponent<CookingPot>();
-        GameObject ingredient = pot?.StoredItems[0];
-        IngredientItem ingredientItem = ingredient?.GetComponent<IngredientItem>();
+        // Get the ingredient on the chopping board
+        GameObject ingredient = storedItems[0];
+        IngredientItem ingredientItem = ingredient.GetComponent<IngredientItem>();
 
         if (ingredientItem != null)
         {
             // Change the ingredient state to chopped
             ingredientItem.ChangeState(IngredientState.Cooked);
         }
+    }
+
+    protected override void UpdateVisual()
+    {
+        if (storedItems.Count == 0)
+        {
+            insidePotRenderer.material = insidePotDefaultMaterial;
+            return;
+        }
+
+        IngredientState ingredientState = storedItems[0].GetComponent<IngredientItem>().CurrentState;
+
+        GameObject rawPrefab = storedItems[0].transform.Find(ingredientState.ToString()).gameObject;
+
+        insidePotRenderer.material = rawPrefab.GetComponent<Renderer>().material;
     }
 }

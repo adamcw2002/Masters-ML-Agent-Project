@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class RecipeManager : MonoBehaviour
 {
-    public List<Recipe> activeRecipes = new List<Recipe>();
+    public List<RecipeData> activeRecipes = new List<RecipeData>();
 }

@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class WorkspaceGenerator : MonoBehaviour
 {
     [SerializeField] private Material borderMaterial;
 
-    [Header ("Appliances")]
+    [Header("Default Workspace")]
+    [SerializeField] private GameObject emptyWorkspacePrefab;
+
+    [Header("Appliances")]
     [SerializeField] private GameObject choppingBoardPrefab;
     [SerializeField] private GameObject stovePrefab;
-    [SerializeField] private GameObject mixingStationPrefab;
 
     [Header("Other")]
     [SerializeField] private GameObject plateStationPrefab;
@@ -17,21 +21,21 @@ public class WorkspaceGenerator : MonoBehaviour
     [SerializeField] private GameObject trashBinPrefab;
     [SerializeField] private GameObject servingCounterPrefab;
 
-    [SerializeField] private int minChoppingBoards = 2;
-
-    private Dictionary<string, int> requiredApplianceCounts = new Dictionary<string, int>();
-    private Dictionary<string, int> requiredIngredientCounts = new Dictionary<string, int>();
+    private Dictionary<GameObject, int> requiredApplianceCounts = new Dictionary<GameObject, int>();
+    private Dictionary<IngredientData, int> requiredIngredientCounts = new Dictionary<IngredientData, int>();
     private List<GameObject> spawnedWorkspaces = new List<GameObject>();
 
     private BSPGridFloorPlanGenerator FloorPlanGenerator;
+    private System.Random rng = new System.Random();
 
     private void OnEnable()
     {
         BSPGridFloorPlanGenerator.OnFloorGenerated += CreateWorkspaces;
     }
+
     private void OnDisable()
     {
-        BSPGridFloorPlanGenerator.OnFloorGenerated += CreateWorkspaces;
+        BSPGridFloorPlanGenerator.OnFloorGenerated -= CreateWorkspaces;
     }
 
     private void Awake()
@@ -41,76 +45,88 @@ public class WorkspaceGenerator : MonoBehaviour
 
     private void CreateWorkspaces()
     {
+        // Clean up previous workspaces
+        CleanupPreviousWorkspaces();
+
+        // Analyze recipes to determine required appliances and ingredients
+        AnalyzeRecipes();
+
+        // Get border and corner positions
+        (List<Vector2Int> borderPositions, HashSet<Vector2Int> cornerPositions) = GetBorderAndCornerPositions();
+
+        // Shuffle the non-corner border positions
+        List<Vector2Int> nonCornerBorderPositions = borderPositions
+            .Where(pos => !cornerPositions.Contains(pos))
+            .ToList();
+        ShufflePositions(nonCornerBorderPositions);
+
+        // Create corner workspaces first (always empty)
+        float floorHeight = FloorPlanGenerator.GetFloorHeight();
+        float floorYScale = FloorPlanGenerator.GetFloorYScale();
+        GameObject workspacesParent = new GameObject("Workspaces");
+        workspacesParent.transform.SetParent(transform);
+
+        // Create empty workspaces at corners
+        foreach (Vector2Int cornerPos in cornerPositions)
+        {
+            CreateWorkspaceCell(cornerPos, emptyWorkspacePrefab, null, floorHeight, floorYScale, workspacesParent.transform);
+        }
+
+        // Create remaining workspaces along the non-corner borders
+        var workspacesToSpawn = GetRequiredWorkspacePrefabs();
+        CreateWorkspacesAtPositions(nonCornerBorderPositions, workspacesToSpawn, floorHeight, floorYScale, workspacesParent.transform);
+    }
+
+    private void CleanupPreviousWorkspaces()
+    {
         foreach (GameObject workspace in spawnedWorkspaces)
         {
             if (workspace != null)
                 Destroy(workspace);
         }
         spawnedWorkspaces.Clear();
-
-        AnalyzeRecipes();
-
-        List<Vector3> borderPositions = GetAllBorderPositions();
-
-        ShufflePositions(borderPositions);
-
-        /*
-        foreach (Room room in FloorPlanGenerator.GeneratedRooms)
-        {
-            CreateBorderCells(room);
-        }
-        */
     }
 
-    private void CreateBorderCells(Room room)
+    private void CreateWorkspacesAtPositions(List<Vector2Int> positions, Queue<(GameObject prefab, IngredientData ingredient)> workspacesToSpawn,
+                                            float floorHeight, float floorYScale, Transform parent)
     {
-        float floorHeight = FloorPlanGenerator.GetFloorHeight();
-        float floorYScale = FloorPlanGenerator.GetFloorYScale();
-        HashSet<Vector2Int> doorPositions = FloorPlanGenerator.DoorPositions;
-
-        GameObject bordersParent = new GameObject("Border Cells");
-        bordersParent.transform.SetParent(transform);
-
-        // Create border cells around this room
-        for (int x = room.position.x; x < room.position.x + room.size.x; x++)
+        foreach (Vector2Int position in positions)
         {
-            for (int z = room.position.y; z < room.position.y + room.size.y; z++)
+            GameObject prefab = emptyWorkspacePrefab;
+            IngredientData ingredient = null;
+
+            if (workspacesToSpawn.Count > 0)
             {
-                if (doorPositions.Contains(new Vector2Int(x, z))) continue;
-
-                // Only create borders for cells on the edge of the room
-                bool isEdgeCell = x == room.position.x ||
-                                 x == room.position.x + room.size.x - 1 ||
-                                 z == room.position.y ||
-                                 z == room.position.y + room.size.y - 1;
-
-                if (isEdgeCell || FloorPlanGenerator.DoorPositions.Contains(new Vector2Int(x, z)))
-                {
-                    CreateBorderCell(x, z, floorHeight, floorYScale, bordersParent.transform);
-                }
+                (prefab, ingredient) = workspacesToSpawn.Dequeue();
             }
+
+            CreateWorkspaceCell(position, prefab, ingredient, floorHeight, floorYScale, parent);
         }
     }
 
-    private void CreateBorderCell(int x, int z, float floorHeight, float floorYScale, Transform parent)
+    private void CreateWorkspaceCell(Vector2Int pos, GameObject prefab, IngredientData ingredient, float floorHeight, float floorYScale, Transform parent)
     {
-        GameObject cell = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cell.name = $"Border_{x}_{z}";
+        GameObject cell = Instantiate(prefab);
+        cell.name = $"Workspace_{pos.x}_{pos.y}";
         cell.transform.SetParent(parent);
 
         cell.transform.position = new Vector3(
-            x + 0.5f,  // Center of the cell
-            floorHeight + floorYScale,  // 1 unit above the floor
-            z + 0.5f   // Center of the cell
+            pos.x + 0.5f,
+            floorHeight + floorYScale,
+            pos.y + 0.5f
         );
 
-        // 1x1x1 cubes
-        cell.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        spawnedWorkspaces.Add(cell);
 
-        // Apply material
-        if (borderMaterial != null)
+        if (borderMaterial != null && cell.TryGetComponent(out Renderer rend))
         {
-            cell.GetComponent<Renderer>().material = borderMaterial;
+            rend.material = borderMaterial;
+        }
+
+        // Initialize ingredient spawner
+        if (ingredient != null && cell.TryGetComponent(out IngredientSpawner spawner))
+        {
+            spawner.SetIngredientData(ingredient);
         }
     }
 
@@ -118,10 +134,6 @@ public class WorkspaceGenerator : MonoBehaviour
     {
         requiredApplianceCounts.Clear();
         requiredIngredientCounts.Clear();
-
-        // Initialize with minimum requirements
-        requiredApplianceCounts["ChoppingBoard"] = minChoppingBoards;
-        requiredApplianceCounts["Stove"] = 0;
 
         RecipeManager recipeManager = FindObjectOfType<RecipeManager>();
 
@@ -132,114 +144,148 @@ public class WorkspaceGenerator : MonoBehaviour
         }
 
         // Analyze each recipe
-        foreach (Recipe recipe in recipeManager.activeRecipes)
+        foreach (RecipeData recipe in recipeManager.activeRecipes)
         {
             // Count required ingredients
-            foreach (string ingredient in recipe.requiredIngredients)
+            foreach (RequiredRecipeIngredient ingredient in recipe.requiredIngredients)
             {
-                if (!requiredIngredientCounts.ContainsKey(ingredient))
-                    requiredIngredientCounts[ingredient] = 0;
+                if (!requiredIngredientCounts.ContainsKey(ingredient.ingredient))
+                    requiredIngredientCounts[ingredient.ingredient] = 0;
 
-                requiredIngredientCounts[ingredient]++;
+                requiredIngredientCounts[ingredient.ingredient]++;
+
+                CheckOrAddAppliance(ingredient.requiredState);
             }
-
-            // Count required appliances based on cooking steps
-            foreach (CookingStep step in recipe.cookingSteps)
-            {
-                if (!requiredApplianceCounts.ContainsKey(step.applianceRequired))
-                    requiredApplianceCounts[step.applianceRequired] = 0;
-
-                requiredApplianceCounts[step.applianceRequired]++;
-            }
-        }
-
-        // Cap appliance counts based on game balance
-        foreach (string appliance in requiredApplianceCounts.Keys)
-        {
-            // Default cap of 3 per appliance type, can be adjusted
-            requiredApplianceCounts[appliance] = Mathf.Min(requiredApplianceCounts[appliance], 3);
         }
 
         // Ensure we always have at least 1 of each basic appliance type
         EnsureMinimumAppliances();
+    }
 
-        // Debug log the analysis
-        Debug.Log("Recipe Analysis Results:");
-        foreach (var kvp in requiredApplianceCounts)
+    private void CheckOrAddAppliance(IngredientState ingredientState)
+    {
+        GameObject appliancePrefab = null;
+
+        switch (ingredientState)
         {
-            Debug.Log($"Required {kvp.Key}: {kvp.Value}");
+            case IngredientState.Chopped:
+                appliancePrefab = choppingBoardPrefab;
+                break;
+            case IngredientState.Cooked:
+                appliancePrefab = stovePrefab;
+                break;
+        }
+
+        if (appliancePrefab != null)
+        {
+            requiredApplianceCounts.TryGetValue(appliancePrefab, out int count);
+            requiredApplianceCounts[appliancePrefab] = count + 1;
         }
     }
 
     private void EnsureMinimumAppliances()
     {
-        // Always include these basic appliances
-        if (!requiredApplianceCounts.ContainsKey("ChoppingBoard"))
-            requiredApplianceCounts["ChoppingBoard"] = minChoppingBoards;
-
-        if (!requiredApplianceCounts.ContainsKey("Stove"))
-            requiredApplianceCounts["Stove"] = 0;
-
-        requiredApplianceCounts["IngredientSpawner"] = Mathf.Max(0, requiredIngredientCounts.Count);
-
-        requiredApplianceCounts["TrashBin"] = 0;
-
-        requiredApplianceCounts["ServingCounter"] = 0;
-
-        requiredApplianceCounts["PlateStation"] = 0;
+        if (trashBinPrefab) requiredApplianceCounts[trashBinPrefab] = 1;
+        if (servingCounterPrefab) requiredApplianceCounts[servingCounterPrefab] = 1;
+        if (plateStationPrefab) requiredApplianceCounts[plateStationPrefab] = 1;
     }
 
-    private List<Vector3> GetAllBorderPositions()
+    private Queue<(GameObject prefab, IngredientData ingredient)> GetRequiredWorkspacePrefabs()
     {
-        float floorHeight = FloorPlanGenerator.GetFloorHeight();
-        float floorYScale = FloorPlanGenerator.GetFloorYScale();
-        HashSet<Vector2Int> doorPositions = FloorPlanGenerator.DoorPositions;
-        List<Vector3> borderPositions = new List<Vector3>();
+        Queue<(GameObject prefab, IngredientData ingredient)> workspaceQueue = new();
 
-        foreach (Room room in FloorPlanGenerator.GeneratedRooms)
+        // Appliances (no ingredient data needed)
+        foreach (var kvp in requiredApplianceCounts)
         {
-            // Create border cells around this room
-            for (int x = room.position.x; x < room.position.x + room.size.x; x++)
+            for (int i = 0; i < kvp.Value; i++)
             {
-                for (int z = room.position.y; z < room.position.y + room.size.y; z++)
-                {
-                    if (doorPositions.Contains(new Vector2Int(x, z))) continue;
-
-                    // Only use cells on the edge of the room
-                    bool isEdgeCell = x == room.position.x ||
-                                     x == room.position.x + room.size.x - 1 ||
-                                     z == room.position.y ||
-                                     z == room.position.y + room.size.y - 1;
-
-                    if (isEdgeCell)
-                    {
-                        Vector3 position = new Vector3(
-                            x + 0.5f,  // Center of the cell
-                            floorHeight + floorYScale,  // 1 unit above the floor
-                            z + 0.5f   // Center of the cell
-                        );
-
-                        borderPositions.Add(position);
-                    }
-                }
+                workspaceQueue.Enqueue((kvp.Key, null));
             }
         }
 
-        return borderPositions;
+        // Ingredient spawners (include the ingredient data)
+        foreach (var kvp in requiredIngredientCounts)
+        {
+            for (int i = 0; i < kvp.Value; i++)
+            {
+                workspaceQueue.Enqueue((ingredientSpawnerPrefab, kvp.Key));
+            }
+        }
+
+        return workspaceQueue;
     }
 
-    private void ShufflePositions(List<Vector3> positions)
+    private (List<Vector2Int>, HashSet<Vector2Int>) GetBorderAndCornerPositions()
     {
-        System.Random rng = new System.Random();
-        int n = positions.Count;
+        HashSet<Vector2Int> doorPositions = FloorPlanGenerator.DoorPositions;
+        List<Vector2Int> borderPositions = new List<Vector2Int>();
+        HashSet<Vector2Int> cornerPositions = new HashSet<Vector2Int>();
 
+        foreach (Room room in FloorPlanGenerator.GeneratedRooms)
+        {
+            int minX = room.position.x;
+            int maxX = room.position.x + room.size.x - 1;
+            int minZ = room.position.y;
+            int maxZ = room.position.y + room.size.y - 1;
+
+            // Add corners first
+            Vector2Int[] corners = new[]
+            {
+                new Vector2Int(minX, minZ), // Bottom-left
+                new Vector2Int(maxX, minZ), // Bottom-right
+                new Vector2Int(minX, maxZ), // Top-left
+                new Vector2Int(maxX, maxZ)  // Top-right
+            };
+
+            // Add corners that are not door positions
+            foreach (Vector2Int corner in corners)
+            {
+                if (!doorPositions.Contains(corner))
+                {
+                    cornerPositions.Add(corner);
+                }
+            }
+
+            // Add non-corner border cells
+            // Left and right edges (excluding corners)
+            for (int z = minZ + 1; z < maxZ; z++)
+            {
+                AddBorderPosition(new Vector2Int(minX, z), doorPositions, borderPositions);
+                AddBorderPosition(new Vector2Int(maxX, z), doorPositions, borderPositions);
+            }
+
+            // Top and bottom edges (excluding corners)
+            for (int x = minX + 1; x < maxX; x++)
+            {
+                AddBorderPosition(new Vector2Int(x, minZ), doorPositions, borderPositions);
+                AddBorderPosition(new Vector2Int(x, maxZ), doorPositions, borderPositions);
+            }
+        }
+
+        // Add corner positions to border positions as well
+        borderPositions.AddRange(cornerPositions);
+
+        return (borderPositions, cornerPositions);
+    }
+
+    private void AddBorderPosition(Vector2Int position, HashSet<Vector2Int> doorPositions, List<Vector2Int> borderPositions)
+    {
+        if (!doorPositions.Contains(position))
+        {
+            borderPositions.Add(position);
+        }
+    }
+
+    private void ShufflePositions(List<Vector2Int> positions)
+    {
+        int n = positions.Count;
         while (n > 1)
         {
             n--;
             int k = rng.Next(n + 1);
-            Vector3 value = positions[k];
+            Vector2Int temp = positions[k];
             positions[k] = positions[n];
-            positions[n] = value;
+            positions[n] = temp;
         }
     }
 }

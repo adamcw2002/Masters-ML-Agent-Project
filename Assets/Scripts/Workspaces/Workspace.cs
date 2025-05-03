@@ -9,7 +9,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
     [SerializeField] protected float processingTime = 0f;
 
     [SerializeField] protected bool canHoldPortableStorage = false;
-    [SerializeField] protected bool onlyProcessIngredientsInsideStorage = false;
+    [SerializeField] protected bool mustRemoveWithPlate = false;
 
     protected List<GameObject> storedItems = new List<GameObject>();
     protected bool isProcessing = false;
@@ -74,7 +74,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         }
 
         //Player is not holding anything, try pick up item
-        if (storedItems.Count > 0)
+        if (storedItems.Count > 0 && mustRemoveWithPlate == false)
         {
             Debug.Log("Player pick up item");
 
@@ -100,6 +100,8 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
     public abstract bool CanProcessItem(GameObject item);
 
+    protected abstract void UpdateVisual();
+
     public virtual bool AddItem(GameObject item)
     {
         if (canHoldPortableStorage && maxItems == 1 && storedItems.Count > 0 && storedItems[0].TryGetComponent(out PortableStorage portableStorage))
@@ -113,6 +115,9 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         item.transform.localPosition = Vector3.up * 0.5f; // Position item on top
 
         if (canProcessItems && CanProcessItem(item)) StartProcessing();
+
+        UpdateVisual();
+
         return true;
     }
 
@@ -122,6 +127,8 @@ public abstract class Workspace : MonoBehaviour, IInteractable
             return null;
 
         storedItems.Remove(item);
+
+        UpdateVisual();
 
         return item;
     }
@@ -146,10 +153,14 @@ public abstract class Workspace : MonoBehaviour, IInteractable
     {
         isProcessing = true;
 
+        UpdateVisual();
+
         yield return new WaitForSeconds(processingTime);
 
         // Process the items (specific to each workspace type)
         CompleteProcessing();
+
+        UpdateVisual();
 
         isProcessing = false;
     }

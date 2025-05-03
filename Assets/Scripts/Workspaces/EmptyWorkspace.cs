@@ -5,4 +5,6 @@ using UnityEngine;
 public class EmptyWorkspace : Workspace
 {
     public override bool CanProcessItem(GameObject item) => false;
+
+    protected override void UpdateVisual() { }
 }

@@ -24,6 +24,7 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
     [SerializeField] private int minRoomSize = 5;
 
     [Header("Doorway Settings")]
+    [SerializeField] private bool generateDoors = true;
     [SerializeField] private int doorWidth = 3;
     [SerializeField] private bool placeDoorsRandomly = true;
     [SerializeField] private Material doorMaterial;
@@ -118,7 +119,7 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
         }
 
         // Generate doors or bridges between rooms
-        if (gapSize <= 0 && finalRooms.Count > 1)
+        if (generateDoors && gapSize <= 0 && finalRooms.Count > 1)
         {
             GenerateDoorsBetweenRooms();
         }
@@ -680,29 +681,6 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
         }
     }
 
-    /*
-    public bool IsBridgeCell(int x, int z)
-    {
-        //If outside of the grid
-        if (x >= gridWidth || x < 0 ||
-            z >= gridLength || z < 0)
-            return false;
-
-        // Check if this cell is part of an original room
-        foreach (Room room in finalRooms)
-        {
-            if (x >= room.position.x && x < room.position.x + room.size.x &&
-                z >= room.position.y && z < room.position.y + room.size.y)
-            {
-                return false; // Cell is part of an original room
-            }
-        }
-
-        // If it's in the floor grid but not in any room, it must be a bridge
-        return floorGrid[x, z];
-    }
-    */
-
     private void CreateFloorCell(int x, int z, Transform parent, bool isBridge)
     {
         bool isDoor = doorPositions.Contains(new Vector2Int(x, z));
@@ -714,7 +692,7 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
         // Position the cell (center of each 1x1 grid cell)
         cell.transform.position = new Vector3(
             x + 0.5f,  // Center of the cell
-            floorHeight,
+            floorHeight - (floorYScale * 2),
             z + 0.5f   // Center of the cell
         );
 

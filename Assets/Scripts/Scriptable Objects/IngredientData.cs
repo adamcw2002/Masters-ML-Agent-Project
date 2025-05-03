@@ -7,7 +7,7 @@ public enum IngredientState
     Raw, Chopped, Cooked
 }
 
-[CreateAssetMenu(fileName = "New Ingredient", menuName = "Ingredient")]
+[CreateAssetMenu(fileName = "New Ingredient", menuName = "new Ingredient")]
 public class IngredientData : ScriptableObject
 {
     public string ingredientName;

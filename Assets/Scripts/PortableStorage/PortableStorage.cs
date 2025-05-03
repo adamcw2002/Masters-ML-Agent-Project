@@ -35,7 +35,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
             {
                 // Player is holding another storage - take item
                 GameObject item = GetLastItem();
-                if (heldStorage.AddItem(item))
+                if (item != null && heldStorage.AddItem(item))
                     RemoveItem(item);
                 return;
             }
@@ -85,7 +85,6 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         if (item == null) return null;
 
         storedItems.Remove(item);
-        item.transform.SetParent(null);
 
         item.SetActive(true);
 
