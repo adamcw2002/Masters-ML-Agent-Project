@@ -19,7 +19,7 @@ public class WorkspaceGenerator : MonoBehaviour
     [SerializeField] private GameObject plateStationPrefab;
     [SerializeField] private GameObject ingredientSpawnerPrefab;
     [SerializeField] private GameObject trashBinPrefab;
-    [SerializeField] private GameObject servingCounterPrefab;
+    [SerializeField] private GameObject deliveryStationPrefab;
 
     private Dictionary<GameObject, int> requiredApplianceCounts = new Dictionary<GameObject, int>();
     private Dictionary<IngredientData, int> requiredIngredientCounts = new Dictionary<IngredientData, int>();
@@ -135,24 +135,22 @@ public class WorkspaceGenerator : MonoBehaviour
         requiredApplianceCounts.Clear();
         requiredIngredientCounts.Clear();
 
-        RecipeManager recipeManager = FindObjectOfType<RecipeManager>();
-
-        if (recipeManager == null)
+        if (RecipeManager.Instance == null)
         {
             Debug.LogWarning("Cannot find Recipe Manager");
             return;
         }
 
         // Analyze each recipe
-        foreach (RecipeData recipe in recipeManager.activeRecipes)
+        foreach (RecipeData recipe in RecipeManager.Instance.availableRecipes)
         {
             // Count required ingredients
             foreach (RequiredRecipeIngredient ingredient in recipe.requiredIngredients)
             {
                 if (!requiredIngredientCounts.ContainsKey(ingredient.ingredient))
-                    requiredIngredientCounts[ingredient.ingredient] = 0;
+                    requiredIngredientCounts[ingredient.ingredient] = 1;
 
-                requiredIngredientCounts[ingredient.ingredient]++;
+                //requiredIngredientCounts[ingredient.ingredient]++;
 
                 CheckOrAddAppliance(ingredient.requiredState);
             }
@@ -178,15 +176,17 @@ public class WorkspaceGenerator : MonoBehaviour
 
         if (appliancePrefab != null)
         {
-            requiredApplianceCounts.TryGetValue(appliancePrefab, out int count);
-            requiredApplianceCounts[appliancePrefab] = count + 1;
+            if (!requiredApplianceCounts.ContainsKey(appliancePrefab))
+                requiredApplianceCounts[appliancePrefab] = 1;
+
+            //requiredApplianceCounts[appliancePrefab]++;
         }
     }
 
     private void EnsureMinimumAppliances()
     {
         if (trashBinPrefab) requiredApplianceCounts[trashBinPrefab] = 1;
-        if (servingCounterPrefab) requiredApplianceCounts[servingCounterPrefab] = 1;
+        if (deliveryStationPrefab) requiredApplianceCounts[deliveryStationPrefab] = 1;
         if (plateStationPrefab) requiredApplianceCounts[plateStationPrefab] = 1;
     }
 

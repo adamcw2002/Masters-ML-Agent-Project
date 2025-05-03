@@ -39,6 +39,10 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
     private const int borderSize = 1;
     private HashSet<Vector2Int> bridgePositions = new HashSet<Vector2Int>();
 
+    [Header("Player")]
+    [SerializeField] private GameObject playerPrefab;
+    private GameObject player;
+
     // Grid to track which cells are floors
     private bool[,] floorGrid;
 
@@ -62,7 +66,7 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             GenerateFloorPlan();
         }
@@ -131,7 +135,22 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
         // Generate the actual floor cells
         CreateFloorCells();
 
+        SpawnPlayer();
+
         OnFloorGenerated?.Invoke();
+    }
+
+    private void SpawnPlayer()
+    {
+        if (finalRooms.Count == 0 || playerPrefab == null) return;
+
+        if (player != null) Destroy(player);
+
+        Room randomRoom = finalRooms[UnityEngine.Random.Range(0, finalRooms.Count)];
+
+        Vector3 spawnPosition = new Vector3(randomRoom.center.x, floorHeight, randomRoom.center.y);
+
+        player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
     }
 
     private void SplitRoomsExactly(int exactSplitCount)

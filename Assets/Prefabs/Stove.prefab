@@ -207,7 +207,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canProcessItems: 1
   processingTime: 0
-  canHoldPortableStorage: 1
+  canHoldPortableStorage: 0
+  mustRemoveWithPlate: 1
   insidePotRenderer: {fileID: 6117523943203147967}
 --- !u!65 &6406861441009542366
 BoxCollider:
