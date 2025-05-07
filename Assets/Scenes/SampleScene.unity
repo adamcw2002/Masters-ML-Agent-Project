@@ -824,6 +824,8 @@ MonoBehaviour:
   availableRecipes:
   - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
   - {fileID: 11400000, guid: 54bfe90b878b4474c80713d164a797da, type: 2}
+  - {fileID: 11400000, guid: 80d6306240865404694b8a54d47cd315, type: 2}
+  - {fileID: 11400000, guid: ef6435531857ec8409b16d931bff5589, type: 2}
   activeRecipe: {fileID: 0}
   currentRecipeNameText: {fileID: 336394709}
   currentRecipeDetailsText: {fileID: 1245300057}

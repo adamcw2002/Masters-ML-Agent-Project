@@ -12,6 +12,7 @@ public class IngredientData : ScriptableObject
 {
     public string ingredientName;
     public Sprite icon;
+    public bool isProduct;
 
     [System.Serializable]
     public class StateVariant

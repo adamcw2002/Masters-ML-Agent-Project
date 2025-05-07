@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 053ebc200605d87448f6cf33fae25c78, type: 3}
-  m_Name: Salad
+  m_Name: Pumpkin
   m_EditorClassIdentifier: 
-  ingredientName: Salad
-  icon: {fileID: 21300000, guid: facb04c1ea3153541a66e9c95b76af68, type: 3}
+  ingredientName: Pumpkin
+  icon: {fileID: 21300000, guid: 6be1643ca59ec64439260323af060b3a, type: 3}
   possibleStates:
   - state: 0
-    visualPrefab: {fileID: 919132149155446097, guid: 20fcafbd3d8f58344b702d6bcf9321f1, type: 3}
+    visualPrefab: {fileID: 919132149155446097, guid: 763aff1b71d61d044b4284dd23eb3d4d, type: 3}
+    plateRequired: 0
+  - state: 3
+    visualPrefab: {fileID: 919132149155446097, guid: 477989e64fc6fa9439f836e0beff12f1, type: 3}
     plateRequired: 1
   initialState: 0
+  ingredientMaterial: {fileID: 2100000, guid: 0a657878660581147aa8b36d593bd764, type: 2}

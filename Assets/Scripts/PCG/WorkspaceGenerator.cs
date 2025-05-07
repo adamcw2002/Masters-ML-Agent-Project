@@ -542,6 +542,12 @@ public class WorkspaceGenerator : MonoBehaviour
             // Count required ingredients
             foreach (RequiredRecipeIngredient ingredient in recipe.requiredIngredients)
             {
+                if (ingredient.ingredient.isProduct)
+                {
+                    //FIND RECIPE TO MAKE THIS PRODUCT
+                    continue;
+                }
+
                 if (!requiredIngredientCounts.ContainsKey(ingredient.ingredient))
                     requiredIngredientCounts[ingredient.ingredient] = 1;
 
