@@ -61,7 +61,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         return true;
     }
 
-    public bool AddItem(GameObject item)
+    public virtual bool AddItem(GameObject item)
     {
         if (!CanAcceptItem(item))
             return false;
@@ -91,6 +91,17 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         UpdateVisual();
 
         return item;
+    }
+
+    protected void RemoveAllItems()
+    {
+        if (storedItems.Count == 0) return;
+
+        foreach (GameObject item in storedItems) Destroy(item);
+
+        storedItems.Clear();
+
+        UpdateVisual();
     }
 
     public GameObject GetLastItem()

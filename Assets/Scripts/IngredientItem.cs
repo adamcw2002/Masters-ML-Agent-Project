@@ -19,13 +19,13 @@ public class IngredientItem : MonoBehaviour
         InitializeFromData();
     }
 
-    public void SetIngredientData(IngredientData data)
+    public void SetIngredientData(IngredientData data, IngredientState startingState = IngredientState.Raw)
     {
         ingredientData = data;
-        InitializeFromData();
+        InitializeFromData(startingState);
     }
 
-    private void InitializeFromData()
+    private void InitializeFromData(IngredientState startingState = IngredientState.Raw)
     {
         if (ingredientData == null) return;
 
@@ -49,7 +49,9 @@ public class IngredientItem : MonoBehaviour
         }
 
         // Set initial state
-        currentState = ingredientData.initialState;
+        if (startingState != IngredientState.Raw) currentState = startingState;
+        else currentState = ingredientData.initialState;
+
         UpdateVisual();
     }
 

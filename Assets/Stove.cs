@@ -52,10 +52,10 @@ public class Stove : Workspace
             return;
         }
 
-        IngredientState ingredientState = storedItems[0].GetComponent<IngredientItem>().CurrentState;
+        IngredientItem ingredient = storedItems[0].GetComponent<IngredientItem>();
 
-        GameObject rawPrefab = storedItems[0].transform.Find(ingredientState.ToString()).gameObject;
+        Material ingredientMaterial = ingredient.IngredientData.ingredientMaterial;
 
-        insidePotRenderer.material = rawPrefab.GetComponent<Renderer>().material;
+        if (ingredientMaterial) insidePotRenderer.material = ingredientMaterial;
     }
 }

@@ -26,14 +26,8 @@ public class RecipeManager : MonoSingleton<RecipeManager>
         UpdateText();
     }
 
-    public bool CompleteRecipe(Plate plate)
+    public bool CanCombineIngredients(Plate plate, RecipeData recipe)
     {
-        if (activeRecipe == null)
-        {
-            Debug.Log("No active recipe");
-            return false;
-        }
-
         // Check if holding an item
         if (plate == null)
         {
@@ -50,15 +44,25 @@ public class RecipeManager : MonoSingleton<RecipeManager>
 
         List<GameObject> plateItems = plate.StoredItems;
 
+        if (plateItems.Count == 1)
+        {
+            plateItems[0].TryGetComponent(out IngredientItem ingredient);
+
+            if (ingredient != null && ingredient.IngredientData == recipe.finalProductData)
+            {
+                return false;
+            }
+        }
+
         // Check if the amount of items on the plate are the same as the recipe
-        if (activeRecipe.requiredIngredients.Count != plateItems.Count)
+        if (recipe.requiredIngredients.Count != plateItems.Count)
         {
             Debug.Log("Incorrect amount of items for recipe");
             return false;
         }
 
         // Create dictionary from active recipe
-        InitRecipeDictionary(activeRecipe);
+        InitRecipeDictionary(recipe);
 
         // Check each item is correct
         foreach (GameObject item in plateItems)
@@ -90,6 +94,53 @@ public class RecipeManager : MonoSingleton<RecipeManager>
                 return false;
             }
         }
+
+        return true;
+    }
+
+    public bool CheckCompletedRecipe(Plate plate, RecipeData recipe)
+    {
+        // Check if holding an item
+        if (plate == null)
+        {
+            Debug.Log("Not holding a plate");
+            return false;
+        }
+
+        //Check the contents of the plate
+        if (plate.IsEmpty)
+        {
+            Debug.Log("Plate does not have anything on it");
+            return false;
+        }
+
+        List<GameObject> plateItems = plate.StoredItems;
+
+        // Check for the made up recipe on the plate
+        if (plateItems.Count == 1)
+        {
+            plateItems[0].TryGetComponent(out IngredientItem ingredient);
+
+            if (ingredient != null && ingredient.IngredientData == recipe.finalProductData)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    public bool CompleteRecipe(Plate plate)
+    {
+        if (activeRecipe == null)
+        {
+            Debug.Log("No active recipe");
+            return false;
+        }
+
+        if (CheckCompletedRecipe(plate, activeRecipe) == false) return false;
 
         Debug.Log("Recipe delivered successfully!");
 

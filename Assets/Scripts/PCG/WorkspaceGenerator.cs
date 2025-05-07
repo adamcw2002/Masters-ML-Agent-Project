@@ -547,8 +547,6 @@ public class WorkspaceGenerator : MonoBehaviour
 
                 //requiredIngredientCounts[ingredient.ingredient]++;
 
-                Debug.Log(ingredient.requiredState);
-
                 CheckOrAddAppliance(ingredient.requiredState);
             }
         }

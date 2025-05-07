@@ -24,6 +24,7 @@ public class IngredientData : ScriptableObject
     [Header("Visual Variants by State")]
     public List<StateVariant> possibleStates = new List<StateVariant>();
     public IngredientState initialState;
+    public Material ingredientMaterial;
 
     public bool CheckPossibleStates(IngredientState state)
     {

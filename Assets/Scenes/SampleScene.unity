@@ -823,7 +823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableRecipes:
   - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
-  - {fileID: 11400000, guid: 2092f466eede4fd45905816b1ee328ae, type: 2}
+  - {fileID: 11400000, guid: 54bfe90b878b4474c80713d164a797da, type: 2}
   activeRecipe: {fileID: 0}
   currentRecipeNameText: {fileID: 336394709}
   currentRecipeDetailsText: {fileID: 1245300057}
@@ -1305,9 +1305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fa8d3977c9f55a4385ac3e1e04fcd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 15
+  gridWidth: 10
   gridLength: 10
-  roomCount: 2
+  roomCount: 1
   floorMaterial: {fileID: 2100000, guid: ea846e04c866fcd4791c7b7345c19cd2, type: 2}
   floorHeight: 0
   gapSize: 0

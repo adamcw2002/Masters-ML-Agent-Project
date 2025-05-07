@@ -6,6 +6,8 @@ using UnityEngine;
 public class RecipeData : ScriptableObject
 {
     public string recipeName;
+    public IngredientData finalProductData;
+    public IngredientState finalProductState;
     public List<RequiredRecipeIngredient> requiredIngredients;
 }
 
