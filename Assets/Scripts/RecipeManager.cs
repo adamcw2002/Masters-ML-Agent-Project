@@ -1,13 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using TMPro;
 
 public class RecipeManager : MonoSingleton<RecipeManager>
 {
-    public List<RecipeData> availableRecipes = new List<RecipeData>();
+    [SerializeField] private List<RecipeData> availableRecipes = new List<RecipeData>();
+    public List<RecipeData> GetAvailableRecipes() => availableRecipes;
 
-    public RecipeData activeRecipe;
+
+    [SerializeField] private RecipeData activeRecipe;
+    public RecipeData GetActiveRecipe() => activeRecipe;
+
     private Dictionary<IngredientData, IngredientState> currentRecipe = new Dictionary<IngredientData, IngredientState>();
+
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI currentRecipeNameText;
+    [SerializeField] private TextMeshProUGUI currentRecipeDetailsText;
+
+    private void Start()
+    {
+        if (activeRecipe == null) SelectNewRecipe();
+
+        UpdateText();
+    }
 
     public bool CompleteRecipe(Plate plate)
     {
@@ -76,6 +93,8 @@ public class RecipeManager : MonoSingleton<RecipeManager>
 
         Debug.Log("Recipe delivered successfully!");
 
+        SelectNewRecipe();
+
         return true;
     }
 
@@ -87,5 +106,33 @@ public class RecipeManager : MonoSingleton<RecipeManager>
         {
             currentRecipe[requiredIngredient.ingredient] = requiredIngredient.requiredState;
         }
+    }
+
+    private void SelectNewRecipe()
+    {
+        activeRecipe = availableRecipes[UnityEngine.Random.Range(0, availableRecipes.Count)];
+
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
+        if (currentRecipeNameText && activeRecipe != null)
+        {
+            currentRecipeNameText.text = "Current Recipe: " + activeRecipe.recipeName;
+            currentRecipeDetailsText.text = GetRecipeDetails();
+        }
+    }
+
+    private string GetRecipeDetails()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        foreach (var IngredientRequirement in activeRecipe.requiredIngredients)
+        {
+            sb.AppendLine($"- {IngredientRequirement.requiredState} {IngredientRequirement.ingredient.ingredientName}");
+        }
+
+        return sb.ToString();
     }
 }

@@ -536,7 +536,7 @@ public class WorkspaceGenerator : MonoBehaviour
         }
 
         // Analyze each recipe
-        foreach (RecipeData recipe in RecipeManager.Instance.availableRecipes)
+        foreach (RecipeData recipe in RecipeManager.Instance.GetAvailableRecipes())
         {
             // Count required ingredients
             foreach (RequiredRecipeIngredient ingredient in recipe.requiredIngredients)
