@@ -11,6 +11,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
     [SerializeField] protected bool canHoldPortableStorage = false;
     [SerializeField] protected bool mustRemoveWithPlate = false;
+    [SerializeField] protected bool itemsVisibleOnStorage = true;
 
     protected List<GameObject> storedItems = new List<GameObject>();
     protected bool isProcessing = false;
@@ -119,6 +120,8 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         storedItems.Add(item);
         item.transform.SetParent(transform);
         item.transform.localPosition = Vector3.up * 0.5f; // Position item on top
+
+        if (itemsVisibleOnStorage == false) item.SetActive(false);
 
         if (canProcessItems && CanProcessItem(item)) StartProcessing();
 

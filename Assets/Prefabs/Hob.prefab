@@ -447,4 +447,5 @@ MonoBehaviour:
   outputState: 2
   canHoldPortableStorage: 0
   mustRemoveWithPlate: 1
+  itemsVisibleOnStorage: 0
   insidePotRenderer: {fileID: 3563079834427024479}
