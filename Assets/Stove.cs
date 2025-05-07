@@ -15,15 +15,17 @@ public class Stove : Workspace
 
     public override bool CanProcessItem(GameObject item)
     {
+        if (canProcessItems == false) return true;
+
         IngredientItem ingredientItem = item.GetComponent<IngredientItem>();
 
         //If its not an ingredient, then cannot process
         if (ingredientItem == null) return false;
 
-        //If item is already chopped, then cannot process
-        if (ingredientItem.CurrentState == IngredientState.Cooked) return false;
+        //If item is already in the new state, then cannot process
+        if (ingredientItem.CurrentState == outputState) return false;
 
-        return ingredientItem.IngredientData.CheckPossibleStates(IngredientState.Cooked);
+        return ingredientItem.IngredientData.CheckPossibleStates(outputState);
     }
 
     protected override void CompleteProcessing()
@@ -38,7 +40,7 @@ public class Stove : Workspace
         if (ingredientItem != null)
         {
             // Change the ingredient state to chopped
-            ingredientItem.ChangeState(IngredientState.Cooked);
+            ingredientItem.ChangeState(outputState);
         }
     }
 

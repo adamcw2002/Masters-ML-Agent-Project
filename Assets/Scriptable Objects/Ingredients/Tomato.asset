@@ -21,7 +21,7 @@ MonoBehaviour:
   - state: 1
     visualPrefab: {fileID: 5786041837218954607, guid: a2de4e5f90a49a945817b7ffe0e101b0, type: 3}
     plateRequired: 0
-  - state: 2
+  - state: 3
     visualPrefab: {fileID: 7823755304412412528, guid: 765fca02573145b44b487deb5dbef2b9, type: 3}
     plateRequired: 1
   initialState: 0

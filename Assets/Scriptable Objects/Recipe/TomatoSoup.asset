@@ -15,4 +15,4 @@ MonoBehaviour:
   recipeName: Tomato Soup
   requiredIngredients:
   - ingredient: {fileID: 11400000, guid: 0fd47207bef1c3f4780084298d588b4d, type: 2}
-    requiredState: 2
+    requiredState: 3

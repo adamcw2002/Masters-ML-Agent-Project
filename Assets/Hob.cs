@@ -2,10 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChoppingBoard : Workspace, IInteractable
+public class Hob : Workspace
 {
+    [Header("Pan")]
+    [SerializeField] private Renderer insidePotRenderer;
+    private Material insidePotDefaultMaterial;
+
+    private void Start()
+    {
+        insidePotDefaultMaterial = insidePotRenderer.material;
+    }
+
     public override bool CanProcessItem(GameObject item)
     {
+        if (canProcessItems == false) return true;
+
         IngredientItem ingredientItem = item.GetComponent<IngredientItem>();
 
         //If its not an ingredient, then cannot process
@@ -33,5 +44,18 @@ public class ChoppingBoard : Workspace, IInteractable
         }
     }
 
-    protected override void UpdateVisual() { }
+    protected override void UpdateVisual()
+    {
+        if (storedItems.Count == 0)
+        {
+            insidePotRenderer.material = insidePotDefaultMaterial;
+            return;
+        }
+
+        IngredientState ingredientState = storedItems[0].GetComponent<IngredientItem>().CurrentState;
+
+        GameObject rawPrefab = storedItems[0].transform.Find(ingredientState.ToString()).gameObject;
+
+        insidePotRenderer.material = rawPrefab.GetComponent<Renderer>().material;
+    }
 }

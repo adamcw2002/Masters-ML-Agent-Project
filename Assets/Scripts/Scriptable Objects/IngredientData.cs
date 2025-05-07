@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum IngredientState
 {
-    Raw, Chopped, Cooked
+    Raw, Chopped, Cooked, Boiled
 }
 
 [CreateAssetMenu(fileName = "New Ingredient", menuName = "new Ingredient")]

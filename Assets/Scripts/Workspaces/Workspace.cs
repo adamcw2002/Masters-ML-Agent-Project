@@ -7,6 +7,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
     protected int maxItems = 1;
     [SerializeField] protected bool canProcessItems = true;
     [SerializeField] protected float processingTime = 0f;
+    [SerializeField] protected IngredientState outputState;
 
     [SerializeField] protected bool canHoldPortableStorage = false;
     [SerializeField] protected bool mustRemoveWithPlate = false;
@@ -107,7 +108,12 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         if (canHoldPortableStorage && maxItems == 1 && storedItems.Count > 0 && storedItems[0].TryGetComponent(out PortableStorage portableStorage))
             return portableStorage.AddItem(item);
 
+        // Check if it can accept the item
         if (!CanAcceptItem(item))
+            return false;
+
+        // Check whether it can process the item
+        if (canProcessItems && !CanProcessItem(item))
             return false;
 
         storedItems.Add(item);

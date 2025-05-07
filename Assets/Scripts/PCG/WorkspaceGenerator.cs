@@ -14,6 +14,7 @@ public class WorkspaceGenerator : MonoBehaviour
     [Header("Appliances")]
     [SerializeField] private GameObject choppingBoardPrefab;
     [SerializeField] private GameObject stovePrefab;
+    [SerializeField] private GameObject hobPrefab;
 
     [Header("Other")]
     [SerializeField] private GameObject plateStationPrefab;
@@ -546,6 +547,8 @@ public class WorkspaceGenerator : MonoBehaviour
 
                 //requiredIngredientCounts[ingredient.ingredient]++;
 
+                Debug.Log(ingredient.requiredState);
+
                 CheckOrAddAppliance(ingredient.requiredState);
             }
         }
@@ -564,6 +567,9 @@ public class WorkspaceGenerator : MonoBehaviour
                 appliancePrefab = choppingBoardPrefab;
                 break;
             case IngredientState.Cooked:
+                appliancePrefab = hobPrefab;
+                break;
+            case IngredientState.Boiled:
                 appliancePrefab = stovePrefab;
                 break;
         }
