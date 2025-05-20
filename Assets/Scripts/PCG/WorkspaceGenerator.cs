@@ -540,7 +540,7 @@ public class WorkspaceGenerator : MonoBehaviour
         foreach (RecipeData recipe in RecipeManager.Instance.GetAvailableRecipes())
         {
             // Count required ingredients
-            foreach (RequiredRecipeIngredient ingredient in recipe.requiredIngredients)
+            foreach (RequiredRecipeIngredient ingredient in recipe.baseRequiredIngredients)
             {
                 if (ingredient.ingredient.isProduct)
                 {

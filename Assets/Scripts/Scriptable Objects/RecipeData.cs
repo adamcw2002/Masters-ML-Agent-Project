@@ -8,7 +8,8 @@ public class RecipeData : ScriptableObject
     public string recipeName;
     public IngredientData finalProductData;
     public IngredientState finalProductState;
-    public List<RequiredRecipeIngredient> requiredIngredients;
+    public List<RequiredRecipeIngredient> baseRequiredIngredients;
+    public List<RequiredRecipeIngredient> alternativeRecipe;
 }
 
 [System.Serializable]
