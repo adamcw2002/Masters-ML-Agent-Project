@@ -15,6 +15,7 @@ MonoBehaviour:
   recipeName: Carrot Soup
   finalProductData: {fileID: 11400000, guid: a836a8a89bcf90c47b7fc3916051c05e, type: 2}
   finalProductState: 3
-  requiredIngredients:
+  baseRequiredIngredients:
   - ingredient: {fileID: 11400000, guid: a836a8a89bcf90c47b7fc3916051c05e, type: 2}
     requiredState: 3
+  alternativeRecipe: []

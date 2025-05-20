@@ -14,20 +14,20 @@ public class Plate : PortableStorage
 
             foreach (var recipe in recipeManager.GetAvailableRecipes())
             {
-                Debug.Log("Checking recipe: " + recipe.recipeName);
+                //Debug.Log("Checking recipe: " + recipe.recipeName);
 
                 StoredItems[0].TryGetComponent(out IngredientItem storedIngredient);
 
                 if (StoredItems.Count == 1 && storedIngredient != null && recipe.finalProductData == storedIngredient.IngredientData)
                 {
-                    Debug.Log("Recipe already completed on plate");
+                    //Debug.Log("Recipe already completed on plate");
 
                     return true;
                 }
 
                 if (recipeManager.CanCombineIngredients(this, recipe))
                 {
-                    Debug.Log("Combining ingredients on plate");
+                    //Debug.Log("Combining ingredients on plate");
 
                     CombineIngredients(recipe);
 

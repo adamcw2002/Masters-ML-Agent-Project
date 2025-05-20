@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeName: Salad
   finalProductData: {fileID: 11400000, guid: 3590f926f6a7b754795dcdcf7a31e8ab, type: 2}
-  requiredIngredients:
+  finalProductState: 0
+  baseRequiredIngredients:
   - ingredient: {fileID: 11400000, guid: 0fd47207bef1c3f4780084298d588b4d, type: 2}
     requiredState: 1
   - ingredient: {fileID: 11400000, guid: 58f09983ec49a1a4290b56c80b0d7c2e, type: 2}
     requiredState: 1
+  alternativeRecipe: []

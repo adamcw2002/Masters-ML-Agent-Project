@@ -15,7 +15,14 @@ MonoBehaviour:
   recipeName: Mac & Cheese with Broccoli
   finalProductData: {fileID: 11400000, guid: b78f226b4243a754bb2a10f9f3c4df8d, type: 2}
   finalProductState: 2
-  requiredIngredients:
+  baseRequiredIngredients:
+  - ingredient: {fileID: 11400000, guid: ee00a399680f8734195a6bb582f39951, type: 2}
+    requiredState: 3
+  - ingredient: {fileID: 11400000, guid: 4480f05c4eeadcb43b28e40fa0ba9b3a, type: 2}
+    requiredState: 0
+  - ingredient: {fileID: 11400000, guid: d132c4402fd5fc04eb7c57058b0657fb, type: 2}
+    requiredState: 0
+  alternativeRecipe:
   - ingredient: {fileID: 11400000, guid: cae19b8dbc544c34e9d506351042d833, type: 2}
     requiredState: 2
   - ingredient: {fileID: 11400000, guid: d132c4402fd5fc04eb7c57058b0657fb, type: 2}

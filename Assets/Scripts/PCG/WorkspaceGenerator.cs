@@ -23,7 +23,8 @@ public class WorkspaceGenerator : MonoBehaviour
     [SerializeField] private GameObject deliveryStationPrefab;
 
     [Header("Placement Rules")]
-    [SerializeField] private int applianceSpacing = 1; // Gap between appliances
+    [SerializeField] private int applianceSpacing = 1;
+    [SerializeField] private int maxiumumNumberOfEachAppliance = 3;
 
     private Dictionary<GameObject, int> requiredApplianceCounts = new Dictionary<GameObject, int>();
     private Dictionary<IngredientData, int> requiredIngredientCounts = new Dictionary<IngredientData, int>();
@@ -583,7 +584,8 @@ public class WorkspaceGenerator : MonoBehaviour
             if (!requiredApplianceCounts.ContainsKey(appliancePrefab))
                 requiredApplianceCounts[appliancePrefab] = 0;
 
-            requiredApplianceCounts[appliancePrefab]++;
+            if (requiredApplianceCounts[appliancePrefab] + 1 <= maxiumumNumberOfEachAppliance)
+                requiredApplianceCounts[appliancePrefab]++;
         }
     }
 

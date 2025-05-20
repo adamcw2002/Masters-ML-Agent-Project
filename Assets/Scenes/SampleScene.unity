@@ -822,10 +822,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableRecipes:
-  - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
-  - {fileID: 11400000, guid: 54bfe90b878b4474c80713d164a797da, type: 2}
-  - {fileID: 11400000, guid: 80d6306240865404694b8a54d47cd315, type: 2}
   - {fileID: 11400000, guid: ef6435531857ec8409b16d931bff5589, type: 2}
+  - {fileID: 11400000, guid: 80d6306240865404694b8a54d47cd315, type: 2}
+  - {fileID: 11400000, guid: 54bfe90b878b4474c80713d164a797da, type: 2}
+  - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
   activeRecipe: {fileID: 0}
   currentRecipeNameText: {fileID: 336394709}
   currentRecipeDetailsText: {fileID: 1245300057}
@@ -1346,6 +1346,7 @@ MonoBehaviour:
   trashBinPrefab: {fileID: 1620992282833043705, guid: 94942bea463e2ab4098298009ce49293, type: 3}
   deliveryStationPrefab: {fileID: 7185545119260946976, guid: c159a895394abd844862e8f4bbe66449, type: 3}
   applianceSpacing: 1
+  maxiumumNumberOfEachAppliance: 2
 --- !u!1001 &1454677314
 PrefabInstance:
   m_ObjectHideFlags: 0

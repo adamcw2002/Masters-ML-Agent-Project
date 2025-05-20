@@ -13,8 +13,8 @@ public class RecipeManager : MonoSingleton<RecipeManager>
     [SerializeField] private RecipeData activeRecipe;
     public RecipeData GetActiveRecipe() => activeRecipe;
 
-    private Dictionary<IngredientData, IngredientState> currentRecipe = new Dictionary<IngredientData, IngredientState>();
-    private Dictionary<IngredientData, IngredientState> alternativeRecipe = new Dictionary<IngredientData, IngredientState>();
+    private Dictionary<IngredientData, IngredientState> currentRecipeRequirements = new Dictionary<IngredientData, IngredientState>();
+    private Dictionary<IngredientData, IngredientState> alternativeRecipeRequirements = new Dictionary<IngredientData, IngredientState>();
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI currentRecipeNameText;
@@ -58,13 +58,11 @@ public class RecipeManager : MonoSingleton<RecipeManager>
         // Create dictionary from active recipe
         InitRecipeDictionaries(recipe);
 
-        bool doesMatchBaseRecipe = ComparePlateToRecipeDictionary(ref currentRecipe, plateItems);
+        bool doesMatchBaseRecipe = ComparePlateToRecipeDictionary(ref currentRecipeRequirements, plateItems);
 
-        Debug.Log(alternativeRecipe.Count);
+        if (doesMatchBaseRecipe == true || alternativeRecipeRequirements.Count == 0) return doesMatchBaseRecipe;
 
-        if (doesMatchBaseRecipe == true || alternativeRecipe.Count == 0) return doesMatchBaseRecipe;
-
-        bool doesMatchAlternative = ComparePlateToRecipeDictionary(ref alternativeRecipe, plateItems);
+        bool doesMatchAlternative = ComparePlateToRecipeDictionary(ref alternativeRecipeRequirements, plateItems);
 
         return doesMatchAlternative;
     }
@@ -159,17 +157,17 @@ public class RecipeManager : MonoSingleton<RecipeManager>
 
     private void InitRecipeDictionaries(RecipeData recipe)
     {
-        currentRecipe.Clear();
-        alternativeRecipe.Clear();
+        currentRecipeRequirements.Clear();
+        alternativeRecipeRequirements.Clear();
 
         foreach (var requiredIngredient in recipe.baseRequiredIngredients)
         {
-            currentRecipe[requiredIngredient.ingredient] = requiredIngredient.requiredState;
+            currentRecipeRequirements[requiredIngredient.ingredient] = requiredIngredient.requiredState;
         }
 
         foreach (var requiredIngredient in recipe.alternativeRecipe)
         {
-            alternativeRecipe[requiredIngredient.ingredient] = requiredIngredient.requiredState;
+            alternativeRecipeRequirements[requiredIngredient.ingredient] = requiredIngredient.requiredState;
         }
     }
 
