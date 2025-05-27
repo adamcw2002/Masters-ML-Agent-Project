@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Workspace : MonoBehaviour, IInteractable
@@ -15,6 +16,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
     protected List<GameObject> storedItems = new List<GameObject>();
     protected bool isProcessing = false;
+    private ProgressBarUI progressBarUI = null;
 
     public virtual void Interact(PlayerInteract player, GameObject itemHolding)
     {
@@ -162,6 +164,8 @@ public abstract class Workspace : MonoBehaviour, IInteractable
     {
         isProcessing = true;
 
+        if (processingTime > 0) ShowProgressBar();
+
         UpdateVisual();
 
         yield return new WaitForSeconds(processingTime);
@@ -172,6 +176,12 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         UpdateVisual();
 
         isProcessing = false;
+    }
+
+    private void ShowProgressBar()
+    {
+        if (progressBarUI == null) progressBarUI = ProgressBarManager.Instance.CreateProgressBar(transform);
+        progressBarUI.StartProcessing(processingTime);
     }
 
     protected virtual void CompleteProcessing()

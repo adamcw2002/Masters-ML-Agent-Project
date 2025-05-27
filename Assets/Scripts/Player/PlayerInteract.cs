@@ -99,7 +99,8 @@ public class PlayerInteract : MonoBehaviour
         {
             if (Physics.Raycast(origin, dir, out RaycastHit hit, interactRange, interactableMask))
             {
-                currentInteractable = hit.collider.GetComponent<IInteractable>();
+                SetNewInteractable(hit.collider?.gameObject);
+
                 if (currentInteractable != null)
                 {
                     Debug.DrawRay(origin, dir * interactRange, Color.green);
@@ -110,7 +111,7 @@ public class PlayerInteract : MonoBehaviour
             Debug.DrawRay(origin, dir * interactRange, Color.red);
         }
 
-        currentInteractable = null;
+        SetNewInteractable(null);
     }
 
     void DetectLastFacingNearbyInteractables()
@@ -120,7 +121,8 @@ public class PlayerInteract : MonoBehaviour
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, interactRange, interactableMask))
         {
-            currentInteractable = hit.collider.GetComponent<IInteractable>();
+            SetNewInteractable(hit.collider?.gameObject);
+
             if (currentInteractable != null)
             {
                 Debug.DrawRay(origin, direction * (interactRange + 0.5f), Color.green);
@@ -129,8 +131,21 @@ public class PlayerInteract : MonoBehaviour
         }
         else
         {
-            currentInteractable = null;
+            SetNewInteractable(null);
             Debug.DrawRay(origin, direction * (interactRange + 0.5f), Color.red);
         }
+    }
+
+    private void SetNewInteractable(GameObject obj)
+    {
+        IInteractable newInteractable = obj?.GetComponent<IInteractable>();
+
+        if (newInteractable == null)
+        {
+            MaterialHighlighter.Instance.ClearHighlight();
+        }
+        else if (newInteractable != currentInteractable) MaterialHighlighter.Instance.HighlightObject(obj);
+
+        currentInteractable = newInteractable;
     }
 }
