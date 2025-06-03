@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canProcessItems: 1
-  processingTime: 2
+  processingTime: 5
   outputState: 3
   canHoldPortableStorage: 0
   mustRemoveWithPlate: 1

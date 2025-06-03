@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         if (moveDirection.sqrMagnitude > 0.01f)
             lastFacingDirection = moveDirection;
 
-        ClampLastDirection();
+        //ClampLastDirection();
 
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 

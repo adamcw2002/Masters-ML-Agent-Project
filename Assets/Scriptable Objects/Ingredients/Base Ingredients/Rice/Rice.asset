@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Rice
   icon: {fileID: 21300000, guid: a433a82dbc8e9c840956160550fda2c3, type: 3}
+  isProduct: 0
   possibleStates:
-  - state: 0
+  - preconditionState: 0
+    outputState: 0
     visualPrefab: {fileID: 919132149155446097, guid: ea7da191f2cf5eb40811367efb81c18b, type: 3}
     plateRequired: 0
-  - state: 3
+  - preconditionState: 0
+    outputState: 3
     visualPrefab: {fileID: 919132149155446097, guid: 94b7883e1336648429edadcf8a804d90, type: 3}
     plateRequired: 1
   initialState: 0

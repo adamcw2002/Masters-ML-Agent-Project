@@ -25,7 +25,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         //If portable storage is currently on the workspace
         if (canHoldPortableStorage && maxItems == 1 && storedItems.Count > 0 && storedItems[0].TryGetComponent(out PortableStorage storage))
         {
-            Debug.Log("A Portable storage is currently on workspace, interact with the storage");
+            //Debug.Log("A Portable storage is currently on workspace, interact with the storage");
             storage.Interact(player, itemHolding);
 
             // Check if storage has changed parent (been picked up), remove from workspace if so
@@ -40,14 +40,14 @@ public abstract class Workspace : MonoBehaviour, IInteractable
             // Player is holding a plate and the workspace is not empty, try add from workspace onto plate
             if (itemHolding.TryGetComponent(out PortableStorage storageHolding) && storedItems.Count > 0)
             {
-                Debug.Log("Player holding portable storage, adding from workspace onto plate");
+                //Debug.Log("Player holding portable storage, adding from workspace onto plate");
 
                 GameObject item = GetLastItem();
                 if (item != null)
                 {
                     if (item.TryGetComponent(out PortableStorage storedPortableStorage) && storedPortableStorage.StoredItems.Count > 0)
                     {
-                        Debug.Log("Trying to take item from portable storage");
+                        //Debug.Log("Trying to take item from portable storage");
 
                         item = storedPortableStorage.GetLastItem();
 
@@ -56,7 +56,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
                     }
                     else
                     {
-                        Debug.Log("Trying to pickup item");
+                        //Debug.Log("Trying to pickup item");
 
                         if (player.PickupItem(item))
                             RemoveItem(item);
@@ -69,7 +69,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
             // Add the item the player is holding to the workspace
             if (AddItem(itemHolding))
             {
-                Debug.Log("Adding item from player to workspace");
+                //Debug.Log("Adding item from player to workspace");
 
                 player.RemoveItem();
             }
@@ -80,7 +80,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         //Player is not holding anything, try pick up item
         if (storedItems.Count > 0 && mustRemoveWithPlate == false)
         {
-            Debug.Log("Player pick up item");
+            //Debug.Log("Player pick up item");
 
             GameObject item = GetLastItem();
             if (item != null)

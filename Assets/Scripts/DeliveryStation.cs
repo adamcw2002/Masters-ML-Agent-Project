@@ -16,6 +16,12 @@ public class DeliveryStation : MonoBehaviour, IInteractable
 
         Plate plate = itemHolding.GetComponent<Plate>();
 
+        if (plate.StoredItems.Count == 0 )
+        {
+            Debug.Log("Cannot deliver empty plate");
+            return;
+        }
+
         bool isRecipeCorrect = RecipeManager.Instance.CompleteRecipe(plate);
 
         if (!isRecipeCorrect) Debug.Log("Incorrect recipe delivered");

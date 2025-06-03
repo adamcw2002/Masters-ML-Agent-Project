@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Pasta
   icon: {fileID: 21300000, guid: bc5b4259880ad744390ea51557d80766, type: 3}
+  isProduct: 0
   possibleStates:
-  - state: 0
+  - preconditionState: 0
+    outputState: 0
     visualPrefab: {fileID: 919132149155446097, guid: 9f3fbb5b5cebdb942967ea100d417fb1, type: 3}
     plateRequired: 0
-  - state: 3
+  - preconditionState: 0
+    outputState: 3
     visualPrefab: {fileID: 5786041837218954607, guid: cddc8c9d3aff55f4fb3db9f6c90520f9, type: 3}
     plateRequired: 1
   initialState: 0

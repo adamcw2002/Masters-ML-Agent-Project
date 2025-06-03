@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940241f3a40b0804da840ff796ab3571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 6
   gravity: -9.81
   lastFacingDirection: {x: 0, y: 0, z: 1}
 --- !u!114 &1486973358302001549
