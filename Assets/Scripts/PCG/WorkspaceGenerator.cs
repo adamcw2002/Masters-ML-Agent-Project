@@ -554,7 +554,13 @@ public class WorkspaceGenerator : MonoBehaviour
 
                 //requiredIngredientCounts[ingredient.ingredient]++;
 
+                //ADD APPLIANCE FOR OUTPUT STATE
                 CheckOrAddAppliance(ingredient.requiredState);
+
+
+                //ADD APPLIANCE FOR THE PRECONDITION eg (chopped -> boiled, adds chopping board aswell)
+                IngredientState? preconditionState = ingredient.ingredient.GetPreconditionState(ingredient.requiredState);
+                if (preconditionState.HasValue) CheckOrAddAppliance(preconditionState.Value);
             }
         }
 

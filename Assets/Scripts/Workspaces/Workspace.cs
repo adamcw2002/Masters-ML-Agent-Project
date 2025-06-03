@@ -102,7 +102,19 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         return true;
     }
 
-    public abstract bool CanProcessItem(GameObject item);
+    protected bool CanProcessItem(GameObject item)
+    {
+        IngredientItem ingredientItem = item.GetComponent<IngredientItem>();
+
+        //If its not an ingredient, then cannot process
+        if (ingredientItem == null) return false;
+
+        //If item is already in the output state, then cannot process
+        if (ingredientItem.CurrentState == outputState) return false;
+
+        //Check if the ingredient can be the output state, and if its current state is valid to change it to the output
+        return ingredientItem.IngredientData.CheckValidStates(ingredientItem.CurrentState, outputState);
+    }
 
     protected abstract void UpdateVisual();
 

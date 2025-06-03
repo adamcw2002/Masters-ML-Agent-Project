@@ -42,9 +42,9 @@ public class IngredientItem : MonoBehaviour
             if (stateVariant.visualPrefab != null)
             {
                 GameObject visual = Instantiate(stateVariant.visualPrefab, transform);
-                visual.name = stateVariant.state.ToString();
+                visual.name = stateVariant.outputState.ToString();
                 visual.SetActive(false);
-                stateVisuals[stateVariant.state] = visual;
+                stateVisuals[stateVariant.outputState] = visual;
             }
         }
 

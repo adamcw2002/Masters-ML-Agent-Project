@@ -4,19 +4,6 @@ using UnityEngine;
 
 public class ChoppingBoard : Workspace, IInteractable
 {
-    public override bool CanProcessItem(GameObject item)
-    {
-        IngredientItem ingredientItem = item.GetComponent<IngredientItem>();
-
-        //If its not an ingredient, then cannot process
-        if (ingredientItem == null) return false;
-
-        //If item is already chopped, then cannot process
-        if (ingredientItem.CurrentState == outputState) return false;
-
-        return ingredientItem.IngredientData.CheckPossibleStates(outputState);
-    }
-
     protected override void CompleteProcessing()
     {
         if (storedItems.Count == 0)

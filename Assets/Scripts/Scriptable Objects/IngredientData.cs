@@ -17,7 +17,8 @@ public class IngredientData : ScriptableObject
     [System.Serializable]
     public class StateVariant
     {
-        public IngredientState state;
+        public IngredientState preconditionState;
+        public IngredientState outputState;
         public GameObject visualPrefab;
         public bool plateRequired;
     }
@@ -27,11 +28,11 @@ public class IngredientData : ScriptableObject
     public IngredientState initialState;
     public Material ingredientMaterial;
 
-    public bool CheckPossibleStates(IngredientState state)
+    public bool CheckValidStates(IngredientState currentState, IngredientState outputState)
     {
         foreach (var stateVariant in possibleStates)
         {
-            if (stateVariant.state == state) return true;
+            if (stateVariant.outputState == outputState && stateVariant.preconditionState == currentState) return true;
         }
         return false;
     }
@@ -40,7 +41,7 @@ public class IngredientData : ScriptableObject
     {
         foreach (var stateVariant in possibleStates)
         {
-            if (stateVariant.state == state) return stateVariant.plateRequired;
+            if (stateVariant.outputState == state) return stateVariant.plateRequired;
         }
         return false;
     }
@@ -49,7 +50,16 @@ public class IngredientData : ScriptableObject
     {
         foreach (var stateVariant in possibleStates)
         {
-            if (stateVariant.state == state) return stateVariant.visualPrefab;
+            if (stateVariant.outputState == state) return stateVariant.visualPrefab;
+        }
+        return null;
+    }
+
+    public IngredientState? GetPreconditionState(IngredientState outputState)
+    {
+        foreach (var stateVariant in possibleStates)
+        {
+            if (stateVariant.outputState == outputState) return stateVariant.preconditionState;
         }
         return null;
     }
