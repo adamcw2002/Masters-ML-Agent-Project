@@ -40,8 +40,6 @@ public class ItemDisplay : MonoBehaviour
         {
             List<IngredientData> ingredients = RecipeManager.Instance.GetBaseIngredients(data);
 
-            Debug.Log(ingredients.Count);
-
             if (ingredients != null && ingredients.Count > 0)
             {
                 foreach (var ingredient in ingredients)
@@ -88,7 +86,7 @@ public class ItemDisplay : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            Destroy(child.gameObject);
+            Destroy(child?.gameObject);
             existingIcons.Clear();
         }
     }

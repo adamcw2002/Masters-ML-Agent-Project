@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class RecipeManager : MonoSingleton<RecipeManager>
 {
+    public static event Action OnRecipeCompleted;
+
     [SerializeField] private List<RecipeData> availableRecipes = new List<RecipeData>();
     public List<RecipeData> GetAvailableRecipes() => availableRecipes;
 
@@ -21,6 +24,18 @@ public class RecipeManager : MonoSingleton<RecipeManager>
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI currentRecipeNameText;
     [SerializeField] private TextMeshProUGUI currentRecipeDetailsText;
+
+    private void OnEnable()
+    {
+        GameTimer.OnTimeEnd += SelectNewRecipe;
+        OnRecipeCompleted += SelectNewRecipe;
+    }
+
+    private void OnDisable()
+    {
+        GameTimer.OnTimeEnd -= SelectNewRecipe;
+        OnRecipeCompleted -= SelectNewRecipe;
+    }
 
     private void Start()
     {
@@ -134,7 +149,7 @@ public class RecipeManager : MonoSingleton<RecipeManager>
 
         Debug.Log("Recipe delivered successfully!");
 
-        SelectNewRecipe();
+        OnRecipeCompleted?.Invoke();
 
         return true;
     }
