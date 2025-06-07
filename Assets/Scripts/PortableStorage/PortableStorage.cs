@@ -15,6 +15,18 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
     public bool IsFull => storedItems.Count >= maxIngredients;
     public List<GameObject> StoredItems => storedItems;
 
+    protected ItemDisplay itemDisplay = null;
+
+    private void Start()
+    {
+        itemDisplay = ItemDisplayManager.Instance.CreateItemDisplay(transform);
+    }
+
+    private void OnDestroy()
+    {
+        if (itemDisplay) itemDisplay.ReturnToPool();
+    }
+
     public void Interact(PlayerInteract player, GameObject itemHolding)
     {
         // Player has empty hands, give them the storage with all its contents
@@ -77,6 +89,12 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
         UpdateVisual();
 
+        if (item.TryGetComponent(out IngredientItem ingredient))
+        {
+            ingredient.DestroyItemDisplay();
+            if (ingredient.IngredientData.isProduct == false) itemDisplay.AddNewIcon(ingredient.IngredientData);
+        }
+
         return true;
     }
 
@@ -90,6 +108,12 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
         UpdateVisual();
 
+        if (item.TryGetComponent(out IngredientItem ingredient))
+        {
+            ingredient.CreateItemDisplay();
+            itemDisplay.RemoveIcon(ingredient.IngredientData);
+        }
+
         return item;
     }
 
@@ -97,7 +121,10 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
     {
         if (storedItems.Count == 0) return;
 
-        foreach (GameObject item in storedItems) Destroy(item);
+        foreach (GameObject item in storedItems)
+        {
+            Destroy(item);
+        }
 
         storedItems.Clear();
 

@@ -99,7 +99,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canProcessItems: 0
   processingTime: 0
+  outputState: 0
   canHoldPortableStorage: 1
+  mustRemoveWithPlate: 0
+  itemsVisibleOnStorage: 1
+  showItemDisplayUI: 0
 --- !u!65 &6240717724104222771
 BoxCollider:
   m_ObjectHideFlags: 0

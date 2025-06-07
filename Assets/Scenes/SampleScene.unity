@@ -959,6 +959,50 @@ MonoBehaviour:
   activeRecipe: {fileID: 0}
   currentRecipeNameText: {fileID: 336394709}
   currentRecipeDetailsText: {fileID: 1245300057}
+--- !u!1 &819504375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 819504377}
+  - component: {fileID: 819504376}
+  m_Layer: 0
+  m_Name: ObjectPooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &819504376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819504375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61130943326416c48bc3666c4987aa1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &819504377
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819504375}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &829726376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,8 +1570,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1370478848}
   - component: {fileID: 1370478847}
+  - component: {fileID: 1370478849}
   m_Layer: 0
-  m_Name: ProgressBarManager
+  m_Name: WorldSpaceUIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1547,7 +1592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressBarPrefab: {fileID: 2256316403693965275, guid: 1b2bc83ca41dbec4cb37c6a5fd673a4a, type: 3}
   worldSpaceCanvas: {fileID: 395580981}
-  progressBarOffset: {x: 0, y: 1.5, z: 0}
+  offset: {x: 0, y: 2, z: 0}
 --- !u!4 &1370478848
 Transform:
   m_ObjectHideFlags: 0
@@ -1563,6 +1608,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1370478849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370478846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f536ea47089d849a5737182ddb24cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDisplayPrefab: {fileID: 6658474845530406239, guid: a935c69b58bc64743a62b27ab731a322, type: 3}
+  worldSpaceCanvas: {fileID: 395580981}
 --- !u!1 &1387950958
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,5 +2306,6 @@ SceneRoots:
   - {fileID: 1387950959}
   - {fileID: 829726377}
   - {fileID: 640190079}
+  - {fileID: 819504377}
   - {fileID: 705507995}
   - {fileID: 307489031}

@@ -14,15 +14,28 @@ public class IngredientItem : MonoBehaviour
 
     public bool RequiresPlate => ingredientData.CheckForPlateNeeded(currentState);
 
+    private ItemDisplay itemDisplay = null;
+
     private void Awake()
     {
         InitializeFromData();
+    }
+
+    private void OnDestroy()
+    {
+        DestroyItemDisplay();
+    }
+
+    public void DestroyItemDisplay()
+    {
+        if (itemDisplay) itemDisplay.ReturnToPool();
     }
 
     public void SetIngredientData(IngredientData data, IngredientState startingState = IngredientState.Raw)
     {
         ingredientData = data;
         InitializeFromData(startingState);
+        CreateItemDisplay();
     }
 
     private void InitializeFromData(IngredientState startingState = IngredientState.Raw)
@@ -53,6 +66,13 @@ public class IngredientItem : MonoBehaviour
         else currentState = ingredientData.initialState;
 
         UpdateVisual();
+    }
+
+    public void CreateItemDisplay()
+    {
+        if (ingredientData == null) return;
+
+        itemDisplay = ItemDisplayManager.Instance.CreateItemDisplay(transform, ingredientData);
     }
 
     public void ChangeState(IngredientState newState)
