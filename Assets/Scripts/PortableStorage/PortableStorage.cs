@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract class PortableStorage : MonoBehaviour, IInteractable
 {
@@ -13,49 +15,63 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
     public bool IsEmpty => storedItems.Count == 0;
     public bool IsFull => storedItems.Count >= maxIngredients;
+    public float MaxItemsAcceptable => Mathf.Max(maxIngredients - storedItems.Count, 0);
     public List<GameObject> StoredItems => storedItems;
 
-    protected ItemDisplay itemDisplay = null;
+    protected ItemDisplayComponent itemDisplay = null;
 
     private void Start()
     {
-        itemDisplay = ItemDisplayManager.Instance.CreateItemDisplay(transform);
-    }
-
-    private void OnDestroy()
-    {
-        if (itemDisplay) itemDisplay.ReturnToPool();
+        itemDisplay = GetComponent<ItemDisplayComponent>();
     }
 
     public void Interact(PlayerInteract player, GameObject itemHolding)
     {
-        // Player has empty hands, give them the storage with all its contents
+        //
+        // PLAYER HAS NO ITEMS, PICKUP STORAGE
+        //
         if (itemHolding == null)
         {
             player.PickupItem(gameObject);
-        }
-        else if (itemHolding == gameObject)
-        {
             return;
         }
-        else
+
+        //
+        // PLAYER HAS A STORAGE IN HAND
+        //
+        if (itemHolding.TryGetComponent(out PortableStorage playerStorage))
         {
-            // Player is holding something else, try to add it to the storage
-            PortableStorage heldStorage = itemHolding.GetComponent<PortableStorage>();
-
-            if (heldStorage != null)
+            //
+            // ADD ALL ITEMS FROM THIS STORAGE TO THE PLAYER STORAGE
+            //
+            if (playerStorage.StoredItems.Count == 0 && storedItems.Count > 0)
             {
-                // Player is holding another storage - take item
-                GameObject item = GetLastItem();
-                if (item != null && heldStorage.AddItem(item))
-                    RemoveItem(item);
-                return;
+                if (playerStorage.AddItems(storedItems))
+                {
+                    RemoveAllItems();
+                    return;
+                }
             }
 
-            if (AddItem(itemHolding))
+            //
+            // ADD ALL ITEMS FROM PLAYER STORAGE TO THIS STORAGE
+            //
+            if (playerStorage.StoredItems.Count > 0 && storedItems.Count == 0)
             {
-                player.RemoveItem();
+                if (AddItems(playerStorage.StoredItems))
+                {
+                    playerStorage.RemoveAllItems();
+                    return;
+                }
             }
+        }
+
+        //
+        // PLAYER HAS AN INGREDIENT IN HAND
+        //
+        if (AddItem(itemHolding))
+        {
+            player.RemoveItem();
         }
     }
 
@@ -91,8 +107,30 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
         if (item.TryGetComponent(out IngredientItem ingredient))
         {
-            ingredient.DestroyItemDisplay();
-            if (ingredient.IngredientData.isProduct == false) itemDisplay.AddNewIcon(ingredient.IngredientData);
+            ingredient.RemoveItemDisplay();
+
+            itemDisplay?.AddItemDisplay();
+            itemDisplay?.AddNewIcon(ingredient.IngredientData);
+        }
+
+        return true;
+    }
+
+    public virtual bool AddItems(List<GameObject> items)
+    {
+        if (items.Count > MaxItemsAcceptable) return false;
+
+        List<GameObject> newItems = new List<GameObject>();
+
+        foreach (var item in items)
+        {
+            if (AddItem(item) == false)
+            {
+                foreach (var newItem in newItems) RemoveItem(newItem);
+                return false;
+            }
+
+            newItems.Add(item);
         }
 
         return true;
@@ -110,14 +148,22 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
         if (item.TryGetComponent(out IngredientItem ingredient))
         {
-            ingredient.CreateItemDisplay();
-            itemDisplay.RemoveIcon(ingredient.IngredientData);
+            ingredient.AddItemDisplay();
+            itemDisplay?.RemoveIcon(ingredient.IngredientData);
         }
+
+        if (storedItems.Count == 0) itemDisplay?.RemoveItemDisplay();
 
         return item;
     }
 
-    protected void RemoveAllItems()
+    public void RemoveAllItems()
+    {
+        storedItems.Clear();
+        itemDisplay?.RemoveItemDisplay();
+    }
+
+    public void DestroyAllItems()
     {
         if (storedItems.Count == 0) return;
 

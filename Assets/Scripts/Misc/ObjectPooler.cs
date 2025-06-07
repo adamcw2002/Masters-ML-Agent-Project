@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ObjectPooler : MonoSingleton<ObjectPooler>
 {
@@ -63,7 +64,7 @@ public class ObjectPooler : MonoSingleton<ObjectPooler>
 
     public void ReturnToPool(string key, GameObject obj)
     {
-        if (poolDictionary.ContainsKey(key))
+        if (obj != null && poolDictionary.ContainsKey(key))
         {
             obj.SetActive(false);
             obj.transform.SetParent(transform, false);

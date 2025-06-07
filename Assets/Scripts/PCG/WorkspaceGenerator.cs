@@ -15,6 +15,7 @@ public class WorkspaceGenerator : MonoBehaviour
     [SerializeField] private GameObject choppingBoardPrefab;
     [SerializeField] private GameObject stovePrefab;
     [SerializeField] private GameObject hobPrefab;
+    [SerializeField] private GameObject ovenPrefab;
 
     [Header("Other")]
     [SerializeField] private GameObject plateStationPrefab;
@@ -578,10 +579,13 @@ public class WorkspaceGenerator : MonoBehaviour
                 appliancePrefab = choppingBoardPrefab;
                 break;
             case IngredientState.Cooked:
-                appliancePrefab = hobPrefab;
+                appliancePrefab = ovenPrefab;
                 break;
             case IngredientState.Boiled:
                 appliancePrefab = stovePrefab;
+                break;
+            case IngredientState.Fried:
+                appliancePrefab = hobPrefab;
                 break;
         }
 

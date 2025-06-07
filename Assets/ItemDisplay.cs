@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class ItemDisplay : MonoBehaviour
 {
     private Transform followTransform = null;
     [SerializeField] private Vector3 offset = new Vector3(0, 0.5f, 0);
+
+    List<Sprite> existingIcons = new List<Sprite>();
 
     private void Update()
     {
@@ -26,21 +29,45 @@ public class ItemDisplay : MonoBehaviour
     {
         followTransform = transform;
 
-        if (data != null) AddNewIcon(data.icon);
+        RemoveAllIcons();
+
+        if (data != null) AddNewIcon(data);
     }
 
-    public void AddNewIcon(IngredientData data) => AddNewIcon(data.icon);
-
-    public void AddNewIcon(Sprite icon)
+    public void AddNewIcon(IngredientData data)
     {
+        if (data.isProduct)
+        {
+            List<IngredientData> ingredients = RecipeManager.Instance.GetBaseIngredients(data);
+
+            Debug.Log(ingredients.Count);
+
+            if (ingredients != null && ingredients.Count > 0)
+            {
+                foreach (var ingredient in ingredients)
+                {
+                    AddNewIcon(ingredient.icon);
+                }
+            }
+        }
+        else
+        {
+            AddNewIcon(data.icon);
+        }
+    }
+
+    private void AddNewIcon(Sprite icon)
+    {
+        if (existingIcons.Contains(icon)) return;
+
         GameObject newIcon = new GameObject();
         newIcon.transform.SetParent(transform, false);
 
         Image image = newIcon.AddComponent<Image>();
         image.sprite = icon;
+
+        existingIcons.Add(icon);
     }
-
-
 
     public void RemoveIcon(IngredientData data) => RemoveIcon(data.icon);
 
@@ -51,14 +78,26 @@ public class ItemDisplay : MonoBehaviour
             if (child.TryGetComponent(out Image image) && image.sprite == icon)
             {
                 Destroy(child.gameObject);
+                existingIcons.Remove(icon);
                 return;
             }
         }
     }
 
+    public void RemoveAllIcons()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+            existingIcons.Clear();
+        }
+    }
+
     public void ReturnToPool()
     {
-        if (gameObject) ObjectPooler.Instance.ReturnToPool(ItemDisplayManager.poolKey, gameObject);
+        RemoveAllIcons();
+
+        if (gameObject != null) ObjectPooler.Instance?.ReturnToPool(ItemDisplayManager.poolKey, gameObject);
     }
 
 }

@@ -12,28 +12,9 @@ public class Plate : PortableStorage
         {
             RecipeManager recipeManager = RecipeManager.Instance;
 
-            foreach (var recipe in recipeManager.GetAvailableRecipes())
-            {
-                //Debug.Log("Checking recipe: " + recipe.recipeName);
+            RecipeData recipeOnPlate = recipeManager.CanCombineIngredients(this);
 
-                StoredItems[0].TryGetComponent(out IngredientItem storedIngredient);
-
-                if (StoredItems.Count == 1 && storedIngredient != null && recipe.finalProductData == storedIngredient.IngredientData)
-                {
-                    //Debug.Log("Recipe already completed on plate");
-
-                    return true;
-                }
-
-                if (recipeManager.CanCombineIngredients(this, recipe))
-                {
-                    //Debug.Log("Combining ingredients on plate");
-
-                    CombineIngredients(recipe);
-
-                    return true;
-                }
-            }
+            if (recipeOnPlate != null) CombineIngredients(recipeOnPlate);
         }
 
         return baseResult;
@@ -41,7 +22,7 @@ public class Plate : PortableStorage
 
     private void CombineIngredients(RecipeData recipe)
     {
-        RemoveAllItems();
+        DestroyAllItems();
 
         IngredientData productData = recipe.finalProductData;
 

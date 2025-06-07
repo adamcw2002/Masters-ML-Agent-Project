@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9064076416471351365}
   - component: {fileID: 4819564092541963894}
   - component: {fileID: 7015930146777211981}
+  - component: {fileID: -1073991692770428473}
   - component: {fileID: 3560124367439327450}
   m_Layer: 0
   m_Name: Plate
@@ -101,6 +102,18 @@ MonoBehaviour:
   itemPositions: []
   defaultItemHeight: 0.1
   showContainedItems: 1
+--- !u!114 &-1073991692770428473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458878896578113670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5fbcda364e9d794aa58037ae439f465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &3560124367439327450
 CapsuleCollider:
   m_ObjectHideFlags: 0

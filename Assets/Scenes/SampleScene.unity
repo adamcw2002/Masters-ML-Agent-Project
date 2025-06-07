@@ -954,8 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableRecipes:
-  - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
-  - {fileID: 11400000, guid: 54bfe90b878b4474c80713d164a797da, type: 2}
+  - {fileID: 11400000, guid: cd6b777f332f13b4bb1d0ec8df2d76bc, type: 2}
   activeRecipe: {fileID: 0}
   currentRecipeNameText: {fileID: 336394709}
   currentRecipeDetailsText: {fileID: 1245300057}
@@ -1701,6 +1700,7 @@ MonoBehaviour:
   choppingBoardPrefab: {fileID: 1892176483223385932, guid: b24cd88cc69fd094eb1646206bafa4a0, type: 3}
   stovePrefab: {fileID: 5754906250328166804, guid: 82d989dc31a40ac44aa1ef0a134d10f1, type: 3}
   hobPrefab: {fileID: 7112264806968776135, guid: 9dbc79719c6cb4a46a0e0cec861c3a60, type: 3}
+  ovenPrefab: {fileID: 1892176483223385932, guid: 0bfa138ca5353c041b0f48d7319fccdb, type: 3}
   plateStationPrefab: {fileID: 1113638121177523948, guid: e792524a4bdbc8a4b917102ccad437af, type: 3}
   ingredientSpawnerPrefab: {fileID: 1892176483223385932, guid: 16fa8ff0117103145ac09f88b1dd9bab, type: 3}
   trashBinPrefab: {fileID: 1620992282833043705, guid: 94942bea463e2ab4098298009ce49293, type: 3}

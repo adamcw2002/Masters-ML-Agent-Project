@@ -336,6 +336,7 @@ GameObject:
   - component: {fileID: 5616106393770883615}
   - component: {fileID: 420912652565602618}
   - component: {fileID: 5318031438196379684}
+  - component: {fileID: -9019283553060307189}
   m_Layer: 3
   m_Name: Hob
   m_TagString: Untagged
@@ -442,10 +443,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 037e90b6b53659943af3cbd086ded7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxItems: 1
   canProcessItems: 1
   processingTime: 0
-  outputState: 2
+  outputState: 4
   canHoldPortableStorage: 0
   mustRemoveWithPlate: 1
   itemsVisibleOnStorage: 0
   insidePotRenderer: {fileID: 3563079834427024479}
+--- !u!114 &-9019283553060307189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7112264806968776135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5fbcda364e9d794aa58037ae439f465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

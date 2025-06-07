@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1627784173753136445}
   - component: {fileID: 4913799160695516008}
   - component: {fileID: 6240717724104222771}
+  - component: {fileID: -6642223801103033038}
   m_Layer: 3
   m_Name: EmptyWorkspace
   m_TagString: Untagged
@@ -97,13 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20103bca191e77c40a5c4a2e4e81b38c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxItems: 1
   canProcessItems: 0
   processingTime: 0
   outputState: 0
   canHoldPortableStorage: 1
   mustRemoveWithPlate: 0
   itemsVisibleOnStorage: 1
-  showItemDisplayUI: 0
 --- !u!65 &6240717724104222771
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -125,3 +126,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6642223801103033038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892176483223385932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5fbcda364e9d794aa58037ae439f465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

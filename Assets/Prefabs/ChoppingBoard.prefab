@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1627784173753136445}
   - component: {fileID: 4313889781541428873}
   - component: {fileID: 6240717724104222771}
+  - component: {fileID: -6319518461964327626}
   m_Layer: 3
   m_Name: ChoppingBoard
   m_TagString: Untagged
@@ -97,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc9256359dbd7284a91b55cc86e5caed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxItems: 1
   canProcessItems: 1
   processingTime: 0.5
   outputState: 1
@@ -124,3 +126,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6319518461964327626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892176483223385932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5fbcda364e9d794aa58037ae439f465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

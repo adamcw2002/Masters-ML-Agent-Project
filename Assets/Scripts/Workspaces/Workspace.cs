@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public abstract class Workspace : MonoBehaviour, IInteractable
 {
-    protected int maxItems = 1;
+    [SerializeField] protected int maxItems = 1;
     [SerializeField] protected bool canProcessItems = true;
     [SerializeField] protected float processingTime = 0f;
     [SerializeField] protected IngredientState outputState;
@@ -17,6 +18,13 @@ public abstract class Workspace : MonoBehaviour, IInteractable
     protected List<GameObject> storedItems = new List<GameObject>();
     protected bool isProcessing = false;
     private ProgressBarUI progressBarUI = null;
+
+    private ItemDisplayComponent itemDisplay = null;
+
+    private void Start()
+    {
+        itemDisplay = GetComponent<ItemDisplayComponent>();
+    }
 
     public virtual void Interact(PlayerInteract player, GameObject itemHolding)
     {
@@ -33,61 +41,69 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
             return;
         }
-        
-        //If player is holding an item
+
+        //
+        // PLAYER IS HOLDING SOMETHING
+        //
         if (itemHolding != null)
         {
-            // Player is holding a plate and the workspace is not empty, try add from workspace onto plate
-            if (itemHolding.TryGetComponent(out PortableStorage storageHolding) && storedItems.Count > 0)
+            //
+            // PLAYER IS HOLDING STORAGE
+            //
+            if (itemHolding.TryGetComponent(out PortableStorage storageHolding))
             {
-                //Debug.Log("Player holding portable storage, adding from workspace onto plate");
-
-                GameObject item = GetLastItem();
-                if (item != null)
+                //
+                // TRY ADD STORAGE TO WORKSPACE
+                //
+                if (AddItem(itemHolding))
                 {
-                    if (item.TryGetComponent(out PortableStorage storedPortableStorage) && storedPortableStorage.StoredItems.Count > 0)
-                    {
-                        //Debug.Log("Trying to take item from portable storage");
-
-                        item = storedPortableStorage.GetLastItem();
-
-                        if (player.PickupItem(item))
-                            storedPortableStorage.RemoveItem(item);
-                    }
-                    else
-                    {
-                        //Debug.Log("Trying to pickup item");
-
-                        if (player.PickupItem(item))
-                            RemoveItem(item);
-                    }
-
+                    player.RemoveItem();
                     return;
+                }
+
+                //
+                // TRY ADD STORED ITEMS FROM WORKSPACE TO STORAGE
+                //
+                if (storedItems.Count > 0)
+                {
+                    if (storageHolding.AddItems(storedItems))
+                    {
+                        RemoveAllItems();
+                        return;
+                    }
+                }
+
+                //
+                // TRY ADD ITEM FROM STORAGE TO WORKSPACE
+                //
+                if (storageHolding.StoredItems.Count > 0)
+                {
+                    if (AddItems(storageHolding.StoredItems))
+                    {
+                        storageHolding.RemoveAllItems();
+                        return;
+                    }
                 }
             }
 
-            // Add the item the player is holding to the workspace
+            //
+            // PLAYER IS HOLDING INGREDIENT, TRY ADD ITEM TO WORKSPACE
+            //
             if (AddItem(itemHolding))
             {
-                //Debug.Log("Adding item from player to workspace");
-
                 player.RemoveItem();
+                return;
             }
-
-            return;
         }
 
-        //Player is not holding anything, try pick up item
+        //
+        // PLAYER IS NOT HOLDING INGREDIENT, TRY TAKE ITEM FROM WORKSPACE
+        //
         if (storedItems.Count > 0 && mustRemoveWithPlate == false)
         {
-            //Debug.Log("Player pick up item");
-
             GameObject item = GetLastItem();
-            if (item != null)
-            {
-                if (player.PickupItem(item))
-                    RemoveItem(item);
-            }
+
+            if (player.PickupItem(item)) RemoveItem(item);
         }
     }
 
@@ -116,30 +132,68 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         return ingredientItem.IngredientData.CheckValidStates(ingredientItem.CurrentState, outputState);
     }
 
-    protected abstract void UpdateVisual();
+    protected virtual void UpdateVisual() 
+    { 
+        if (itemsVisibleOnStorage == false)
+        {
+            foreach (var item in storedItems) if (item.activeInHierarchy) item.SetActive(false);
+        }
+    }
 
-    public virtual bool AddItem(GameObject item)
+    public virtual bool AddItem(GameObject item, bool forceItem = false)
     {
-        if (canHoldPortableStorage && maxItems == 1 && storedItems.Count > 0 && storedItems[0].TryGetComponent(out PortableStorage portableStorage))
-            return portableStorage.AddItem(item);
+        if (forceItem == false)
+        {
+            if (item.TryGetComponent(out PortableStorage storage) && storedItems.Count > 0) 
+                return false;
 
-        // Check if it can accept the item
-        if (!CanAcceptItem(item))
-            return false;
+            if (canHoldPortableStorage && storedItems.Count > 0 && storedItems[0].TryGetComponent(out PortableStorage portableStorage))
+                return portableStorage.AddItem(item);
 
-        // Check whether it can process the item
-        if (canProcessItems && !CanProcessItem(item))
-            return false;
+            // Check if it can accept the item
+            if (!CanAcceptItem(item))
+                return false;
+
+            // Check whether it can process the item
+            if (canProcessItems && storage == false && !CanProcessItem(item)) 
+                return false;
+        }
 
         storedItems.Add(item);
         item.transform.SetParent(transform);
-        item.transform.localPosition = Vector3.up * 0.5f; // Position item on top
-
-        if (itemsVisibleOnStorage == false) item.SetActive(false);
+        item.transform.localPosition = Vector3.up * 0.5f;
 
         if (canProcessItems && CanProcessItem(item)) StartProcessing();
 
         UpdateVisual();
+
+        if (item.TryGetComponent(out IngredientItem ingredient))
+        {
+            ingredient.RemoveItemDisplay();
+
+            itemDisplay?.AddItemDisplay();
+            itemDisplay?.AddNewIcon(ingredient.IngredientData);
+        }
+
+        return true;
+    }
+
+    public virtual bool AddItems(List<GameObject> items)
+    {
+        if (items.Count > maxItems - storedItems.Count) return false;
+
+        List<GameObject> newItems = new List<GameObject>();
+
+        foreach (var item in items)
+        {
+            if (AddItem(item) == false)
+            {
+                foreach (var newItem in newItems) RemoveItem(newItem);
+                return false;
+            }
+
+            newItems.Add(item);
+        }
 
         return true;
     }
@@ -153,7 +207,32 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
         UpdateVisual();
 
+        if (item.TryGetComponent(out IngredientItem ingredient))
+        {
+            itemDisplay?.RemoveIcon(ingredient.IngredientData);
+            ingredient.AddItemDisplay();
+        }
+
+        if (storedItems.Count == 0) itemDisplay?.RemoveItemDisplay();
+
         return item;
+    }
+
+    public virtual void RemoveAllItems()
+    {
+        storedItems.Clear();
+        itemDisplay?.RemoveItemDisplay();
+    }
+
+    public virtual void DestroyAllItems()
+    {
+        for (int i = 0; i < storedItems.Count; i++)
+        {
+            GameObject item = RemoveItem(GetLastItem());
+            Destroy(item);
+        }
+
+        storedItems.Clear();
     }
 
     private GameObject GetLastItem()
@@ -182,12 +261,11 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
         yield return new WaitForSeconds(processingTime);
 
-        // Process the items (specific to each workspace type)
+        isProcessing = false;
+
         CompleteProcessing();
 
         UpdateVisual();
-
-        isProcessing = false;
     }
 
     private void ShowProgressBar()
@@ -198,6 +276,37 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
     protected virtual void CompleteProcessing()
     {
-        // Override in derived classes to implement specific processing
+        if (storedItems.Count == 0)
+            return;
+
+        foreach (GameObject ingredientObj in storedItems)
+        {
+            if (ingredientObj.TryGetComponent(out IngredientItem ingredient))
+            {
+                ingredient.ChangeState(outputState);
+            }
+        }
+
+        TryCombineIngredients();
+    }
+
+    private void TryCombineIngredients()
+    {
+        RecipeData recipe = RecipeManager.Instance.GetMatchingRecipe(storedItems);
+        if (recipe != null)
+        {
+            // HAS MADE RECIPE IN APPLIANCE
+            DestroyAllItems();
+
+            IngredientData productData = recipe.finalProductData;
+
+            GameObject recipePrefab = productData.GetPrefabFromState(recipe.finalProductState);
+            GameObject recipeObject = Instantiate(recipePrefab);
+
+            if (recipeObject.TryGetComponent(out IngredientItem ingredient) == false) ingredient = recipeObject.AddComponent<IngredientItem>();
+            ingredient.SetIngredientData(productData, recipe.finalProductState);
+
+            AddItem(recipeObject, true);
+        }
     }
 }

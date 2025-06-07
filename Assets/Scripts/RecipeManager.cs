@@ -9,6 +9,8 @@ public class RecipeManager : MonoSingleton<RecipeManager>
     [SerializeField] private List<RecipeData> availableRecipes = new List<RecipeData>();
     public List<RecipeData> GetAvailableRecipes() => availableRecipes;
 
+    private List<RecipeData> allRecipes = new List<RecipeData>();
+
 
     [SerializeField] private RecipeData activeRecipe;
     public RecipeData GetActiveRecipe() => activeRecipe;
@@ -25,55 +27,47 @@ public class RecipeManager : MonoSingleton<RecipeManager>
         if (activeRecipe == null) SelectNewRecipe();
 
         UpdateText();
+
+        allRecipes.AddRange(Resources.LoadAll<RecipeData>("Recipes"));
     }
 
-    public bool CanCombineIngredients(Plate plate, RecipeData recipe)
+    public RecipeData CanCombineIngredients(Plate plate)
     {
-        // Check if holding an item
-        if (plate == null)
-        {
-            Debug.Log("Not holding a plate");
-            return false;
-        }
+        if (plate == null || plate.IsEmpty) return null;
 
-        //Check the contents of the plate
-        if (plate.IsEmpty)
-        {
-            Debug.Log("Plate does not have anything on it");
-            return false;
-        }
-
-        List<GameObject> plateItems = plate.StoredItems;
-
-        if (plateItems.Count == 1)
-        {
-            plateItems[0].TryGetComponent(out IngredientItem ingredient);
-
-            if (ingredient != null && ingredient.IngredientData == recipe.finalProductData)
-            {
-                return false;
-            }
-        }
-
-        // Create dictionary from active recipe
-        InitRecipeDictionaries(recipe);
-
-        bool doesMatchBaseRecipe = ComparePlateToRecipeDictionary(ref currentRecipeRequirements, plateItems);
-
-        if (doesMatchBaseRecipe == true || alternativeRecipeRequirements.Count == 0) return doesMatchBaseRecipe;
-
-        bool doesMatchAlternative = ComparePlateToRecipeDictionary(ref alternativeRecipeRequirements, plateItems);
-
-        return doesMatchAlternative;
+        return CanCombineIngredients(plate.StoredItems);
     }
 
-    private bool ComparePlateToRecipeDictionary(ref Dictionary<IngredientData, IngredientState> dict, List<GameObject> plateItems)
+    public RecipeData CanCombineIngredients(List<GameObject> storedIngredients)
+    {
+        RecipeData matched = GetMatchingRecipe(storedIngredients);
+        return matched;
+    }
+
+    public RecipeData GetMatchingRecipe(List<GameObject> storedItems)
+    {
+        foreach (RecipeData recipe in allRecipes)
+        {
+            InitRecipeDictionaries(recipe);
+
+            if (ComparePlateToRecipeDictionary(new Dictionary<IngredientData, IngredientState>(currentRecipeRequirements), storedItems))
+                return recipe;
+
+            if (alternativeRecipeRequirements.Count > 0 &&
+                ComparePlateToRecipeDictionary(new Dictionary<IngredientData, IngredientState>(alternativeRecipeRequirements), storedItems))
+                return recipe;
+        }
+
+        return null;
+    }
+
+    private bool ComparePlateToRecipeDictionary(Dictionary<IngredientData, IngredientState> dict, List<GameObject> plateItems)
     {
         if (dict.Count != plateItems.Count) return false;
 
         foreach (GameObject item in plateItems)
         {
-            if (item.TryGetComponent(out IngredientItem plateIngredient) == false)
+            if (!item.TryGetComponent(out IngredientItem plateIngredient))
             {
                 Debug.Log($"{item.name} is not a valid ingredient");
                 return false;
@@ -82,23 +76,13 @@ public class RecipeManager : MonoSingleton<RecipeManager>
             IngredientData data = plateIngredient.IngredientData;
             IngredientState state = plateIngredient.CurrentState;
 
-            // Check if the ingredient is needed and in the correct state
-            if (dict.TryGetValue(data, out IngredientState requiredState))
+            if (!dict.TryGetValue(data, out IngredientState requiredState) || requiredState != state)
             {
-                if (requiredState != state)
-                {
-                    Debug.Log($"Ingredient {data.name} is in the wrong state. Needed: {requiredState}, Got: {state}");
-                    return false;
-                }
-
-                // Remove the matched ingredient to prevent duplicate matches
-                dict.Remove(data);
-            }
-            else
-            {
-                Debug.Log($"Ingredient {data.name} is not required or duplicated.");
+                Debug.Log($"Invalid ingredient or state mismatch: {data.name}");
                 return false;
             }
+
+            dict.Remove(data); // Remove to prevent duplicates
         }
 
         return true;
@@ -193,9 +177,31 @@ public class RecipeManager : MonoSingleton<RecipeManager>
 
         foreach (var IngredientRequirement in activeRecipe.baseRequiredIngredients)
         {
-            sb.AppendLine($"- {IngredientRequirement.requiredState} {IngredientRequirement.ingredient.ingredientName}");
+            IngredientState? preconditionState = IngredientRequirement.ingredient.GetPreconditionState(IngredientRequirement.requiredState);
+
+            sb.AppendLine($"- {IngredientRequirement.requiredState} {(preconditionState == IngredientState.Raw ? "" : preconditionState)} {IngredientRequirement.ingredient.ingredientName}");
         }
 
         return sb.ToString();
+    }
+
+    public List<IngredientData> GetBaseIngredients(IngredientData data)
+    {
+        List<IngredientData> ingredients = new List<IngredientData>();
+
+        foreach (var recipe in allRecipes)
+        {
+            if (recipe.finalProductData == data)
+            {
+                foreach (var requiredIngredients in recipe.baseRequiredIngredients)
+                {
+                    ingredients.Add(requiredIngredients.ingredient);
+                }
+
+                return ingredients;
+            }
+        }
+
+        return null;
     }
 }
