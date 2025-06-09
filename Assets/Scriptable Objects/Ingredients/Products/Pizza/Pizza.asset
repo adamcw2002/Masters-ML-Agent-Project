@@ -18,7 +18,7 @@ MonoBehaviour:
   possibleStates:
   - preconditionState: 0
     outputState: 2
-    visualPrefab: {fileID: 919132149155446097, guid: e5b9ca4443220c44b8224a8fe7f8023c, type: 3}
+    visualPrefab: {fileID: 3831650488775094263, guid: f5dd709ef43d9a94ead4aad86916237b, type: 3}
     plateRequired: 1
   initialState: 2
   ingredientMaterial: {fileID: 0}
