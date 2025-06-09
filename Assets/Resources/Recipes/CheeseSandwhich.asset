@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd06f0b0cf7cb5f42beb0e7a6c2631e1, type: 3}
+  m_Name: CheeseSandwhich
+  m_EditorClassIdentifier: 
+  recipeName: Cheese Sandwhich
+  finalProductData: {fileID: 11400000, guid: 88d6e5bfddbc0fd4e88fb657b624f14e, type: 2}
+  finalProductState: 0
+  baseRequiredIngredients:
+  - ingredient: {fileID: 11400000, guid: b4c5740db323a94478b94d61a8f3ffd1, type: 2}
+    requiredState: 1
+  - ingredient: {fileID: 11400000, guid: 4480f05c4eeadcb43b28e40fa0ba9b3a, type: 2}
+    requiredState: 1
+  alternativeRecipe: []

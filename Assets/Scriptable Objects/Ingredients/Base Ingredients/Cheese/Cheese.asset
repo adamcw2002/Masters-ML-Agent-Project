@@ -21,8 +21,12 @@ MonoBehaviour:
     visualPrefab: {fileID: 919132149155446097, guid: c64d4d945dfd2b5408ed88902d87bace, type: 3}
     plateRequired: 0
   - preconditionState: 0
+    outputState: 1
+    visualPrefab: {fileID: 6458026557223818856, guid: 97ac3e8f21bd9b3448240bfffbc5b94d, type: 3}
+    plateRequired: 0
+  - preconditionState: 0
     outputState: 2
-    visualPrefab: {fileID: 919132149155446097, guid: c64d4d945dfd2b5408ed88902d87bace, type: 3}
+    visualPrefab: {fileID: 1731126719373007740, guid: 0523262ea257acf46a1c46035434eba8, type: 3}
     plateRequired: 1
   initialState: 0
   ingredientMaterial: {fileID: 2100000, guid: e500c05fe45ffbf4cb554465358de2a8, type: 2}

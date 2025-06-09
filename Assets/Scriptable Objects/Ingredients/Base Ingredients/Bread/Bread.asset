@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 053ebc200605d87448f6cf33fae25c78, type: 3}
+  m_Name: Bread
+  m_EditorClassIdentifier: 
+  ingredientName: Bread
+  icon: {fileID: 21300000, guid: 65867671365ee7c4387a1b8ec735a75a, type: 3}
+  isProduct: 0
+  possibleStates:
+  - preconditionState: 0
+    outputState: 0
+    visualPrefab: {fileID: 7816292378280258943, guid: a60a00940092aca4f9858eac31fb027e, type: 3}
+    plateRequired: 0
+  - preconditionState: 0
+    outputState: 1
+    visualPrefab: {fileID: 4109245444208377456, guid: 708d7a50dd0721541be897784cf38d4b, type: 3}
+    plateRequired: 0
+  initialState: 0
+  ingredientMaterial: {fileID: 2100000, guid: fc99cadf90ecc7a4ca5837eaafdbfb22, type: 2}

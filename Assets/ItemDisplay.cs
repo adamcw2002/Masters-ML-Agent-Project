@@ -84,10 +84,12 @@ public class ItemDisplay : MonoBehaviour
 
     public void RemoveAllIcons()
     {
+        if (!transform) return;
+
         foreach (Transform child in transform)
         {
             Destroy(child?.gameObject);
-            existingIcons.Clear();
+            existingIcons?.Clear();
         }
     }
 

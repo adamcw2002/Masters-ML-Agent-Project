@@ -954,7 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableRecipes:
-  - {fileID: 11400000, guid: cd6b777f332f13b4bb1d0ec8df2d76bc, type: 2}
+  - {fileID: 11400000, guid: afe70735a229a904ca702545d3466398, type: 2}
   activeRecipe: {fileID: 0}
   currentRecipeNameText: {fileID: 336394709}
   currentRecipeDetailsText: {fileID: 1245300057}
