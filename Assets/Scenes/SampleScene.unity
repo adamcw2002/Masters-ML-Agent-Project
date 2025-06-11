@@ -577,7 +577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+  m_Color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1190,11 +1190,7 @@ MonoBehaviour:
   availableRecipes:
   - {fileID: 11400000, guid: cd6b777f332f13b4bb1d0ec8df2d76bc, type: 2}
   - {fileID: 11400000, guid: eefce9c503463f549aec78164dbb0e69, type: 2}
-  - {fileID: 11400000, guid: f312105e387839d43898fdd4cdd44a67, type: 2}
-  - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
   activeRecipe: {fileID: 0}
-  currentRecipeNameText: {fileID: 336394709}
-  currentRecipeDetailsText: {fileID: 1245300057}
 --- !u!1 &819504375
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,6 +1511,7 @@ RectTransform:
   - {fileID: 1638132045}
   - {fileID: 1298007403}
   - {fileID: 356955659}
+  - {fileID: 1955793057}
   m_Father: {fileID: 1935156199}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -2705,6 +2702,11 @@ MonoBehaviour:
   recipeTitleText: {fileID: 717756765}
   recipeIcon: {fileID: 1298007404}
   ingredientIconContainer: {fileID: 356955659}
+  cookingInstructionContainer: {fileID: 1955793057}
+  iconImageTransform: {fileID: 4609923986283829027, guid: 150c73a2cec114f4aa9314c90745e75c, type: 3}
+  friedSpriteIcon: {fileID: 21300000, guid: 96f4209adf980224d8dd9ac2c8a3651a, type: 3}
+  cookedSpriteIcon: {fileID: 21300000, guid: 8558586e85e1c0c409671670495ac272, type: 3}
+  boiledSpriteIcon: {fileID: 21300000, guid: 3dd9caa5a5bb3d74daa33aca63e32496, type: 3}
 --- !u!4 &1821131049
 Transform:
   m_ObjectHideFlags: 0
@@ -2890,6 +2892,75 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1955793056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1955793057}
+  - component: {fileID: 1955793059}
+  - component: {fileID: 1955793058}
+  m_Layer: 5
+  m_Name: CookingInstructionBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1955793057
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955793056}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 906173777}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -75}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1955793058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955793056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 50, y: 50}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 2
+  m_ConstraintCount: 1
+--- !u!222 &1955793059
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955793056}
+  m_CullTransparentMesh: 1
 --- !u!4 &730973365811644491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3704135937579037860, guid: c159a895394abd844862e8f4bbe66449, type: 3}

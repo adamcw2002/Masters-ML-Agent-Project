@@ -22,10 +22,6 @@ public class RecipeManager : MonoSingleton<RecipeManager>
     private Dictionary<IngredientData, IngredientState> currentRecipeRequirements = new Dictionary<IngredientData, IngredientState>();
     private Dictionary<IngredientData, IngredientState> alternativeRecipeRequirements = new Dictionary<IngredientData, IngredientState>();
 
-    [Header("UI")]
-    [SerializeField] private TextMeshProUGUI currentRecipeNameText;
-    [SerializeField] private TextMeshProUGUI currentRecipeDetailsText;
-
     private void OnEnable()
     {
         GameTimer.OnTimeEnd += SelectNewRecipe;
@@ -182,11 +178,7 @@ public class RecipeManager : MonoSingleton<RecipeManager>
 
     private void UpdateText()
     {
-        if (currentRecipeNameText && activeRecipe != null)
-        {
-            currentRecipeNameText.text = "Current Recipe: " + activeRecipe.recipeName;
-            currentRecipeDetailsText.text = GetRecipeDetails();
-        }
+        Debug.Log("Current Recipe: " + activeRecipe.recipeName + " \n " + GetRecipeDetails());
     }
 
     private string GetRecipeDetails()

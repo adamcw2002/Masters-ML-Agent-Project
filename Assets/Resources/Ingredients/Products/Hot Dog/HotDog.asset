@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HotDog
   m_EditorClassIdentifier: 
   ingredientName: Hot Dog
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 55e3047e23debd041a70f65a62bf3ce6, type: 3}
   isProduct: 1
   possibleStates:
   - preconditionState: 2

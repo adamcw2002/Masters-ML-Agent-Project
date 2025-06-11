@@ -12,6 +12,8 @@ public class RecipeUIManager : MonoBehaviour
     [SerializeField] private Transform ingredientIconContainer;
     [SerializeField] private Transform cookingInstructionContainer;
 
+    [SerializeField] private Transform iconImageTransform;
+
     [SerializeField] private Sprite friedSpriteIcon;
     [SerializeField] private Sprite cookedSpriteIcon;
     [SerializeField] private Sprite boiledSpriteIcon;
@@ -42,10 +44,10 @@ public class RecipeUIManager : MonoBehaviour
 
     private void CreateNewIcon(RequiredRecipeIngredient ingredient)
     {
-        GameObject newIcon = new GameObject();
-        newIcon.transform.parent = ingredientIconContainer;
+        Transform newIcon = Instantiate(iconImageTransform);
+        newIcon.transform.SetParent(ingredientIconContainer, false);
 
-        Image image = newIcon.AddComponent<Image>();
+        Image image = newIcon.GetChild(0).GetComponent<Image>();
 
         image.sprite = ingredient.ingredient.icon;
 
@@ -54,8 +56,8 @@ public class RecipeUIManager : MonoBehaviour
 
     private void AddCookingInstruction(IngredientState requiredState)
     {
-        GameObject newIcon = new GameObject();
-        newIcon.transform.parent = cookingInstructionContainer;
+        Transform newIcon = Instantiate(iconImageTransform);
+        newIcon.transform.SetParent(cookingInstructionContainer, false);
 
         Sprite iconSprite = null;
         switch (requiredState)
@@ -71,12 +73,15 @@ public class RecipeUIManager : MonoBehaviour
                 break;
         }
 
-        Image image = newIcon.AddComponent<Image>();
+        Image image = newIcon.GetChild(0).GetComponent<Image>();
         image.sprite = iconSprite;
 
         if (iconSprite == null)
         {
-            image.color = new Color(0, 0, 0, 0);
+            Color hiddenColor = new Color(0, 0, 0, 0);
+            image.color = hiddenColor;
+            newIcon.GetComponent<Image>().color = hiddenColor;
         }
+
     }
 }

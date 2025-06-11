@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd06f0b0cf7cb5f42beb0e7a6c2631e1, type: 3}
   m_Name: Pizza
   m_EditorClassIdentifier: 
-  recipeName: Pizza
+  recipeName: Cheese Pizza
   finalProductData: {fileID: 11400000, guid: 63263409d0e623747bf5d5d368c7c739, type: 2}
   finalProductState: 2
   baseRequiredIngredients:
