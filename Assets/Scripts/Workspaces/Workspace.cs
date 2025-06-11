@@ -21,7 +21,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
     private ItemDisplayComponent itemDisplay = null;
 
-    private void Start()
+    protected virtual void Start()
     {
         itemDisplay = GetComponent<ItemDisplayComponent>();
     }
@@ -167,13 +167,9 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
         UpdateVisual();
 
-        if (item.TryGetComponent(out IngredientItem ingredient))
-        {
-            ingredient.RemoveItemDisplay();
+        UpdateItemDisplay();
 
-            itemDisplay?.AddItemDisplay();
-            itemDisplay?.AddNewIcon(ingredient.IngredientData);
-        }
+        if (item.TryGetComponent(out IngredientItem ingredientItem)) ingredientItem.RemoveItemDisplay();
 
         return true;
     }
@@ -207,11 +203,9 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
         UpdateVisual();
 
-        if (item.TryGetComponent(out IngredientItem ingredient))
-        {
-            itemDisplay?.RemoveIcon(ingredient.IngredientData);
-            ingredient.AddItemDisplay();
-        }
+        UpdateItemDisplay();
+
+        if (item.TryGetComponent(out IngredientItem ingredientItem)) ingredientItem.AddItemDisplay();
 
         if (storedItems.Count == 0) itemDisplay?.RemoveItemDisplay();
 
@@ -264,8 +258,6 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         isProcessing = false;
 
         CompleteProcessing();
-
-        UpdateVisual();
     }
 
     private void ShowProgressBar()
@@ -288,6 +280,8 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         }
 
         TryCombineIngredients();
+
+        UpdateVisual();
     }
 
     private void TryCombineIngredients()
@@ -307,6 +301,15 @@ public abstract class Workspace : MonoBehaviour, IInteractable
             ingredient.SetIngredientData(productData, recipe.finalProductState);
 
             AddItem(recipeObject, true);
+        }
+    }
+
+    private void UpdateItemDisplay()
+    {
+        if (itemDisplay != null)
+        {
+            itemDisplay.AddItemDisplay();
+            itemDisplay.UpdateItemDisplay(storedItems);
         }
     }
 }

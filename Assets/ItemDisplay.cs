@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,6 +33,28 @@ public class ItemDisplay : MonoBehaviour
         RemoveAllIcons();
 
         if (data != null) AddNewIcon(data);
+    }
+
+
+    public void UpdateItemDisplay(List<GameObject> storedItems)
+    {
+        RemoveAllIcons();
+
+        foreach (GameObject item in storedItems)
+        {
+            if (item.TryGetComponent(out PortableStorage portableStorage))
+            {
+                return;
+            }
+        }
+
+        foreach (GameObject item in storedItems)
+        {
+            if (item.TryGetComponent(out IngredientItem ingredientItem))
+            {
+                AddNewIcon(ingredientItem.IngredientData);
+            }
+        }
     }
 
     public void AddNewIcon(IngredientData data)
@@ -67,24 +90,10 @@ public class ItemDisplay : MonoBehaviour
         existingIcons.Add(icon);
     }
 
-    public void RemoveIcon(IngredientData data) => RemoveIcon(data.icon);
 
-    public void RemoveIcon(Sprite icon)
+    private void RemoveAllIcons()
     {
-        foreach (Transform child in transform)
-        {
-            if (child.TryGetComponent(out Image image) && image.sprite == icon)
-            {
-                Destroy(child.gameObject);
-                existingIcons.Remove(icon);
-                return;
-            }
-        }
-    }
-
-    public void RemoveAllIcons()
-    {
-        if (!transform) return;
+        if (this == null || transform == null) return;
 
         foreach (Transform child in transform)
         {

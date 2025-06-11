@@ -105,13 +105,9 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
         UpdateVisual();
 
-        if (item.TryGetComponent(out IngredientItem ingredient))
-        {
-            ingredient.RemoveItemDisplay();
+        UpdateItemDisplay();
 
-            itemDisplay?.AddItemDisplay();
-            itemDisplay?.AddNewIcon(ingredient.IngredientData);
-        }
+        if (item.TryGetComponent(out IngredientItem ingredientItem)) ingredientItem.RemoveItemDisplay();
 
         return true;
     }
@@ -146,11 +142,9 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
         UpdateVisual();
 
-        if (item.TryGetComponent(out IngredientItem ingredient))
-        {
-            ingredient.AddItemDisplay();
-            itemDisplay?.RemoveIcon(ingredient.IngredientData);
-        }
+        UpdateItemDisplay();
+
+        if (item.TryGetComponent(out IngredientItem ingredientItem)) ingredientItem.AddItemDisplay();
 
         if (storedItems.Count == 0) itemDisplay?.RemoveItemDisplay();
 
@@ -186,6 +180,15 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
     }
 
     protected virtual void UpdateVisual() { }
+
+    private void UpdateItemDisplay()
+    {
+        if (itemDisplay != null)
+        {
+            itemDisplay.AddItemDisplay();
+            itemDisplay.UpdateItemDisplay(storedItems);
+        }
+    }
 
     private void PositionItem(GameObject item, int index)
     {

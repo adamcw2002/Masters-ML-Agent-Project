@@ -22,9 +22,6 @@ public class ItemDisplayComponent : MonoBehaviour
         itemDisplay = null;
     }
 
-    public void AddNewIcon(IngredientData data) => itemDisplay?.AddNewIcon(data);
-
-    public void RemoveIcon(IngredientData data) => itemDisplay.RemoveIcon(data);
-    public void RemoveIcon(Sprite icon) => itemDisplay.RemoveIcon(icon);
+    public void UpdateItemDisplay(List<GameObject> storedItems) => itemDisplay?.UpdateItemDisplay(storedItems);
 }
 
