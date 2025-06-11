@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd06f0b0cf7cb5f42beb0e7a6c2631e1, type: 3}
+  m_Name: Mushroom Pizza
+  m_EditorClassIdentifier: 
+  recipeName: Mushroom Pizza
+  finalProductData: {fileID: 11400000, guid: 8f6471c99c0458c48875c28b4e50ed3c, type: 2}
+  finalProductState: 2
+  baseRequiredIngredients:
+  - ingredient: {fileID: 11400000, guid: b547db522d5cbdd4c847cc4e9c348646, type: 2}
+    requiredState: 2
+  - ingredient: {fileID: 11400000, guid: 0fd47207bef1c3f4780084298d588b4d, type: 2}
+    requiredState: 2
+  - ingredient: {fileID: 11400000, guid: 4480f05c4eeadcb43b28e40fa0ba9b3a, type: 2}
+    requiredState: 2
+  - ingredient: {fileID: 11400000, guid: 8942ab6d30d917f488252bf0e3ef595d, type: 2}
+    requiredState: 2
+  alternativeRecipe:
+  - ingredient: {fileID: 11400000, guid: 63263409d0e623747bf5d5d368c7c739, type: 2}
+    requiredState: 2
+  - ingredient: {fileID: 11400000, guid: 8942ab6d30d917f488252bf0e3ef595d, type: 2}
+    requiredState: 2

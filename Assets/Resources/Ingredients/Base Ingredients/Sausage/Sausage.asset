@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 053ebc200605d87448f6cf33fae25c78, type: 3}
+  m_Name: Sausage
+  m_EditorClassIdentifier: 
+  ingredientName: Sausage
+  icon: {fileID: 21300000, guid: 2b9068873a6ea8b4fa0b275024ce5a8c, type: 3}
+  isProduct: 0
+  possibleStates:
+  - preconditionState: 0
+    outputState: 0
+    visualPrefab: {fileID: 204343389783221142, guid: 6f0985e43afcb0240b5382a87e4dda62, type: 3}
+    plateRequired: 0
+  - preconditionState: 0
+    outputState: 4
+    visualPrefab: {fileID: 6020467431162793234, guid: 97eaa7a289e1cf14fb11fe86abb195d7, type: 3}
+    plateRequired: 1
+  - preconditionState: 0
+    outputState: 2
+    visualPrefab: {fileID: 6020467431162793234, guid: 97eaa7a289e1cf14fb11fe86abb195d7, type: 3}
+    plateRequired: 1
+  initialState: 0
+  ingredientMaterial: {fileID: 2100000, guid: 2aca08f5e015514409a192d24ed0ce26, type: 2}

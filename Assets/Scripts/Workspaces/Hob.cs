@@ -17,6 +17,8 @@ public class Hob : Workspace
 
     protected override void UpdateVisual()
     {
+        base.UpdateVisual();
+
         if (storedItems.Count == 0)
         {
             insidePotRenderer.material = insidePotDefaultMaterial;

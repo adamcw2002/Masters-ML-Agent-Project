@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 053ebc200605d87448f6cf33fae25c78, type: 3}
+  m_Name: HotDog
+  m_EditorClassIdentifier: 
+  ingredientName: Hot Dog
+  icon: {fileID: 0}
+  isProduct: 1
+  possibleStates:
+  - preconditionState: 2
+    outputState: 2
+    visualPrefab: {fileID: 6803329616811941180, guid: 9977185c99efa9d4b8261ecf4520a3e5, type: 3}
+    plateRequired: 0
+  initialState: 2
+  ingredientMaterial: {fileID: 0}

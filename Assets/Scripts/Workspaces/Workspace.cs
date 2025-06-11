@@ -78,7 +78,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
                 //
                 if (storageHolding.StoredItems.Count > 0)
                 {
-                    if (AddItems(storageHolding.StoredItems))
+                    if (AddItems(storageHolding))
                     {
                         storageHolding.RemoveAllItems();
                         return;
@@ -140,30 +140,37 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         }
     }
 
-    public virtual bool AddItem(GameObject item, bool forceItem = false)
+    private bool CheckValidItem(GameObject item)
     {
-        if (forceItem == false)
+        if (item.TryGetComponent(out PortableStorage storage) && storedItems.Count > 0)
+            return false;
+
+        if (canHoldPortableStorage && storedItems.Count > 0 && storedItems[0].TryGetComponent(out PortableStorage portableStorage))
+            return portableStorage.AddItem(item);
+
+        // Check if it can accept the item
+        if (!CanAcceptItem(item))
+            return false;
+
+        // Check whether it can process the item
+        if (canProcessItems && storage == false && !CanProcessItem(item))
+            return false;
+
+        return true;
+    }
+
+    public virtual bool AddItem(GameObject item, bool forceItem = false, bool startProcessing = true)
+    {
+        if (forceItem == false && CheckValidItem(item) == false)
         {
-            if (item.TryGetComponent(out PortableStorage storage) && storedItems.Count > 0) 
-                return false;
-
-            if (canHoldPortableStorage && storedItems.Count > 0 && storedItems[0].TryGetComponent(out PortableStorage portableStorage))
-                return portableStorage.AddItem(item);
-
-            // Check if it can accept the item
-            if (!CanAcceptItem(item))
-                return false;
-
-            // Check whether it can process the item
-            if (canProcessItems && storage == false && !CanProcessItem(item)) 
-                return false;
+            return false;
         }
 
         storedItems.Add(item);
         item.transform.SetParent(transform);
         item.transform.localPosition = Vector3.up * 0.5f;
 
-        if (canProcessItems && CanProcessItem(item)) StartProcessing();
+        if (startProcessing && canProcessItems && CanProcessItem(item)) StartProcessing();
 
         UpdateVisual();
 
@@ -174,21 +181,24 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         return true;
     }
 
-    public virtual bool AddItems(List<GameObject> items)
+    public virtual bool AddItems(PortableStorage storage)
     {
-        if (items.Count > maxItems - storedItems.Count) return false;
+        if (storage.StoredItems.Count > maxItems - storedItems.Count) return false;
 
-        List<GameObject> newItems = new List<GameObject>();
+        foreach (var item in storage.StoredItems)
+        {
+            if (CheckValidItem(item) == false)
+            {
+                return false;
+            }
+        }
 
-        foreach (var item in items)
+        foreach (var item in storage.StoredItems)
         {
             if (AddItem(item) == false)
             {
-                foreach (var newItem in newItems) RemoveItem(newItem);
-                return false;
+                Debug.LogWarning("One of the items were not accepted after passing previous checks");
             }
-
-            newItems.Add(item);
         }
 
         return true;

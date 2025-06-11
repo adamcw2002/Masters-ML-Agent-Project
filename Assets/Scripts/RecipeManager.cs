@@ -8,6 +8,7 @@ using System;
 public class RecipeManager : MonoSingleton<RecipeManager>
 {
     public static event Action OnRecipeCompleted;
+    public static event EventHandler<RecipeData> OnNewRecipeSelected;
 
     [SerializeField] private List<RecipeData> availableRecipes = new List<RecipeData>();
     public List<RecipeData> GetAvailableRecipes() => availableRecipes;
@@ -173,6 +174,8 @@ public class RecipeManager : MonoSingleton<RecipeManager>
     private void SelectNewRecipe()
     {
         activeRecipe = availableRecipes[UnityEngine.Random.Range(0, availableRecipes.Count)];
+
+        OnNewRecipeSelected?.Invoke(this, activeRecipe);
 
         UpdateText();
     }
