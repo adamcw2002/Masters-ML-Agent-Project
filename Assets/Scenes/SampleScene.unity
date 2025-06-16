@@ -2364,7 +2364,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387950958}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bb42d3bc84a0549b9affb92a3dac71, type: 3}
   m_Name: 
@@ -2376,7 +2376,7 @@ MonoBehaviour:
   minStartingPoints: 1
   maxStartingPoints: 4
   branchingChance: 0.3
-  maxBranches: 2
+  maxBranches: 1
 --- !u!1001 &1454677314
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class RecipeUIManager : MonoBehaviour
     [SerializeField] private Sprite cookedSpriteIcon;
     [SerializeField] private Sprite boiledSpriteIcon;
 
-    private void Start()
+    private void Awake()
     {
         RecipeManager.OnNewRecipeSelected += RecipeManager_OnNewRecipeSelected;
     }
