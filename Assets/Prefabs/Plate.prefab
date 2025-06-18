@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxIngredients: 4
   itemPositions: []
-  defaultItemHeight: 0.1
+  defaultItemHeight: 0.2
   showContainedItems: 1
 --- !u!114 &-1073991692770428473
 MonoBehaviour:

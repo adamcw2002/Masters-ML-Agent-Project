@@ -40,8 +40,6 @@ public class RecipeManager : MonoSingleton<RecipeManager>
     {
         if (activeRecipe == null) SelectNewRecipe();
 
-        UpdateText();
-
         allRecipes.AddRange(Resources.LoadAll<RecipeData>("Recipes"));
     }
 

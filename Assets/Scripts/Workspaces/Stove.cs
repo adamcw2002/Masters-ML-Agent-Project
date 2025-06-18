@@ -13,15 +13,11 @@ public class Stove : Workspace
         base.Start();
 
         insidePotDefaultMaterial = insidePotRenderer.material;
-
-        Debug.Log(insidePotDefaultMaterial);
     }
 
     protected override void UpdateVisual()
     {
         base.UpdateVisual();
-
-        Debug.Log("UPDATE VISUAL");
 
         insidePotRenderer.material = insidePotDefaultMaterial;
 

@@ -22,6 +22,8 @@ public class Oven : Workspace, IInteractable
         // Compare stored ingredients with all recipes
         foreach (var recipe in allRecipes)
         {
+            if (recipe.baseRequiredIngredients[0].requiredState != IngredientState.Cooked) continue;
+
             var requiredIngredients = recipe.baseRequiredIngredients
                                             .Select(req => req.ingredient)
                                             .ToList();
