@@ -13,22 +13,25 @@ public class Stove : Workspace
         base.Start();
 
         insidePotDefaultMaterial = insidePotRenderer.material;
+
+        Debug.Log(insidePotDefaultMaterial);
     }
 
     protected override void UpdateVisual()
     {
         base.UpdateVisual();
 
-        if (storedItems.Count == 0)
+        Debug.Log("UPDATE VISUAL");
+
+        insidePotRenderer.material = insidePotDefaultMaterial;
+
+        if (storedItems.Count > 0)
         {
-            insidePotRenderer.material = insidePotDefaultMaterial;
-            return;
+            IngredientItem ingredient = storedItems[0].GetComponent<IngredientItem>();
+
+            Material ingredientMaterial = ingredient.IngredientData.ingredientMaterial;
+
+            if (ingredientMaterial) insidePotRenderer.material = ingredientMaterial;
         }
-
-        IngredientItem ingredient = storedItems[0].GetComponent<IngredientItem>();
-
-        Material ingredientMaterial = ingredient.IngredientData.ingredientMaterial;
-
-        if (ingredientMaterial) insidePotRenderer.material = ingredientMaterial;
     }
 }

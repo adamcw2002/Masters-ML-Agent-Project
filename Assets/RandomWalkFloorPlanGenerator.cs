@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class RandomWalkFloorPlanGenerator : MonoBehaviour
 {
-    [SerializeField] private Material centerMaterial;
-
     [Header("Default Workspace")]
     [SerializeField] private GameObject emptyWorkspacePrefab;
 
@@ -206,12 +204,6 @@ public class RandomWalkFloorPlanGenerator : MonoBehaviour
         );
 
         spawnedCenterWorkspaces.Add(cell);
-
-        // Apply center material if available
-        if (centerMaterial != null && cell.TryGetComponent(out Renderer rend))
-        {
-            rend.material = centerMaterial;
-        }
     }
 
     private void CleanupPreviousCenterWorkspaces()

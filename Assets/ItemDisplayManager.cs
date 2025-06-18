@@ -21,14 +21,14 @@ public class ItemDisplayManager : MonoSingleton<ItemDisplayManager>
         ObjectPooler.Instance.CreatePool(poolKey, itemDisplayPrefab, 10);
     }
 
-    public ItemDisplay CreateItemDisplay(Transform objectTransform, IngredientData data = null)
+    public ItemDisplay CreateItemDisplay(Transform objectTransform, IngredientData data = null, float yOffset = 1)
     {
         GameObject itemDisplay = ObjectPooler.Instance.GetFromPool(poolKey, objectTransform.position);
         itemDisplay.transform.SetParent(container);
 
         if (itemDisplay.TryGetComponent(out ItemDisplay controller))
         {
-            controller.Init(objectTransform, data);
+            controller.Init(objectTransform, data, yOffset);
             return controller;
         }
 
