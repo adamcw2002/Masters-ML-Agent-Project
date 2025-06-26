@@ -1,0 +1,15 @@
+D:/
+cd D:\Game Projects\Unity Projects\Masters ML Agent Project
+venv\Scripts\activate
+
+py -m pip install --upgrade pip
+pip install mlagents
+pip3 install torch torchvision torchaudio
+pip install protobuf==3.20.1
+pip install packaging
+pip install onnx
+
+pip uninstall onnx protobuf numpy -y
+pip install numpy==1.21.2 protobuf==3.20.1 onnx==1.12.0
+
+>mlagents-learn --run-id=Test2

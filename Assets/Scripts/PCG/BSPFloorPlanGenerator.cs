@@ -62,6 +62,13 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
     private void Start()
     {
         GenerateFloorPlan();
+
+        PlayerAgent.OnNewEpisodeBegin += PlayerAgent_OnNewEpisodeBegin;
+    }
+
+    private void PlayerAgent_OnNewEpisodeBegin(object sender, EventArgs e)
+    {
+        GenerateFloorPlan();
     }
 
     private void Update()

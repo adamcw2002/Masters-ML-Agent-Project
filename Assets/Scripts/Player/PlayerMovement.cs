@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
     public float gravity = -9.81f;
 
+    private float moveX;
+    private float moveZ;
+
     private CharacterController controller;
     private Vector3 moveDirection;
     private Vector3 velocity;
@@ -14,16 +17,30 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public Vector3 lastFacingDirection = Vector3.forward; // default facing
 
-    void Start()
+    private PlayerAgent agent;
+
+    void Awake()
     {
         controller = GetComponent<CharacterController>();
+        agent = GetComponent<PlayerAgent>();
     }
 
     void Update()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+        if (!agent)
+        {
+            moveX = Input.GetAxis("Horizontal");
+            moveZ = Input.GetAxis("Vertical");
+        }
 
+        Move();
+    }
+
+    public void SetMoveX(float moveX) => this.moveX = moveX;
+    public void SetMoveZ(float moveZ) => this.moveZ = moveZ;
+
+    public void Move()
+    {
         moveDirection = new Vector3(moveX, 0f, moveZ);
 
         if (moveDirection.magnitude > 1)
@@ -32,9 +49,7 @@ public class PlayerMovement : MonoBehaviour
         if (moveDirection.sqrMagnitude > 0.01f)
             lastFacingDirection = moveDirection;
 
-        //ClampLastDirection();
-
-        controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+        controller?.Move(moveDirection * moveSpeed * Time.deltaTime);
 
         if (controller.isGrounded && velocity.y < 0)
             velocity.y = -2f;

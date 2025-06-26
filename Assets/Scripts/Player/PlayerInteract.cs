@@ -9,6 +9,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private Transform itemHoldTransform;
 
     private PlayerMovement movementScript;
+    private PlayerAgent agent;
 
     private IInteractable currentInteractable;
     private GameObject currentItemHolding = null;
@@ -18,6 +19,7 @@ public class PlayerInteract : MonoBehaviour
     void Start()
     {
         movementScript = GetComponent<PlayerMovement>();
+        agent = GetComponent<PlayerAgent>();
     }
 
     void FixedUpdate()
@@ -25,12 +27,21 @@ public class PlayerInteract : MonoBehaviour
         DetectNearbyInteractables();
     }
 
+    public IInteractable GetCurrentInteractable() => currentInteractable;
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && currentInteractable != null)
+        if (!agent && Input.GetKeyDown(KeyCode.Space) && currentInteractable != null)
         {
-            currentInteractable.Interact(this, currentItemHolding);
+            Interact();
         }
+    }
+
+    public void Interact()
+    {
+        Debug.Log("Interact");
+
+        currentInteractable?.Interact(this, currentItemHolding);
     }
 
     public bool CanPickupItem()
