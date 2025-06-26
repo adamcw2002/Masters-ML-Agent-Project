@@ -15,6 +15,7 @@ MonoBehaviour:
   ingredientName: Pasta
   icon: {fileID: 21300000, guid: 9d7868e10f0af344a906b8fff3ce5193, type: 3}
   isProduct: 0
+  uniqueIntID: -293011265
   possibleStates:
   - preconditionState: 0
     outputState: 0

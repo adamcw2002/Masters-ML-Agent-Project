@@ -170,10 +170,10 @@ public class PlayerInteract : MonoBehaviour
         {
             observation[2] = ingredient.IngredientData.uniqueIntID;
 
-            for (int i = 0; i < numStates; i++)
-                observation[3 + i] = 0f;
+            var oneHotState = AgentObservationManager.Instance.GetOneHotIngredientState(ingredient.CurrentState);
 
-            observation[3 + (int)ingredient.CurrentState] = 1f; // one-hot set
+            for (int i = 0; i < oneHotState.Length; i++)
+                observation[3 + i] = oneHotState[i];
         }
         else
         {

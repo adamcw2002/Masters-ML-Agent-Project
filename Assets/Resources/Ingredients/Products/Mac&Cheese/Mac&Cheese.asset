@@ -15,6 +15,7 @@ MonoBehaviour:
   ingredientName: Mac & Cheese
   icon: {fileID: 21300000, guid: 0b83eaab42b16e04e9dd9d502612479c, type: 3}
   isProduct: 1
+  uniqueIntID: 568517653
   possibleStates:
   - preconditionState: 2
     outputState: 2

@@ -15,6 +15,7 @@ MonoBehaviour:
   ingredientName: Carrot
   icon: {fileID: 21300000, guid: b9b3089627834614bba4e2ff1b3bb3ab, type: 3}
   isProduct: 0
+  uniqueIntID: 1443200468
   possibleStates:
   - preconditionState: 0
     outputState: 0
@@ -24,7 +25,7 @@ MonoBehaviour:
     outputState: 1
     visualPrefab: {fileID: 919132149155446097, guid: 4da0378f7ef66e4418f70191f50e3050, type: 3}
     plateRequired: 0
-  - preconditionState: 1
+  - preconditionState: 0
     outputState: 3
     visualPrefab: {fileID: 919132149155446097, guid: b3fa70a5b617ee54ca64b45d7b16dd68, type: 3}
     plateRequired: 1

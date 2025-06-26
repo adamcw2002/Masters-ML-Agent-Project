@@ -15,6 +15,7 @@ MonoBehaviour:
   ingredientName: Mushroom
   icon: {fileID: 21300000, guid: 99290789efb97704fb66fffdfa920905, type: 3}
   isProduct: 0
+  uniqueIntID: 578978581
   possibleStates:
   - preconditionState: 0
     outputState: 0

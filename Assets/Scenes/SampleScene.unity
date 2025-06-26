@@ -1188,9 +1188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableRecipes:
-  - {fileID: 11400000, guid: cd6b777f332f13b4bb1d0ec8df2d76bc, type: 2}
-  - {fileID: 11400000, guid: eefce9c503463f549aec78164dbb0e69, type: 2}
-  - {fileID: 11400000, guid: 80d6306240865404694b8a54d47cd315, type: 2}
+  - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
+  - {fileID: 11400000, guid: 54bfe90b878b4474c80713d164a797da, type: 2}
   activeRecipe: {fileID: 0}
 --- !u!1 &819504375
 GameObject:
@@ -2375,8 +2374,6 @@ MonoBehaviour:
   maxWalkLength: 8
   minStartingPoints: 1
   maxStartingPoints: 4
-  branchingChance: 0.3
-  maxBranches: 1
 --- !u!1001 &1454677314
 PrefabInstance:
   m_ObjectHideFlags: 0

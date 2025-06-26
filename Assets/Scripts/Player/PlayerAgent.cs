@@ -40,12 +40,14 @@ public class PlayerAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Example: add position as an observation
+        //Current Position - 3 Observations
         sensor.AddObservation(transform.position);
-        // Add more observations as needed
 
-        //Current Inventory
+        //Current Inventory - 8 Observations
         sensor.AddObservation(interact.GetAgentInventoryObservation());
+
+        //Current Recipe - 30 Observations
+        sensor.AddObservation(AgentObservationManager.Instance.GetCurrentRecipeObservation());
     }
 
     public override void OnActionReceived(ActionBuffers actions)
