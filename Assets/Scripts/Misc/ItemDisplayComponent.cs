@@ -11,9 +11,9 @@ public class ItemDisplayComponent : MonoBehaviour
         RemoveItemDisplay();
     }
 
-    public void AddItemDisplay()
+    public void AddItemDisplay(float yOffset = 1f)
     {
-        if (itemDisplay == null) itemDisplay = ItemDisplayManager.Instance.CreateItemDisplay(transform);
+        if (itemDisplay == null) itemDisplay = ItemDisplayManager.Instance.CreateItemDisplay(transform, null, yOffset);
     }
 
     public void RemoveItemDisplay()

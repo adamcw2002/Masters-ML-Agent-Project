@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class ItemDisplay : MonoBehaviour
 {
     private Transform followTransform = null;
-    [SerializeField] private Vector3 offset = new Vector3(0, 0.5f, 0);
+    private Vector3 offset = new Vector3(0, 1f, 0);
 
     List<Sprite> existingIcons = new List<Sprite>();
 
@@ -26,9 +26,11 @@ public class ItemDisplay : MonoBehaviour
         transform.forward = Camera.main.transform.forward;
     }
 
-    public void Init(Transform transform, IngredientData data)
+    public void Init(Transform transform, IngredientData data, float yOffset)
     {
         followTransform = transform;
+
+        offset.y = yOffset;
 
         RemoveAllIcons();
 

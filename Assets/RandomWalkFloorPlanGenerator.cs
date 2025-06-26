@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class RandomWalkFloorPlanGenerator : MonoBehaviour
 {
-    [SerializeField] private Material centerMaterial;
-
     [Header("Default Workspace")]
     [SerializeField] private GameObject emptyWorkspacePrefab;
 
@@ -15,8 +13,6 @@ public class RandomWalkFloorPlanGenerator : MonoBehaviour
     [SerializeField] private int maxWalkLength = 8;
     [SerializeField] private int minStartingPoints = 1;
     [SerializeField] private int maxStartingPoints = 2;
-    [SerializeField] private float branchingChance = 0.3f;
-    [SerializeField] private int maxBranches = 2;
 
     private List<GameObject> spawnedCenterWorkspaces = new List<GameObject>();
     private HashSet<Vector2Int> centerWorkspacePositions = new HashSet<Vector2Int>();
@@ -132,15 +128,6 @@ public class RandomWalkFloorPlanGenerator : MonoBehaviour
 
                 // Add next step in walk
                 walkQueue.Enqueue(new WalkNode(nextPos, currentNode.stepsTaken + 1, currentNode.branchLevel));
-
-                // Chance to create branches
-                if (currentNode.branchLevel < maxBranches &&
-                    rng.NextDouble() < branchingChance &&
-                    directions.Count > 1)
-                {
-                    Vector2Int branchPos = currentPos + directions[1];
-                    walkQueue.Enqueue(new WalkNode(branchPos, currentNode.stepsTaken + 1, currentNode.branchLevel + 1));
-                }
             }
         }
 
@@ -206,12 +193,6 @@ public class RandomWalkFloorPlanGenerator : MonoBehaviour
         );
 
         spawnedCenterWorkspaces.Add(cell);
-
-        // Apply center material if available
-        if (centerMaterial != null && cell.TryGetComponent(out Renderer rend))
-        {
-            rend.material = centerMaterial;
-        }
     }
 
     private void CleanupPreviousCenterWorkspaces()

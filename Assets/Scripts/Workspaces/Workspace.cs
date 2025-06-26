@@ -226,6 +226,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
     {
         storedItems.Clear();
         itemDisplay?.RemoveItemDisplay();
+        UpdateVisual();
     }
 
     public virtual void DestroyAllItems()
@@ -318,7 +319,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
     {
         if (itemDisplay != null)
         {
-            itemDisplay.AddItemDisplay();
+            itemDisplay.AddItemDisplay(1f);
             itemDisplay.UpdateItemDisplay(storedItems);
         }
     }

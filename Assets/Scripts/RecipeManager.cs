@@ -15,6 +15,8 @@ public class RecipeManager : MonoSingleton<RecipeManager>
 
     private List<RecipeData> allRecipes = new List<RecipeData>();
 
+    public List<RecipeData> GetAllRecipes() => allRecipes;
+
 
     [SerializeField] private RecipeData activeRecipe;
     public RecipeData GetActiveRecipe() => activeRecipe;
@@ -37,8 +39,6 @@ public class RecipeManager : MonoSingleton<RecipeManager>
     private void Start()
     {
         if (activeRecipe == null) SelectNewRecipe();
-
-        UpdateText();
 
         allRecipes.AddRange(Resources.LoadAll<RecipeData>("Recipes"));
     }

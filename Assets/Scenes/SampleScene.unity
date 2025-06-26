@@ -1190,6 +1190,7 @@ MonoBehaviour:
   availableRecipes:
   - {fileID: 11400000, guid: cd6b777f332f13b4bb1d0ec8df2d76bc, type: 2}
   - {fileID: 11400000, guid: eefce9c503463f549aec78164dbb0e69, type: 2}
+  - {fileID: 11400000, guid: 80d6306240865404694b8a54d47cd315, type: 2}
   activeRecipe: {fileID: 0}
 --- !u!1 &819504375
 GameObject:
@@ -2364,12 +2365,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387950958}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bb42d3bc84a0549b9affb92a3dac71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerMaterial: {fileID: 0}
   emptyWorkspacePrefab: {fileID: 1892176483223385932, guid: 63e991b845236d441a6a9a9638b7a16d, type: 3}
   minWalkLength: 3
   maxWalkLength: 8
