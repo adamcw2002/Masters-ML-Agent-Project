@@ -39,8 +39,6 @@ public class PlayerInteract : MonoBehaviour
 
     public void Interact()
     {
-        Debug.Log("Interact");
-
         currentInteractable?.Interact(this, currentItemHolding);
     }
 
@@ -158,5 +156,32 @@ public class PlayerInteract : MonoBehaviour
         else if (newInteractable != currentInteractable) MaterialHighlighter.Instance.HighlightObject(obj);
 
         currentInteractable = newInteractable;
+    }
+
+    public float[] GetAgentInventoryObservation()
+    {
+        int numStates = System.Enum.GetNames(typeof(IngredientState)).Length;
+        float[] observation = new float[2 + 1 + numStates]; // 2 bools + ID + one-hot state
+
+        observation[0] = currentItemHolding != null ? 1f : 0f;
+        observation[1] = (currentItemHolding != null && currentItemHolding.TryGetComponent<PortableStorage>(out _)) ? 1f : 0f;
+
+        if (currentItemHolding != null && currentItemHolding.TryGetComponent<IngredientItem>(out var ingredient))
+        {
+            observation[2] = ingredient.IngredientData.uniqueIntID;
+
+            for (int i = 0; i < numStates; i++)
+                observation[3 + i] = 0f;
+
+            observation[3 + (int)ingredient.CurrentState] = 1f; // one-hot set
+        }
+        else
+        {
+            observation[2] = -1f;
+            for (int i = 0; i < numStates; i++)
+                observation[3 + i] = 0f;
+        }
+
+        return observation;
     }
 }

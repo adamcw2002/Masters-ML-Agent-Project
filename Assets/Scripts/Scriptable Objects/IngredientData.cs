@@ -14,6 +14,20 @@ public class IngredientData : ScriptableObject
     public Sprite icon;
     public bool isProduct;
 
+    public int uniqueIntID;
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (uniqueIntID == 0) // 0 means uninitialized
+        {
+            string guidStr = System.Guid.NewGuid().ToString();
+            uniqueIntID = guidStr.GetHashCode(); // Convert GUID string to int hash
+            UnityEditor.EditorUtility.SetDirty(this);
+        }
+    }
+#endif
+
     [System.Serializable]
     public class StateVariant
     {

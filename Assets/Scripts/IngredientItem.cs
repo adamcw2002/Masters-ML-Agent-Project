@@ -100,4 +100,17 @@ public class IngredientItem : MonoBehaviour
             stateVisuals[currentState].SetActive(true);
         }
     }
+
+    public  float[] OneHotEncodeCurrentState()
+    {
+        int numStates = System.Enum.GetNames(typeof(IngredientState)).Length;
+        float[] oneHot = new float[numStates];
+
+        int index = (int)currentState;
+        if (index >= 0 && index < numStates)
+        {
+            oneHot[index] = 1f;
+        }
+        return oneHot;
+    }
 }

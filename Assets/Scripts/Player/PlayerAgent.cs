@@ -6,7 +6,7 @@ using System;
 
 public class PlayerAgent : Agent
 {
-    public static event EventHandler OnNewEpisodeBegin;
+    public static event EventHandler OnEpisodeEnd;
 
     private PlayerMovement movement;
     private PlayerInteract interact;
@@ -19,6 +19,17 @@ public class PlayerAgent : Agent
         interact = GetComponent<PlayerInteract>();
     }
 
+    private void Start()
+    {
+        GameTimer.OnTimeEnd += GameTimer_OnTimeEnd;
+    }
+
+    private void GameTimer_OnTimeEnd()
+    {
+        OnEpisodeEnd?.Invoke(this, EventArgs.Empty);
+        EndEpisode();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -27,18 +38,14 @@ public class PlayerAgent : Agent
         }
     }
 
-    public override void OnEpisodeBegin()
-    {
-        //OnNewEpisodeBegin?.Invoke(this, EventArgs.Empty);
-
-        Debug.Log("New Episode");
-    }
-
     public override void CollectObservations(VectorSensor sensor)
     {
         // Example: add position as an observation
         sensor.AddObservation(transform.position);
         // Add more observations as needed
+
+        //Current Inventory
+        sensor.AddObservation(interact.GetAgentInventoryObservation());
     }
 
     public override void OnActionReceived(ActionBuffers actions)
