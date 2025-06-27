@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
 
-public class WorkspaceGenerator : MonoBehaviour
+public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
 {
+    public static event EventHandler OnWorkspacesGenerated;
+
     [SerializeField] private Material borderMaterial;
 
     [Header("Default Workspace")]
@@ -31,6 +34,11 @@ public class WorkspaceGenerator : MonoBehaviour
     private Dictionary<IngredientData, int> requiredIngredientCounts = new Dictionary<IngredientData, int>();
     private List<GameObject> spawnedWorkspaces = new List<GameObject>();
 
+    // Grid system for workspace lookup
+    private Dictionary<Vector2Int, GameObject> workspaceGrid = new Dictionary<Vector2Int, GameObject>();
+    private Vector2Int gridMinBounds;
+    private Vector2Int gridMaxBounds;
+
     private BSPGridFloorPlanGenerator FloorPlanGenerator;
     private System.Random rng = new System.Random();
 
@@ -40,6 +48,98 @@ public class WorkspaceGenerator : MonoBehaviour
 
     private HashSet<Vector2Int> usedPositions = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> bufferPositions = new HashSet<Vector2Int>();
+
+
+
+    #region Public Grid Access Methods
+
+    public GameObject GetWorkspaceAt(Vector2Int gridPosition)
+    {
+        workspaceGrid.TryGetValue(gridPosition, out GameObject workspace);
+        return workspace;
+    }
+
+    public GameObject GetWorkspaceAtWorldPosition(Vector3 worldPosition)
+    {
+        Vector2Int gridPos = WorldToGridPosition(worldPosition);
+        return GetWorkspaceAt(gridPos);
+    }
+
+    public Dictionary<Vector2Int, GameObject> GetWorkspacesInRange(Vector2Int minPosition, Vector2Int maxPosition)
+    {
+        Dictionary<Vector2Int, GameObject> workspacesInRange = new Dictionary<Vector2Int, GameObject>();
+
+        for (int x = minPosition.x; x <= maxPosition.x; x++)
+        {
+            for (int y = minPosition.y; y <= maxPosition.y; y++)
+            {
+                Vector2Int pos = new Vector2Int(x, y);
+                GameObject workspace = GetWorkspaceAt(pos);
+                if (workspace != null)
+                {
+                    workspacesInRange[pos] = workspace;
+                }
+            }
+        }
+
+        return workspacesInRange;
+    }
+
+    public Dictionary<Vector2Int, GameObject> GetWorkspacesInRadius(Vector2Int centerPosition, int radius)
+    {
+        Dictionary<Vector2Int, GameObject> workspacesInRadius = new Dictionary<Vector2Int, GameObject>();
+
+        for (int x = centerPosition.x - radius; x <= centerPosition.x + radius; x++)
+        {
+            for (int y = centerPosition.y - radius; y <= centerPosition.y + radius; y++)
+            {
+                Vector2Int pos = new Vector2Int(x, y);
+
+                // Check if position is within circular radius
+                float distance = Vector2Int.Distance(centerPosition, pos);
+                if (distance <= radius)
+                {
+                    GameObject workspace = GetWorkspaceAt(pos);
+                    if (workspace != null)
+                    {
+                        workspacesInRadius[pos] = workspace;
+                    }
+                }
+            }
+        }
+
+        return workspacesInRadius;
+    }
+
+    public Vector2Int WorldToGridPosition(Vector3 worldPosition)
+    {
+        return new Vector2Int(
+            Mathf.RoundToInt(worldPosition.x - 0.5f),
+            Mathf.RoundToInt(worldPosition.z - 0.5f)
+        );
+    }
+
+    public Vector3 GridToWorldPosition(Vector2Int gridPosition)
+    {
+        return new Vector3(
+            gridPosition.x + 0.5f,
+            FloorHeight + FloorYScale,
+            gridPosition.y + 0.5f
+        );
+    }
+
+
+    public bool HasWorkspaceAt(Vector2Int gridPosition)
+    {
+        return workspaceGrid.ContainsKey(gridPosition);
+    }
+
+    public Dictionary<Vector2Int, GameObject> GetAllWorkspaces()
+    {
+        return new Dictionary<Vector2Int, GameObject>(workspaceGrid);
+    }
+
+    #endregion
 
     private void OnEnable()
     {
@@ -89,11 +189,36 @@ public class WorkspaceGenerator : MonoBehaviour
         // Create empty workspaces at corners
         foreach (Vector2Int cornerPos in cornerPositions)
         {
-            CreateWorkspaceCell(cornerPos, emptyWorkspacePrefab, null);
+            CreateWorkspaceCell(cornerPos, emptyWorkspacePrefab, null, true);
         }
 
         // Apply the new placement rules
         ApplyPlacementRules(nonCornerBorderPositions);
+
+        // Update grid bounds after all workspaces are created
+        UpdateGridBounds();
+
+        OnWorkspacesGenerated?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void UpdateGridBounds()
+    {
+        if (workspaceGrid.Count == 0)
+        {
+            gridMinBounds = Vector2Int.zero;
+            gridMaxBounds = Vector2Int.zero;
+            return;
+        }
+
+        var positions = workspaceGrid.Keys.ToList();
+        gridMinBounds = new Vector2Int(
+            positions.Min(p => p.x),
+            positions.Min(p => p.y)
+        );
+        gridMaxBounds = new Vector2Int(
+            positions.Max(p => p.x),
+            positions.Max(p => p.y)
+        );
     }
 
     private void ApplyPlacementRules(List<Vector2Int> availablePositions)
@@ -490,6 +615,7 @@ public class WorkspaceGenerator : MonoBehaviour
         spawnedWorkspaces.Clear();
         bufferPositions.Clear();
         usedPositions.Clear();
+        workspaceGrid.Clear(); // Clear the grid
 
         Destroy(workspacesParent);
         workspacesParent = null;
@@ -501,7 +627,7 @@ public class WorkspaceGenerator : MonoBehaviour
         }
     }
 
-    private void CreateWorkspaceCell(Vector2Int pos, GameObject prefab, IngredientData ingredient)
+    private void CreateWorkspaceCell(Vector2Int pos, GameObject prefab, IngredientData ingredient, bool isCornerCell = false)
     {
         GameObject cell = Instantiate(prefab);
         cell.name = $"Workspace_{pos.x}_{pos.y}";
@@ -514,6 +640,9 @@ public class WorkspaceGenerator : MonoBehaviour
         );
 
         spawnedWorkspaces.Add(cell);
+
+        // Add to grid system
+        if (!isCornerCell) workspaceGrid[pos] = cell;
 
         if (borderMaterial != null && cell.TryGetComponent(out Renderer rend))
         {

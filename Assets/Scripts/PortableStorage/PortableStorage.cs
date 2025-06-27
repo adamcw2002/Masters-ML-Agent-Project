@@ -13,6 +13,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
     private List<GameObject> storedItems = new List<GameObject>();
 
+    public int MaxIngredients => maxIngredients;
     public bool IsEmpty => storedItems.Count == 0;
     public bool IsFull => storedItems.Count >= maxIngredients;
     public float MaxItemsAcceptable => Mathf.Max(maxIngredients - storedItems.Count, 0);
@@ -89,7 +90,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         return true;
     }
 
-    public virtual bool AddItem(GameObject item)
+    public virtual bool AddItem(GameObject item, bool tryCombine = true)
     {
         if (!CanAcceptItem(item))
             return false;
@@ -132,7 +133,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         return true;
     }
 
-    public GameObject RemoveItem(GameObject item)
+    public virtual GameObject RemoveItem(GameObject item)
     {
         if (item == null) return null;
 
@@ -151,7 +152,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         return item;
     }
 
-    public void RemoveAllItems()
+    public virtual void RemoveAllItems()
     {
         storedItems.Clear();
         itemDisplay?.RemoveItemDisplay();
@@ -212,4 +213,6 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
         item.transform.localPosition = position;
     }
+
+    public abstract int GetStorageID();
 }

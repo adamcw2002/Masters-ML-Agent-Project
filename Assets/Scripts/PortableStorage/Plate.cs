@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class Plate : PortableStorage
 {
-    public override bool AddItem(GameObject item)
+    private bool hasCombinedIngredients = false;
+    public bool HasCombinedIngredients => hasCombinedIngredients;
+
+    public override int GetStorageID()
+    {
+        return 1;
+    }
+
+    public override bool AddItem(GameObject item, bool tryCombine = true)
     {
         bool baseResult = base.AddItem(item);
 
@@ -14,7 +22,9 @@ public class Plate : PortableStorage
 
             RecipeData recipeOnPlate = recipeManager.CanCombineIngredients(this);
 
-            if (recipeOnPlate != null) CombineIngredients(recipeOnPlate);
+            if (recipeOnPlate != null && tryCombine) CombineIngredients(recipeOnPlate);
+
+            hasCombinedIngredients = false;
         }
 
         return baseResult;
@@ -32,6 +42,22 @@ public class Plate : PortableStorage
         if (recipeObject.TryGetComponent(out IngredientItem ingredient) == false) ingredient = recipeObject.AddComponent<IngredientItem>();
         ingredient.SetIngredientData(productData, recipe.finalProductState);
 
-        AddItem(recipeObject);
+        AddItem(recipeObject, false);
+
+        hasCombinedIngredients = true;
+    }
+
+    public override GameObject RemoveItem(GameObject item)
+    {
+        hasCombinedIngredients = false;
+
+        return base.RemoveItem(item);
+    }
+
+    public override void RemoveAllItems()
+    {
+        hasCombinedIngredients = false;
+
+        base.RemoveAllItems(); 
     }
 }

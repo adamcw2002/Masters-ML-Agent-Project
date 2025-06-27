@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DeliveryStation : MonoBehaviour, IInteractable
 {
+    public static event EventHandler OnRecipeDelivered;
+
     [SerializeField] private bool allowIncorrectRecipes = false;
 
     public void Interact(PlayerInteract player, GameObject itemHolding)
@@ -30,6 +33,8 @@ public class DeliveryStation : MonoBehaviour, IInteractable
         {
             player.RemoveItem();
             Destroy(itemHolding);
+
+            OnRecipeDelivered?.Invoke(this, EventArgs.Empty);
         }
     }
 }

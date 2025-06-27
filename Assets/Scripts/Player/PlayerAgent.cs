@@ -36,6 +36,11 @@ public class PlayerAgent : Agent
         {
             interactKeyPressed = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            var workspaces = AgentObservationManager.Instance.GetTileObservations(transform.position, 1, true);
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -48,6 +53,21 @@ public class PlayerAgent : Agent
 
         //Current Recipe - 30 Observations
         sensor.AddObservation(AgentObservationManager.Instance.GetCurrentRecipeObservation());
+
+        //Tile Observations - (Range + Range + 1)^2 * 10 Observations
+        //Range = 1 -> 90 Observations
+        //Range = 2 -> 250 Observations
+        //Range = 3 -> 490 Observations
+        //Range = 4 -> 810 Observations
+        //Range = 5 -> 1210 Observations
+        int tileRange = 3;
+        sensor.AddObservation(AgentObservationManager.Instance.GetTileObservations(transform.position, tileRange));
+
+        //Plate Observations - 23 * 3 = 69 Observations
+        sensor.AddObservation(AgentObservationManager.Instance.GetAllPlateObservations(transform.position));
+
+        //Loose Items Observations
+        sensor.AddObservation(AgentObservationManager.Instance.GetAllLooseItemObservations(transform.position));
     }
 
     public override void OnActionReceived(ActionBuffers actions)

@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public abstract class Workspace : MonoBehaviour, IInteractable
 {
     [SerializeField] protected int maxItems = 1;
+
     [SerializeField] protected bool canProcessItems = true;
     [SerializeField] protected float processingTime = 0f;
+    private int processAmount;
+    public bool CanProcessItems() => canProcessItems; 
+    public int GetProccessAmount() => processAmount;
+
     [SerializeField] protected IngredientState outputState;
 
     [SerializeField] protected bool canHoldPortableStorage = false;
@@ -20,6 +24,9 @@ public abstract class Workspace : MonoBehaviour, IInteractable
     private ProgressBarUI progressBarUI = null;
 
     private ItemDisplayComponent itemDisplay = null;
+
+    public bool HasItems => storedItems.Count > 0;
+    public GameObject GetFirstItem() => HasItems ? storedItems[0] : null;
 
     protected virtual void Start()
     {
@@ -256,7 +263,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         }
     }
 
-    protected virtual System.Collections.IEnumerator ProcessItems()
+    protected virtual IEnumerator ProcessItems()
     {
         isProcessing = true;
 
@@ -264,7 +271,15 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
         UpdateVisual();
 
-        yield return new WaitForSeconds(processingTime);
+        float elapsed = 0f;
+        while (elapsed < processingTime)
+        {
+            elapsed += Time.deltaTime;
+            float rawProgress = Mathf.Clamp01(elapsed / processingTime);
+            processAmount = Mathf.RoundToInt(rawProgress * 100f);
+
+            yield return null;
+        }
 
         isProcessing = false;
 

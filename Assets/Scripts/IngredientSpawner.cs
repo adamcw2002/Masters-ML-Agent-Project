@@ -8,6 +8,8 @@ public class IngredientSpawner : MonoBehaviour, IInteractable
 
     [SerializeField] private SpriteRenderer iconRenderer;
 
+    public IngredientData GetSpawnedIngredient() => ingredientData;
+
     private void Awake()
     {
         if (ingredientData) SetIngredientData(ingredientData);
