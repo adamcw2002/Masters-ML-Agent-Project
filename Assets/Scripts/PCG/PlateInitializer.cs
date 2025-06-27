@@ -19,17 +19,17 @@ public class PlateInitializer : MonoSingleton<PlateInitializer>
 
         DeliveryStation.OnRecipeDelivered += DeliveryStation_OnRecipeDelivered;
 
-        Bin.OnDishBinned += Bin_OnDishBinned;
+        Bin.OnPlateBinned += Bin_OnPlateBinned;
     }
 
-    private void Bin_OnDishBinned(object sender, System.EventArgs e)
+    private void Bin_OnPlateBinned(object sender, System.EventArgs e)
     {
-        SpawnNewPlate();
+        ResetPlate(sender as Plate);
     }
 
     private void DeliveryStation_OnRecipeDelivered(object sender, System.EventArgs e)
     {
-        SpawnNewPlate();
+        ResetPlate(sender as Plate);
     }
 
     private void WorkspaceGenerator_OnWorkspacesGenerated(object sender, System.EventArgs e)
@@ -66,11 +66,9 @@ public class PlateInitializer : MonoSingleton<PlateInitializer>
 
     private void SpawnNewPlate()
     {
-        AssignEmptyWorkspaces();
-
         Debug.Log("Spawn plate");
 
-        GameObject workspace = emptyWorkspaces[0];
+        GameObject workspace = GetEmptyWorkspace();
         if (workspace.TryGetComponent(out Workspace ws))
         {
             GameObject plate = Instantiate(platePrefab);
@@ -81,5 +79,21 @@ public class PlateInitializer : MonoSingleton<PlateInitializer>
                 plates.Add(plateComponent);
             }
         }
+    }
+
+    public void ResetPlate(Plate plate)
+    {
+        GameObject emptyWorkspace = GetEmptyWorkspace();
+
+        if (emptyWorkspace.TryGetComponent(out Workspace workspace))
+        {
+            workspace.AddItem(plate.gameObject);
+        }
+    }
+
+        private GameObject GetEmptyWorkspace()
+    {
+        AssignEmptyWorkspaces();
+        return emptyWorkspaces[0];
     }
 }

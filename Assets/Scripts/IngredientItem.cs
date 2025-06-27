@@ -23,6 +23,7 @@ public class IngredientItem : MonoBehaviour
     private void OnDestroy()
     {
         RemoveItemDisplay();
+        LooseIngredientManager.Instance?.RemoveLooseItem(this);
     }
 
     public void RemoveItemDisplay()

@@ -154,6 +154,8 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
 
     public virtual void RemoveAllItems()
     {
+        foreach (var item in storedItems) Destroy(item);
+
         storedItems.Clear();
         itemDisplay?.RemoveItemDisplay();
     }

@@ -41,6 +41,11 @@ public class PlayerAgent : Agent
         {
             var workspaces = AgentObservationManager.Instance.GetTileObservations(transform.position, 1, true);
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            AgentObservationManager.Instance.GetAllLooseIngredientObservations(transform.position, true);
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -63,11 +68,11 @@ public class PlayerAgent : Agent
         int tileRange = 3;
         sensor.AddObservation(AgentObservationManager.Instance.GetTileObservations(transform.position, tileRange));
 
-        //Plate Observations - 23 * 3 = 69 Observations
+        //Plate Observations - 24 * 3 = 72 Observations
         sensor.AddObservation(AgentObservationManager.Instance.GetAllPlateObservations(transform.position));
 
-        //Loose Items Observations
-        sensor.AddObservation(AgentObservationManager.Instance.GetAllLooseItemObservations(transform.position));
+        //Loose Items Observations - 90 Observations
+        sensor.AddObservation(AgentObservationManager.Instance.GetAllLooseIngredientObservations(transform.position));
     }
 
     public override void OnActionReceived(ActionBuffers actions)

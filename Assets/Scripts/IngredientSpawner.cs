@@ -32,7 +32,7 @@ public class IngredientSpawner : MonoBehaviour, IInteractable
 
     private void TrySpawnIngredient(PlayerInteract player)
     {
-        if (ingredientData == null || player.CanPickupItem() == false) return;
+        if (ingredientData == null || player.CanPickupItem() == false || LooseIngredientManager.Instance.CanAcceptLooseItem == false) return;
 
         GameObject ingredientPrefab = ingredientData.GetPrefabFromState(ingredientData.initialState);
         if (ingredientPrefab == null) return;

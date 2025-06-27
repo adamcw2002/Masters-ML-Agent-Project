@@ -211,27 +211,32 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         List<Plate> plates = PlateInitializer.Instance.GetPlates();
 
         int plateCount = 3;
-        float[] observation = new float[23 * plateCount];
+        float[] observation = new float[24 * plateCount];
         int index = 0;
 
-        foreach (var plate in plates) //23 OBSERVATIONS PER PLATE
+        for (int i = 0; i < plateCount; i++)
         {
-            float[] plateObservation = GetPlateObservation(plate, playerVector2Pos);
+            if (i < plates.Count)
+            {
+                float[] plateObservation = GetPlateObservation(plates[i], playerVector2Pos);
 
-            foreach (float val in plateObservation)
+                foreach (float val in plateObservation)
                     observation[index++] = val;
+            }
         }
-
         return observation;
     }
 
     private float[] GetPlateObservation(Plate plate, Vector2Int playerPos)
     {
-        float[] observation = new float[23];
+        float[] observation = new float[24];
         int index = 0;
 
         Vector2Int platePos = GetVector2IntPos(plate.gameObject.transform.position);
         Vector2Int relativePos = platePos - playerPos;
+
+        //PLATE EXISTS
+        observation[index++] = 1;
 
         observation[index++] = relativePos.x;
         observation[index++] = relativePos.y;
@@ -256,7 +261,6 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
                         observation[index++] = val;
 
                 }
-
             }
         }
 
@@ -264,14 +268,55 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
     }
 
 
-    public float[] GetAllLooseItemObservations(Vector3 playerPosition)
+    public float[] GetAllLooseIngredientObservations(Vector3 playerPosition, bool showDebug = false)
     {
         Vector2Int playerVector2Pos = GetVector2IntPos(playerPosition);
 
-        float[] observation = new float[5];
+        List<IngredientItem> looseIngredients = LooseIngredientManager.Instance.GetAllLooseItems();
+
+        float[] observation = new float[9 * 10];
         int index = 0;
 
+        int maxLooseItems = 10;
+        for (int i = 0; i < maxLooseItems; i++)
+        {
+            if (i < looseIngredients.Count)
+            {
+                float[] looseIngredientObservation = GetLooseIngredientObservation(looseIngredients[i], playerVector2Pos, showDebug);
 
+                foreach (float val in looseIngredientObservation)
+                    observation[index++] = val;
+            }
+        }
+
+        return observation;
+    }
+
+    private float[] GetLooseIngredientObservation(IngredientItem ingredient, Vector2Int playerPos, bool showDebug = false)
+    {
+        //9 OBSERVATIONS PER LOOSE INGREDIENT
+        float[] observation = new float[9];
+        int index = 0;
+
+        Vector2Int ingredientPos = GetVector2IntPos(ingredient.gameObject.transform.position);
+
+        //INGREDIENT EXISTS
+        observation[index++] = 1;
+
+        //INGREDIENT POSITION
+        Vector2Int relativePos = ingredientPos - playerPos;
+        observation[index++] = relativePos.x;
+        observation[index++] = relativePos.y;
+
+        //INGREDIENT ID
+        observation[index++] = ingredient.IngredientData.uniqueIntID;
+
+        //INGREDIENT STATE
+        float[] stateOneHot = GetOneHotIngredientState(ingredient.CurrentState);
+        foreach (float val in stateOneHot)
+            observation[index++] = val;
+
+        if (showDebug) Debug.Log("Loose Item: [" + string.Join(", ", observation) + "]");
 
         return observation;
     }

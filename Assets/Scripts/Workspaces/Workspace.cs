@@ -183,7 +183,12 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
         UpdateItemDisplay();
 
-        if (item.TryGetComponent(out IngredientItem ingredientItem)) ingredientItem.RemoveItemDisplay();
+        if (item.TryGetComponent(out IngredientItem ingredientItem))
+        {
+            ingredientItem.RemoveItemDisplay();
+
+            LooseIngredientManager.Instance.AddLooseItem(ingredientItem);
+        }
 
         return true;
     }
@@ -222,7 +227,12 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
         UpdateItemDisplay();
 
-        if (item.TryGetComponent(out IngredientItem ingredientItem)) ingredientItem.AddItemDisplay();
+        if (item.TryGetComponent(out IngredientItem ingredientItem))
+        {
+            ingredientItem.AddItemDisplay();
+
+            LooseIngredientManager.Instance.RemoveLooseItem(ingredientItem);
+        }
 
         if (storedItems.Count == 0) itemDisplay?.RemoveItemDisplay();
 

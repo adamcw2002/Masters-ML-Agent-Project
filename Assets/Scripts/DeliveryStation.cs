@@ -32,9 +32,9 @@ public class DeliveryStation : MonoBehaviour, IInteractable
         if (allowIncorrectRecipes || isRecipeCorrect)
         {
             player.RemoveItem();
-            Destroy(itemHolding);
+            plate.RemoveAllItems();
 
-            OnRecipeDelivered?.Invoke(this, EventArgs.Empty);
+            OnRecipeDelivered?.Invoke(plate, EventArgs.Empty);
         }
     }
 }

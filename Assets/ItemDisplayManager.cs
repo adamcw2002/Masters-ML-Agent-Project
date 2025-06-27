@@ -18,7 +18,7 @@ public class ItemDisplayManager : MonoSingleton<ItemDisplayManager>
         container.transform.parent = worldSpaceCanvas.transform;
         container.name = "Item Display Container";
 
-        ObjectPooler.Instance.CreatePool(poolKey, itemDisplayPrefab, 10);
+        ObjectPooler.Instance.CreatePool(poolKey, itemDisplayPrefab, 20);
     }
 
     public ItemDisplay CreateItemDisplay(Transform objectTransform, IngredientData data = null, float yOffset = 1)
