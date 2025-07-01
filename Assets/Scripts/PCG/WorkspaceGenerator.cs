@@ -40,7 +40,6 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
     private Vector2Int gridMaxBounds;
 
     private BSPGridFloorPlanGenerator FloorPlanGenerator;
-    private System.Random rng = new System.Random();
 
     private float FloorHeight = 0;
     private float FloorYScale = 0;
@@ -804,7 +803,7 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
         while (n > 1)
         {
             n--;
-            int k = rng.Next(n + 1);
+            int k = UnityEngine.Random.Range(0, n + 1);
             Vector2Int temp = positions[k];
             positions[k] = positions[n];
             positions[n] = temp;

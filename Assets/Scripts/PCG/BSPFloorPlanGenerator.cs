@@ -7,6 +7,11 @@ using UnityEngine;
 
 public class BSPGridFloorPlanGenerator : MonoBehaviour
 {
+    [Header("Generation Seed")]
+    private int seed;
+    [SerializeField] private int startSeed;
+    [SerializeField] private bool randomizeSeedOnNewEpisode;
+
     [Header("Floor Plan Settings")]
     [SerializeField] private int gridWidth = 50;    // Width in cells
     [SerializeField] private int gridLength = 50;
@@ -61,26 +66,39 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
 
     private void Start()
     {
-        GenerateFloorPlan();
+        seed = startSeed;
+
+        GenerateFloorPlan(false);
 
         PlayerAgent.OnEpisodeEnd += PlayerAgent_OnEpisodeEnd;
     }
 
     private void PlayerAgent_OnEpisodeEnd(object sender, EventArgs e)
     {
-        GenerateFloorPlan();
+        GenerateFloorPlan(randomizeSeedOnNewEpisode);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GenerateFloorPlan();
+            GenerateFloorPlan(randomizeSeedOnNewEpisode);
         }
     }
 
-    public void GenerateFloorPlan()
+    public void GenerateFloorPlan(bool randomizeSeed = true)
     {
+        if (randomizeSeed)
+        {
+            seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+
+            Debug.Log("New seed");
+        }
+
+        UnityEngine.Random.InitState(seed);
+
+        //for (int i = 0; i < 10; i++) Debug.Log(UnityEngine.Random.Range(0, 10));
+
         // Clear any existing floor plan
         foreach (Transform child in transform)
         {

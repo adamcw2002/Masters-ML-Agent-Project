@@ -47,9 +47,7 @@ public class PlateInitializer : MonoSingleton<PlateInitializer>
             .Where(ws => ws != null && ws.TryGetComponent<EmptyWorkspace>(out EmptyWorkspace workspace) && workspace.HasItems == false)
             .ToList();
 
-        // Shuffle the list
-        System.Random rng = new System.Random();
-        emptyWorkspaces = emptyWorkspaces.OrderBy(_ => rng.Next()).ToList();
+        Shuffle(emptyWorkspaces);
     }
 
     private void SpawnPlates()
@@ -91,9 +89,18 @@ public class PlateInitializer : MonoSingleton<PlateInitializer>
         }
     }
 
-        private GameObject GetEmptyWorkspace()
+    private GameObject GetEmptyWorkspace()
     {
         AssignEmptyWorkspaces();
         return emptyWorkspaces[0];
+    }
+
+    private void Shuffle<T>(IList<T> list)
+    {
+        for (int i = 0; i < list.Count - 1; i++)
+        {
+            int j = UnityEngine.Random.Range(i, list.Count);
+            (list[i], list[j]) = (list[j], list[i]);
+        }
     }
 }

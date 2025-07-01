@@ -229,8 +229,19 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
     private float[] GetPlateObservation(Plate plate, Vector2Int playerPos)
     {
-        float[] observation = new float[24];
+        int observationSize = 24;
+        float[] observation = new float[observationSize];
         int index = 0;
+
+        if (plate == null)
+        {
+            for(int i = 0; i < observationSize; i++)
+            {
+                observation[i] = 0;
+            }
+
+            return observation;
+        }
 
         Vector2Int platePos = GetVector2IntPos(plate.gameObject.transform.position);
         Vector2Int relativePos = platePos - playerPos;

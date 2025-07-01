@@ -2361,6 +2361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fa8d3977c9f55a4385ac3e1e04fcd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startSeed: 100
+  randomizeSeedOnNewEpisode: 1
   gridWidth: 10
   gridLength: 10
   roomCount: 1
