@@ -7,6 +7,7 @@ using System;
 public class PlayerAgent : Agent
 {
     public static event EventHandler OnEpisodeEnd;
+    public static event EventHandler OnAgentSpawned;
 
     private PlayerMovement movement;
     private PlayerInteract interact;
@@ -22,6 +23,8 @@ public class PlayerAgent : Agent
     private void Start()
     {
         GameTimer.OnTimeEnd += GameTimer_OnTimeEnd;
+
+        OnAgentSpawned.Invoke(this, EventArgs.Empty);
     }
 
     private void GameTimer_OnTimeEnd()
