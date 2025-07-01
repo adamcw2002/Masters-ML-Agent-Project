@@ -44,7 +44,7 @@ public class PlayerAgent : Agent
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            AgentObservationManager.Instance.GetAllLooseIngredientObservations(transform.position, true);
+            AgentObservationManager.Instance.GetAllIngredientObservations(transform.position, true);
         }
     }
 
@@ -71,8 +71,8 @@ public class PlayerAgent : Agent
         //Plate Observations - 24 * 3 = 72 Observations
         sensor.AddObservation(AgentObservationManager.Instance.GetAllPlateObservations(transform.position));
 
-        //Loose Items Observations - 90 Observations
-        sensor.AddObservation(AgentObservationManager.Instance.GetAllLooseIngredientObservations(transform.position));
+        //Loose Items Observations - 9 * Max Loose Ingredients
+        sensor.AddObservation(AgentObservationManager.Instance.GetAllIngredientObservations(transform.position));
     }
 
     public override void OnActionReceived(ActionBuffers actions)

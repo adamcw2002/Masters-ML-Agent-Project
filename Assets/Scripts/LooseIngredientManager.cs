@@ -3,8 +3,29 @@ using UnityEngine;
 
 public class LooseIngredientManager : MonoSingleton<LooseIngredientManager>
 {
-    private int maxLooseItems = 10;
+    private const int maxLooseItems = 20;
     private List<IngredientItem> looseItems = new List<IngredientItem>();
+    private List<IngredientSpawner> ingredientSpawners = new List<IngredientSpawner>();
+
+    private void Start()
+    {
+        BSPGridFloorPlanGenerator.OnFloorGenerated += BSPGridFloorPlanGenerator_OnFloorGenerated;
+
+        IngredientSpawner.OnNewIngredientSpawner += IngredientSpawner_OnNewIngredientSpawner;
+    }
+
+    private void BSPGridFloorPlanGenerator_OnFloorGenerated()
+    {
+        ClearAllIngredientSpawners();
+    }
+
+    private void IngredientSpawner_OnNewIngredientSpawner(object sender, System.EventArgs e)
+    {
+        AddIngredientSpawner(sender as IngredientSpawner);
+    }
+
+    public int GetMaxLooseItems() => maxLooseItems;
+    public bool CanAcceptLooseItem => looseItems.Count + ingredientSpawners.Count < maxLooseItems;
 
     public void AddLooseItem(GameObject item)
     {
@@ -39,15 +60,27 @@ public class LooseIngredientManager : MonoSingleton<LooseIngredientManager>
         return looseItems.Contains(item);
     }
 
+    private void AddIngredientSpawner(IngredientSpawner spawner)
+    {
+        if (spawner == null) return;
+
+        ingredientSpawners.Add(spawner);
+    }
+
     public List<IngredientItem> GetAllLooseItems()
     {
         return new List<IngredientItem>(looseItems);
     }
 
-    public bool CanAcceptLooseItem => looseItems.Count < maxLooseItems;
+    public List<IngredientSpawner> GetAllIngredientSpawners() => ingredientSpawners;
 
     public void ClearAllLooseItems()
     {
         looseItems.Clear();
+    }
+
+    private void ClearAllIngredientSpawners()
+    {
+        ingredientSpawners.Clear();
     }
 }

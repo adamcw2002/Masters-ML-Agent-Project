@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class IngredientSpawner : MonoBehaviour, IInteractable
 {
+    public static event EventHandler OnNewIngredientSpawner;
+
     [SerializeField] private IngredientData ingredientData;
 
     [SerializeField] private SpriteRenderer iconRenderer;
@@ -13,6 +16,11 @@ public class IngredientSpawner : MonoBehaviour, IInteractable
     private void Awake()
     {
         if (ingredientData) SetIngredientData(ingredientData);
+    }
+
+    private void Start()
+    {
+        OnNewIngredientSpawner?.Invoke(this, EventArgs.Empty);
     }
 
     public void SetIngredientData(IngredientData data)

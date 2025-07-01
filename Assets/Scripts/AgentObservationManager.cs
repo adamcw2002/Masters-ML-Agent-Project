@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -279,21 +280,32 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
     }
 
 
-    public float[] GetAllLooseIngredientObservations(Vector3 playerPosition, bool showDebug = false)
+    public float[] GetAllIngredientObservations(Vector3 playerPosition, bool showDebug = false)
     {
         Vector2Int playerVector2Pos = GetVector2IntPos(playerPosition);
 
         List<IngredientItem> looseIngredients = LooseIngredientManager.Instance.GetAllLooseItems();
+        int maxLooseIngredients = LooseIngredientManager.Instance.GetMaxLooseItems();
+        List<IngredientSpawner> ingredientSpawners = LooseIngredientManager.Instance.GetAllIngredientSpawners();
 
-        float[] observation = new float[9 * 10];
+        float[] observation = new float[9 * maxLooseIngredients];
         int index = 0;
 
-        int maxLooseItems = 10;
-        for (int i = 0; i < maxLooseItems; i++)
+        //INGREDIENT SPAWNERS
+        for (int i = 0; i < ingredientSpawners.Count; i++)
+        {
+            float[] ingredientSpawnerObservation = GetIngredientSpawnerObservation(ingredientSpawners[i], playerVector2Pos, showDebug);
+
+            foreach (float val in ingredientSpawnerObservation)
+                observation[index++] = val;
+        }
+
+        //INGREDIENTS
+        for (int i = 0; i < maxLooseIngredients - ingredientSpawners.Count; i++)
         {
             if (i < looseIngredients.Count)
             {
-                float[] looseIngredientObservation = GetLooseIngredientObservation(looseIngredients[i], playerVector2Pos, showDebug);
+                float[] looseIngredientObservation = GetIngredientObservation(looseIngredients[i], playerVector2Pos, showDebug);
 
                 foreach (float val in looseIngredientObservation)
                     observation[index++] = val;
@@ -303,7 +315,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         return observation;
     }
 
-    private float[] GetLooseIngredientObservation(IngredientItem ingredient, Vector2Int playerPos, bool showDebug = false)
+    private float[] GetIngredientObservation(IngredientItem ingredient, Vector2Int playerPos, bool showDebug = false)
     {
         //9 OBSERVATIONS PER LOOSE INGREDIENT
         float[] observation = new float[9];
@@ -328,6 +340,35 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             observation[index++] = val;
 
         if (showDebug) Debug.Log("Loose Item: [" + string.Join(", ", observation) + "]");
+
+        return observation;
+    }
+
+    private float[] GetIngredientSpawnerObservation(IngredientSpawner spawner, Vector2Int playerPos, bool showDebug = false)
+    {
+        //9 OBSERVATIONS PER LOOSE INGREDIENT
+        float[] observation = new float[9];
+        int index = 0;
+
+        Vector2Int ingredientPos = GetVector2IntPos(spawner.gameObject.transform.position);
+
+        //INGREDIENT EXISTS
+        observation[index++] = 1;
+
+        //INGREDIENT POSITION
+        Vector2Int relativePos = ingredientPos - playerPos;
+        observation[index++] = relativePos.x;
+        observation[index++] = relativePos.y;
+
+        //INGREDIENT ID
+        observation[index++] = spawner.GetSpawnedIngredient().uniqueIntID;
+
+        //INGREDIENT STATE
+        float[] stateOneHot = GetOneHotIngredientState(spawner.GetSpawnedIngredient().initialState);
+        foreach (float val in stateOneHot)
+            observation[index++] = val;
+
+        if (showDebug) Debug.Log("IngredientSpawner: [" + string.Join(", ", observation) + "]");
 
         return observation;
     }
