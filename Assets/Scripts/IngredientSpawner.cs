@@ -6,7 +6,7 @@ using UnityEngine;
 public class IngredientSpawner : MonoBehaviour, IInteractable
 {
     public static event EventHandler OnNewIngredientSpawner;
-    public static event EventHandler OnPlayerGrabIngredient;
+    public static event EventHandler<IngredientEventArgs> OnPlayerGrabIngredient;
 
     [SerializeField] private IngredientData ingredientData;
 
@@ -66,7 +66,7 @@ public class IngredientSpawner : MonoBehaviour, IInteractable
             }
             else
             {
-                OnPlayerGrabIngredient?.Invoke(this, EventArgs.Empty);
+                OnPlayerGrabIngredient?.Invoke(this, new IngredientEventArgs(ingredientItem));
             }
         }
     }

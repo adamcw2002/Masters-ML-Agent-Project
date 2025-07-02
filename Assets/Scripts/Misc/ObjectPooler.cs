@@ -66,8 +66,8 @@ public class ObjectPooler : MonoSingleton<ObjectPooler>
     {
         if (obj != null && poolDictionary.ContainsKey(key))
         {
-            obj.SetActive(false);
-            obj.transform.SetParent(transform, false);
+            obj?.SetActive(false);
+            obj?.transform.SetParent(transform, false);
             poolDictionary[key].Enqueue(obj);
         }
     }

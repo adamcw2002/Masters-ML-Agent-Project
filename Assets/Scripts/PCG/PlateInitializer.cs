@@ -22,14 +22,14 @@ public class PlateInitializer : MonoSingleton<PlateInitializer>
         Bin.OnPlateBinned += Bin_OnPlateBinned;
     }
 
-    private void Bin_OnPlateBinned(object sender, System.EventArgs e)
+    private void Bin_OnPlateBinned(object sender, BinEventArgs e)
     {
-        ResetPlate(sender as Plate);
+        ResetPlate(e.plate);
     }
 
-    private void DeliveryStation_OnRecipeDelivered(object sender, System.EventArgs e)
+    private void DeliveryStation_OnRecipeDelivered(object sender, DeliveryEventArgs e)
     {
-        ResetPlate(sender as Plate);
+        ResetPlate(e.plate);
     }
 
     private void WorkspaceGenerator_OnWorkspacesGenerated(object sender, System.EventArgs e)

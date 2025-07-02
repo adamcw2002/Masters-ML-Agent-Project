@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Plate : PortableStorage
 {
+    public static event EventHandler<IngredientEventArgs> OnAnyCombineIngredients;
+
     private bool hasCombinedIngredients = false;
     public bool HasCombinedIngredients => hasCombinedIngredients;
 
@@ -22,7 +25,10 @@ public class Plate : PortableStorage
 
             RecipeData recipeOnPlate = recipeManager.CanCombineIngredients(this);
 
-            if (recipeOnPlate != null && tryCombine) CombineIngredients(recipeOnPlate);
+            if (recipeOnPlate != null && tryCombine)
+            {
+                CombineIngredients(recipeOnPlate);
+            }
 
             hasCombinedIngredients = false;
         }
@@ -45,6 +51,8 @@ public class Plate : PortableStorage
         AddItem(recipeObject, false);
 
         hasCombinedIngredients = true;
+
+        OnAnyCombineIngredients?.Invoke(this, new IngredientEventArgs(ingredient));
     }
 
     public override GameObject RemoveItem(GameObject item)

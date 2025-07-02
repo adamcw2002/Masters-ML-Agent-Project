@@ -12,6 +12,20 @@ public class LooseIngredientManager : MonoSingleton<LooseIngredientManager>
         BSPGridFloorPlanGenerator.OnFloorGenerated += BSPGridFloorPlanGenerator_OnFloorGenerated;
 
         IngredientSpawner.OnNewIngredientSpawner += IngredientSpawner_OnNewIngredientSpawner;
+
+        Workspace.OnAnyItemAddedToWorkspace += Workspace_OnItemAddedToWorkspace;
+
+        Workspace.OnAnyItemRemovedFromWorkspace += Workspace_OnItemRemovedFromWorkspace;
+    }
+
+    private void Workspace_OnItemRemovedFromWorkspace(object sender, IngredientEventArgs e)
+    {
+        RemoveLooseItem(e.IngredientItem);
+    }
+
+    private void Workspace_OnItemAddedToWorkspace(object sender, IngredientEventArgs e)
+    {
+        AddLooseItem(e.IngredientItem);
     }
 
     private void BSPGridFloorPlanGenerator_OnFloorGenerated()

@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class DeliveryStation : MonoBehaviour, IInteractable
 {
-    public static event EventHandler OnRecipeDelivered;
+    public static event EventHandler<DeliveryEventArgs> OnRecipeDelivered;
 
     [SerializeField] private bool allowIncorrectRecipes = false;
 
@@ -31,10 +33,10 @@ public class DeliveryStation : MonoBehaviour, IInteractable
 
         if (allowIncorrectRecipes || isRecipeCorrect)
         {
+            OnRecipeDelivered?.Invoke(this, new DeliveryEventArgs(plate, isRecipeCorrect));
+
             player.RemoveItem();
             plate.RemoveAllItems();
-
-            OnRecipeDelivered?.Invoke(plate, EventArgs.Empty);
         }
     }
 }

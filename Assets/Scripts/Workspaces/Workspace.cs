@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,6 +6,9 @@ using UnityEngine;
 
 public abstract class Workspace : MonoBehaviour, IInteractable
 {
+    public static event EventHandler<IngredientEventArgs> OnAnyItemAddedToWorkspace;
+    public static event EventHandler<IngredientEventArgs> OnAnyItemRemovedFromWorkspace;
+
     [SerializeField] protected int maxItems = 1;
 
     [SerializeField] protected bool canProcessItems = true;
@@ -27,6 +31,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
     public bool HasItems => storedItems.Count > 0;
     public GameObject GetFirstItem() => HasItems ? storedItems[0] : null;
+    public IngredientState GetOutputState() => outputState;
 
     protected virtual void Start()
     {
@@ -186,9 +191,9 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         if (item.TryGetComponent(out IngredientItem ingredientItem))
         {
             ingredientItem.RemoveItemDisplay();
-
-            LooseIngredientManager.Instance.AddLooseItem(ingredientItem);
         }
+
+        OnAnyItemAddedToWorkspace?.Invoke(this, new IngredientEventArgs(ingredientItem));
 
         return true;
     }
@@ -230,11 +235,11 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         if (item.TryGetComponent(out IngredientItem ingredientItem))
         {
             ingredientItem.AddItemDisplay();
-
-            LooseIngredientManager.Instance.RemoveLooseItem(ingredientItem);
         }
 
         if (storedItems.Count == 0) itemDisplay?.RemoveItemDisplay();
+
+        OnAnyItemRemovedFromWorkspace?.Invoke(this, new IngredientEventArgs(ingredientItem));
 
         return item;
     }

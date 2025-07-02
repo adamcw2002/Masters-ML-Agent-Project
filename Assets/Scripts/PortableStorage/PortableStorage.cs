@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +7,8 @@ using UnityEngine.UIElements;
 
 public abstract class PortableStorage : MonoBehaviour, IInteractable
 {
+    public static event EventHandler<IngredientEventArgs> OnAnyIngredientAddedToPortableStorage;
+
     [SerializeField] private int maxIngredients = 4;
     [SerializeField] private List<Transform> itemPositions;  // Optional positions where items should be placed
     [SerializeField] private float defaultItemHeight = 0.1f; // Height above plate for items
@@ -109,6 +112,8 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         UpdateItemDisplay();
 
         if (item.TryGetComponent(out IngredientItem ingredientItem)) ingredientItem.RemoveItemDisplay();
+
+        OnAnyIngredientAddedToPortableStorage?.Invoke(this, new IngredientEventArgs(ingredientItem));
 
         return true;
     }

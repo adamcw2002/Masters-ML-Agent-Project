@@ -6,7 +6,8 @@ using System;
 
 public class Bin : MonoBehaviour, IInteractable
 {
-    public static event EventHandler OnPlateBinned;
+    public static event EventHandler<BinEventArgs> OnPlateBinned;
+    public static event EventHandler<IngredientEventArgs> OnIngredientBinned;
 
     public void Interact(PlayerInteract player, GameObject ingredientHolding)
     {
@@ -14,9 +15,18 @@ public class Bin : MonoBehaviour, IInteractable
 
         if (ingredientHolding.TryGetComponent(out Plate plate))
         {
+            OnPlateBinned?.Invoke(this, new BinEventArgs(plate));
+
             player.RemoveItem();
             plate.RemoveAllItems();
-            OnPlateBinned?.Invoke(plate, EventArgs.Empty);
+        }
+        else if (ingredientHolding.TryGetComponent(out IngredientItem ingredient))
+        {
+            OnIngredientBinned?.Invoke(this, new IngredientEventArgs(ingredient));
+
+            GameObject removedItem = player.RemoveItem();
+            if (removedItem) Destroy(removedItem);
+
         }
     }
 }
