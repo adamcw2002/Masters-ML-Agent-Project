@@ -76,6 +76,9 @@ public class PlayerAgent : Agent
 
         //Loose Items Observations - 9 * Max Loose Ingredients
         sensor.AddObservation(AgentObservationManager.Instance.GetAllIngredientObservations(transform.position));
+
+        //Game Timer
+        sensor.AddObservation(GameTimer.Instance.GetCurrentGameTime());
     }
 
     public override void OnActionReceived(ActionBuffers actions)

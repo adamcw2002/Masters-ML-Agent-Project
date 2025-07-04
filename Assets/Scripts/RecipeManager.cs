@@ -90,7 +90,7 @@ public class RecipeManager : MonoSingleton<RecipeManager>
 
             if (!dict.TryGetValue(data, out IngredientState requiredState) || requiredState != state)
             {
-                Debug.Log($"Invalid ingredient or state mismatch: {data.name}");
+                //Debug.Log($"Invalid ingredient or state mismatch: {data.name}");
                 return false;
             }
 

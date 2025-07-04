@@ -73,7 +73,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
     {
         int width = range + range + 1;
 
-        float[] observation = new float[(width * width) * 10];
+        float[] observation = new float[(width * width) * 15];
         int index = 0;
 
         GameObject[,] workspaces = new GameObject[width,width];
@@ -112,13 +112,15 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
         cookProgress (0–100 or -1 if not applicable), 
 
+        outputState (one hot)
+
         itemType (e.g. 0 = nothing, 1 = tomato, 2 = plate...), 
 
         itemState [1,0,0,0,0] raw etc
 
         */
 
-        float[] observation = new float[10];
+        float[] observation = new float[15];
 
         int index = 0;
 
@@ -133,6 +135,12 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
         //WORKSPACE PROCESSING PROGRESS
         observation[index++] = GetWorkspaceProgress(workspace);
+
+        //ONE HOT OUTPUT STATE
+
+        float[] oneHotOutputState = GetWorkspaceOutputStateOneHot(workspace);
+        foreach (float val in oneHotOutputState)
+            observation[index++] = val;
 
         //ID OF ITEM ON WORKSPACE
         observation[index++] = GetItemOnWorkspace(workspace);
@@ -201,6 +209,16 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         }
 
         return -1;
+    }
+
+    private float[] GetWorkspaceOutputStateOneHot(GameObject obj)
+    {
+        if (obj?.TryGetComponent(out Workspace workspace) == true)
+        {
+            return GetOneHotIngredientState(workspace.GetOutputState());
+        }
+
+        return new float[5];
     }
 
     private float[] GetIngredientStateOnWorkpace(GameObject obj)

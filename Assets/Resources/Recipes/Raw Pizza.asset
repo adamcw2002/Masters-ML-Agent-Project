@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeName: Cheese Pizza
   finalProductData: {fileID: 11400000, guid: 63263409d0e623747bf5d5d368c7c739, type: 2}
-  finalProductState: 2
+  finalProductState: 0
   baseRequiredIngredients:
   - ingredient: {fileID: 11400000, guid: b547db522d5cbdd4c847cc4e9c348646, type: 2}
-    requiredState: 2
+    requiredState: 0
   - ingredient: {fileID: 11400000, guid: 0fd47207bef1c3f4780084298d588b4d, type: 2}
-    requiredState: 2
+    requiredState: 1
   - ingredient: {fileID: 11400000, guid: 4480f05c4eeadcb43b28e40fa0ba9b3a, type: 2}
-    requiredState: 2
+    requiredState: 0
   alternativeRecipe: []

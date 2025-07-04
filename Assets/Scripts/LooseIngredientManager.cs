@@ -50,7 +50,7 @@ public class LooseIngredientManager : MonoSingleton<LooseIngredientManager>
     {
         if (CanAcceptLooseItem && item != null && !looseItems.Contains(item))
         {
-            Debug.Log("Added Loose Item");
+            //Debug.Log("Added Loose Item");
 
             looseItems.Add(item);
         }

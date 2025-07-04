@@ -1242,8 +1242,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableRecipes:
-  - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
-  - {fileID: 11400000, guid: 54bfe90b878b4474c80713d164a797da, type: 2}
+  - {fileID: 11400000, guid: cd6b777f332f13b4bb1d0ec8df2d76bc, type: 2}
+  - {fileID: 11400000, guid: eefce9c503463f549aec78164dbb0e69, type: 2}
+  - {fileID: 11400000, guid: f312105e387839d43898fdd4cdd44a67, type: 2}
   activeRecipe: {fileID: 0}
 --- !u!1 &819504375
 GameObject:

@@ -12,6 +12,7 @@ public class RewardManager : MonoSingleton<RewardManager>
     [SerializeField] private float CreatedFinalRecipeOnPlateReward = 0.2f;
     [SerializeField] private float CorrectFinalProductDeliveredReward = 0.5f;
     [SerializeField] private float BinnedIncorrectPlate = 0.05f;
+    [SerializeField] private float EfficientMovementReward = 0.1f;
 
     [Header("Negative Rewards")]
     [SerializeField] private float GrabIncorrectIngredientReward = -0.1f;
@@ -25,6 +26,9 @@ public class RewardManager : MonoSingleton<RewardManager>
     private Dictionary<IngredientData, IngredientState> currentIngredientStateRequirements = new Dictionary<IngredientData, IngredientState>();
     private Dictionary<IngredientData, IngredientState> currentRecipeRequirements = new Dictionary<IngredientData, IngredientState>();
 
+    private float idleTimer;
+    private float idleTime = 10f;
+
     private void Start()
     {
         PlayerAgent.OnAgentSpawned += PlayerAgent_OnAgentSpawned;
@@ -37,11 +41,26 @@ public class RewardManager : MonoSingleton<RewardManager>
         Plate.OnAnyCombineIngredients += Plate_OnAnyCombineIngredients;
         DeliveryStation.OnRecipeDelivered += DeliveryStation_OnRecipeDelivered;
         Bin.OnPlateBinned += Bin_OnPlateBinned;
+
+        ResetIdleTimer();
     }
 
     private void OnDisable()
     {
         PlayerAgent.OnAgentSpawned -= PlayerAgent_OnAgentSpawned;
+    }
+
+    private void Update()
+    {
+        if (idleTimer > 0)
+        {
+            idleTimer -= Time.deltaTime;
+        }
+
+        if (idleTimer <= 0)
+        {
+            AddAgentReward(-Time.deltaTime);
+        }
     }
 
     private void PlayerAgent_OnAgentSpawned(object sender, System.EventArgs e)
@@ -95,6 +114,7 @@ public class RewardManager : MonoSingleton<RewardManager>
 
     private void Workspace_OnItemAddedToWorkspace(object sender, IngredientEventArgs e)
     {
+        
         IngredientData ingredientData = e.IngredientItem?.IngredientData;
         Workspace workspace = sender as Workspace;
 
@@ -104,10 +124,22 @@ public class RewardManager : MonoSingleton<RewardManager>
 
         RecipeData recipe = RecipeManager.Instance.GetActiveRecipe();
 
+        if (ingredientData == recipe.finalProductData && workspace?.GetOutputState() == recipe.finalProductState)
+        {
+            if (!currentIngredientStateRequirements.ContainsKey(ingredientData))
+            {
+                currentIngredientStateRequirements[ingredientData] = recipe.finalProductState;
+                AddAgentReward(CorrectIngredientToWorkspaceReward);
+            }
+
+            return;
+        }
+
         foreach (var requiredIngredient in recipe.baseRequiredIngredients)
         {
             //IF INGREDIENT IS NEEDED IN THE FINAL RECIPE AND THE WORKSPACE TURNS IT INTO THE CORRECT STATE
-            if (ingredientData == requiredIngredient.ingredient && workspace?.GetOutputState() == requiredIngredient.requiredState)
+            if (ingredientData == requiredIngredient.ingredient && (workspace?.GetOutputState() == requiredIngredient.requiredState || 
+                workspace?.GetOutputState() == requiredIngredient.ingredient.GetPreconditionState(requiredIngredient.requiredState)))
             {
 
                 //CORRECT INGREDIENT HAS NOT BEEN TURNED INTO CORRECT STATE YET, REWARD
@@ -138,6 +170,8 @@ public class RewardManager : MonoSingleton<RewardManager>
             AddAgentReward(CorrectIngredientStateToPlateReward);
             currentRecipeRequirements.Remove(ingredientData);
         }
+
+        ResetIdleTimer();
     }
 
     private void Plate_OnAnyCombineIngredients(object sender, IngredientEventArgs e)
@@ -151,6 +185,8 @@ public class RewardManager : MonoSingleton<RewardManager>
         {
             AddAgentReward(CreatedFinalRecipeOnPlateReward);
         }
+
+        ResetIdleTimer();
     }
 
     private void DeliveryStation_OnRecipeDelivered(object sender, DeliveryEventArgs e)
@@ -182,10 +218,27 @@ public class RewardManager : MonoSingleton<RewardManager>
     }
 
 
-    private void AddAgentReward(float amount)
+    private void AddAgentReward(float amount, bool checkEfficiency = true)
     {
         agent?.AddReward(amount);
 
+        if (checkEfficiency && amount > 0) CheckMovementReward();
+
         Debug.Log("Reward: " + amount);
+
+        ResetIdleTimer();
+    }
+
+    private void ResetIdleTimer()
+    {
+        idleTimer = idleTime;
+    }
+
+    private void CheckMovementReward()
+    {
+        if (idleTimer > 5)
+        {
+            AddAgentReward(EfficientMovementReward, false);
+        }
     }
 }

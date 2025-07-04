@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Oven : Workspace, IInteractable
 {
-    /*
     public override bool AddItems(PortableStorage storage)
     {
         List<RecipeData> allRecipes = RecipeManager.Instance.GetAllRecipes();
@@ -55,5 +54,4 @@ public class Oven : Workspace, IInteractable
         // No match found
         return false;
     }
-    */
 }

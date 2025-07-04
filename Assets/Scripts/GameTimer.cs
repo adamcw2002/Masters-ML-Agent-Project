@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameTimer : MonoBehaviour
+public class GameTimer : MonoSingleton<GameTimer>
 {
     public static event Action OnTimeEnd;
 
@@ -12,6 +12,7 @@ public class GameTimer : MonoBehaviour
     [SerializeField] private float timerDuration = 60f;
 
     private float currentTime;
+    public float GetCurrentGameTime() => currentTime;
 
     private void OnEnable()
     {
