@@ -849,6 +849,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &642670675
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 642670677}
+  - component: {fileID: 642670676}
+  m_Layer: 0
+  m_Name: RewardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &642670676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642670675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3ab77058fcf0145a2dc6a70b323f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrabCorrectIngredientReward: 0.1
+  CorrectIngredientToWorkspaceReward: 0.1
+  CorrectIngredientStateToPlateReward: 0.2
+  CreatedFinalRecipeOnPlateReward: 0.2
+  CorrectFinalProductDeliveredReward: 0.5
+  BinnedIncorrectPlate: 0.05
+  GrabIncorrectIngredientReward: -0.1
+  IncorrectIngredientToWorkspaceReward: -0.1
+  IncorrectRecipeDelivered: -0.5
+  BinnedCorrectRecipe: -0.5
+--- !u!4 &642670677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642670675}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 476.42258, y: 310.9829, z: -13.170715}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &696128096 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5978413202831006441, guid: 16fa8ff0117103145ac09f88b1dd9bab, type: 3}
@@ -3308,6 +3362,7 @@ SceneRoots:
   - {fileID: 860715313}
   - {fileID: 1344275368}
   - {fileID: 1620555921}
+  - {fileID: 642670677}
   - {fileID: 1340165587}
   - {fileID: 866893689}
   - {fileID: 1935156199}

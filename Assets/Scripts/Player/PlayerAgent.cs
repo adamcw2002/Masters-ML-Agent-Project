@@ -59,7 +59,7 @@ public class PlayerAgent : Agent
         //Current Inventory - 8 Observations
         sensor.AddObservation(interact.GetAgentInventoryObservation());
 
-        //Current Recipe - 30 Observations
+        //Current Recipe - 46 Observations
         sensor.AddObservation(AgentObservationManager.Instance.GetCurrentRecipeObservation());
 
         //Tile Observations - (Range + Range + 1)^2 * 10 Observations

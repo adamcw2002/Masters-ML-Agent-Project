@@ -16,7 +16,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         int stateCount = System.Enum.GetValues(typeof(IngredientState)).Length;
 
         // Total: 1 ID + n state one-hot = 1 + 5 = 6 per entry
-        float[] observation = new float[1 + stateCount + maxIngredients * (1 + stateCount)];
+        float[] observation = new float[1 + stateCount + (maxIngredients * 2) * (1 + stateCount)];
         int index = 0;
 
         // --- Final Product ---
@@ -34,8 +34,15 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
                 var req = activeRecipe.baseRequiredIngredients[i];
                 observation[index++] = req.ingredient.uniqueIntID;
 
-                float[] oneHot = GetOneHotIngredientState(req.requiredState);
-                foreach (float val in oneHot)
+                IngredientState requiredState = req.requiredState;
+                IngredientState? preconditionState = req.ingredient.GetPreconditionState(requiredState);
+
+                float[] oneHotPrecondition = GetOneHotIngredientState(preconditionState);
+                foreach (float val in oneHotPrecondition)
+                    observation[index++] = val;
+
+                float[] oneHotRequired = GetOneHotIngredientState(req.requiredState);
+                foreach (float val in oneHotRequired)
                     observation[index++] = val;
             }
             else
@@ -50,12 +57,15 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         return observation;
     }
 
-    public float[] GetOneHotIngredientState(IngredientState state)
+    public float[] GetOneHotIngredientState(IngredientState? state)
     {
         int numStates = System.Enum.GetValues(typeof(IngredientState)).Length;
         float[] oneHot = new float[numStates];
 
+        if (state == null) return oneHot;
+
         oneHot[(int)state] = 1f;
+
         return oneHot;
     }
 
