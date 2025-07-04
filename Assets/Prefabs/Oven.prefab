@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 693c1ef94cbfaa34baf65e3a5a449793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxItems: 4
+  maxItems: 1
   canProcessItems: 1
   processingTime: 10
   outputState: 2

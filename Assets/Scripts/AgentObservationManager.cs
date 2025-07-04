@@ -172,14 +172,14 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
     private int GetItemOnWorkspace(GameObject obj)
     {
-        if (obj?.TryGetComponent(out Workspace workspace) == true)
+        if (obj?.TryGetComponent(out Workspace workspace) == true && workspace.HasItems)
         {
             GameObject item = workspace.GetFirstItem();
-            if (item?.TryGetComponent(out IngredientItem ingredient) == true)
+            if (item != null && item?.TryGetComponent(out IngredientItem ingredient) == true)
             {
                 return ingredient.IngredientData.uniqueIntID;
             }
-            if (item?.TryGetComponent(out PortableStorage storage) == true)
+            else if (item != null && item.TryGetComponent(out PortableStorage storage) == true)
             {
                 //PLATE
                 return storage.GetStorageID();
@@ -204,11 +204,15 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
     }
 
     private float[] GetIngredientStateOnWorkpace(GameObject obj)
-    {
+    { 
         //If it is a workspace and there is an ingredient stored on it
-        if (obj?.TryGetComponent(out Workspace workspace) == true && workspace?.GetFirstItem()?.TryGetComponent(out IngredientItem ingredient) == true)
+        if (obj != null && obj?.TryGetComponent(out Workspace workspace) == true)
         {
-            return GetOneHotIngredientState(ingredient.CurrentState);
+            GameObject item = workspace?.GetFirstItem();
+            if (item != null && item?.TryGetComponent(out IngredientItem ingredient) == true)
+            {
+                return GetOneHotIngredientState(ingredient.CurrentState);
+            }
         }
 
         return new float[5];
@@ -272,7 +276,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             {
                 GameObject storedItem = plate.StoredItems[i];
 
-                if (storedItem.TryGetComponent(out IngredientItem ingredientItem))
+                if (storedItem?.TryGetComponent(out IngredientItem ingredientItem) == true)
                 {
                     //INGREDIENT ID
                     observation[index++] = ingredientItem.IngredientData.uniqueIntID;

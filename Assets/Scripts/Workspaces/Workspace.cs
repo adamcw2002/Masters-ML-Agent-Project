@@ -92,7 +92,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
                 {
                     if (AddItems(storageHolding))
                     {
-                        storageHolding.RemoveAllItems();
+                        storageHolding.ClearAllItems();
                         return;
                     }
                 }
@@ -182,8 +182,6 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         item.transform.SetParent(transform);
         item.transform.localPosition = Vector3.up * 0.5f;
 
-        if (startProcessing && canProcessItems && CanProcessItem(item)) StartProcessing();
-
         UpdateVisual();
 
         UpdateItemDisplay();
@@ -193,7 +191,11 @@ public abstract class Workspace : MonoBehaviour, IInteractable
             ingredientItem.RemoveItemDisplay();
         }
 
+        //if (startProcessing && canProcessItems && CanProcessItem(item)) StartProcessing();
+
         OnAnyItemAddedToWorkspace?.Invoke(this, new IngredientEventArgs(ingredientItem));
+
+        if (startProcessing && canProcessItems && CanProcessItem(item)) StartProcessing();
 
         return true;
     }
@@ -314,7 +316,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
         foreach (GameObject ingredientObj in storedItems)
         {
-            if (ingredientObj.TryGetComponent(out IngredientItem ingredient))
+            if (ingredientObj?.TryGetComponent(out IngredientItem ingredient) == true)
             {
                 ingredient.ChangeState(outputState);
             }

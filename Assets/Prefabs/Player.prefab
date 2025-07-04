@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 799
+    VectorObservationSize: 807
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2

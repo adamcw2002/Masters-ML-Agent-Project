@@ -18,8 +18,12 @@ MonoBehaviour:
   uniqueIntID: -1766491626
   possibleStates:
   - preconditionState: 0
+    outputState: 0
+    visualPrefab: {fileID: 3831650488775094263, guid: f5dd709ef43d9a94ead4aad86916237b, type: 3}
+    plateRequired: 1
+  - preconditionState: 0
     outputState: 2
     visualPrefab: {fileID: 3831650488775094263, guid: f5dd709ef43d9a94ead4aad86916237b, type: 3}
     plateRequired: 1
-  initialState: 2
+  initialState: 0
   ingredientMaterial: {fileID: 0}

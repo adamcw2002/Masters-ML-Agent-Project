@@ -36,7 +36,7 @@ public class DeliveryStation : MonoBehaviour, IInteractable
             OnRecipeDelivered?.Invoke(this, new DeliveryEventArgs(plate, isRecipeCorrect));
 
             player.RemoveItem();
-            plate.RemoveAllItems();
+            plate.DestroyAllItems();
         }
     }
 }

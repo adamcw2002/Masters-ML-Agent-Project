@@ -62,10 +62,10 @@ public class Plate : PortableStorage
         return base.RemoveItem(item);
     }
 
-    public override void RemoveAllItems()
+    public override void DestroyAllItems()
     {
         hasCombinedIngredients = false;
 
-        base.RemoveAllItems(); 
+        base.DestroyAllItems(); 
     }
 }

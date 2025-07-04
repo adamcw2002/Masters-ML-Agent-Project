@@ -52,7 +52,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
             {
                 if (playerStorage.AddItems(storedItems))
                 {
-                    RemoveAllItems();
+                    ClearAllItems();
                     return;
                 }
             }
@@ -64,7 +64,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
             {
                 if (AddItems(playerStorage.StoredItems))
                 {
-                    playerStorage.RemoveAllItems();
+                    playerStorage.ClearAllItems();
                     return;
                 }
             }
@@ -157,15 +157,13 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         return item;
     }
 
-    public virtual void RemoveAllItems()
+    public virtual void ClearAllItems()
     {
-        foreach (var item in storedItems) Destroy(item);
-
         storedItems.Clear();
         itemDisplay?.RemoveItemDisplay();
     }
 
-    public void DestroyAllItems()
+    public virtual void DestroyAllItems()
     {
         if (storedItems.Count == 0) return;
 
@@ -175,6 +173,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         }
 
         storedItems.Clear();
+        itemDisplay?.RemoveItemDisplay();
 
         UpdateVisual();
     }

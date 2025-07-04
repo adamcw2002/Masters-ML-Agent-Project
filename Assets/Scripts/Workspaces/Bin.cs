@@ -18,7 +18,7 @@ public class Bin : MonoBehaviour, IInteractable
             OnPlateBinned?.Invoke(this, new BinEventArgs(plate));
 
             player.RemoveItem();
-            plate.RemoveAllItems();
+            plate.DestroyAllItems();
         }
         else if (ingredientHolding.TryGetComponent(out IngredientItem ingredient))
         {
