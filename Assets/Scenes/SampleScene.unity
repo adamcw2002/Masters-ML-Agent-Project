@@ -885,6 +885,7 @@ MonoBehaviour:
   CorrectFinalProductDeliveredReward: 1
   BinnedIncorrectPlate: 0.05
   EfficientMovementReward: 0.1
+  CompletingRecipeWithNoMistakes: 1
   GrabIncorrectIngredientReward: -0.1
   IncorrectIngredientToWorkspaceReward: -0.1
   IncorrectRecipeDelivered: -1
@@ -1243,9 +1244,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableRecipes:
-  - {fileID: 11400000, guid: cd6b777f332f13b4bb1d0ec8df2d76bc, type: 2}
-  - {fileID: 11400000, guid: eefce9c503463f549aec78164dbb0e69, type: 2}
-  - {fileID: 11400000, guid: f312105e387839d43898fdd4cdd44a67, type: 2}
   - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
   - {fileID: 11400000, guid: afe70735a229a904ca702545d3466398, type: 2}
   activeRecipe: {fileID: 0}
@@ -2420,7 +2418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startSeed: 100
-  randomizeSeedOnNewEpisode: 1
+  randomizeSeedOnNewEpisode: 0
   gridWidth: 10
   gridLength: 10
   roomCount: 1

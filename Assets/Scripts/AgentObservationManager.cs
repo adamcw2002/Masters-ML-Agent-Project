@@ -37,10 +37,12 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
                 IngredientState requiredState = req.requiredState;
                 IngredientState? preconditionState = req.ingredient.GetPreconditionState(requiredState);
 
+                //PRECONDITION STATE
                 float[] oneHotPrecondition = GetOneHotIngredientState(preconditionState);
                 foreach (float val in oneHotPrecondition)
                     observation[index++] = val;
 
+                //REQUIRED STATE
                 float[] oneHotRequired = GetOneHotIngredientState(req.requiredState);
                 foreach (float val in oneHotRequired)
                     observation[index++] = val;
