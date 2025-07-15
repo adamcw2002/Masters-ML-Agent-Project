@@ -890,6 +890,7 @@ MonoBehaviour:
   IncorrectIngredientToWorkspaceReward: -0.1
   IncorrectRecipeDelivered: -1
   BinnedCorrectRecipe: -0.5
+  IdleBehaviour: -0.1
 --- !u!4 &642670677
 Transform:
   m_ObjectHideFlags: 0
@@ -1244,7 +1245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableRecipes:
-  - {fileID: 11400000, guid: 633c6b28e61473747bc6fb651cc1e1e2, type: 2}
+  - {fileID: 11400000, guid: 6806f09e682089b4d96a703ee5aad3da, type: 2}
   - {fileID: 11400000, guid: afe70735a229a904ca702545d3466398, type: 2}
   activeRecipe: {fileID: 0}
 --- !u!1 &819504375

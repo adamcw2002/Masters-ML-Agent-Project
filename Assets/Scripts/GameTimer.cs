@@ -31,7 +31,7 @@ public class GameTimer : MonoSingleton<GameTimer>
 
     void Update()
     {
-        currentTime -= Time.deltaTime;
+        currentTime -= Time.unscaledDeltaTime;
 
         if (currentTime <= 0f)
         {

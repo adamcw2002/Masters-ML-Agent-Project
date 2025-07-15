@@ -8,23 +8,23 @@ public class PlayerAgent : Agent
 {
     public static event EventHandler OnEpisodeEnd;
     public static event EventHandler OnAgentSpawned;
+    public static event Action OnAgentStep;
 
-    private PlayerMovement movement;
-    private PlayerInteract interact;
+    [SerializeField] private PlayerMovement movement;
+    [SerializeField] private PlayerInteract interact;
 
     private bool interactKeyPressed = false;
-
-    private void Awake()
-    {
-        movement = GetComponent<PlayerMovement>();
-        interact = GetComponent<PlayerInteract>();
-    }
 
     private void Start()
     {
         GameTimer.OnTimeEnd += GameTimer_OnTimeEnd;
 
         OnAgentSpawned.Invoke(this, EventArgs.Empty);
+    }
+
+    public override void OnEpisodeBegin()
+    {
+        interactKeyPressed = false;
     }
 
     private void GameTimer_OnTimeEnd()
@@ -91,6 +91,10 @@ public class PlayerAgent : Agent
         {
             interact.Interact();
         }
+
+        Debug.Log(interactPressed);
+
+        OnAgentStep?.Invoke();
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)

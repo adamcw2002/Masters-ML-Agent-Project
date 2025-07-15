@@ -1,5 +1,7 @@
 D:/
 cd D:\Game Projects\Unity Projects\Masters ML Agent Project
+cd C:\Users\adamc\Desktop\Masters-ML-Agent-Project
+
 venv\Scripts\activate
 
 py -m pip install --upgrade pip
