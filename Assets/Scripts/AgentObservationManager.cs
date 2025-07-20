@@ -246,7 +246,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         List<Plate> plates = PlateInitializer.Instance.GetPlates();
 
         int plateCount = 3;
-        float[] observation = new float[24 * plateCount];
+        float[] observation = new float[GetPlateObservationSize() * plateCount];
         int index = 0;
 
         for (int i = 0; i < plateCount; i++)
@@ -262,9 +262,20 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         return observation;
     }
 
+    private int GetPlateObservationSize()
+    {
+        int numStates = System.Enum.GetValues(typeof(IngredientState)).Length;
+        int plateMaxIngredients = 4;
+        return 1 + 2 + 1 + plateMaxIngredients * (1 + numStates);
+    }
+
     private float[] GetPlateObservation(Plate plate, Vector2Int playerPos)
     {
-        int observationSize = 24;
+        int numStates = System.Enum.GetValues(typeof(IngredientState)).Length;
+        int plateMaxIngredients = 4;
+
+        int observationSize = GetPlateObservationSize();
+        //int observationSize = 24;
         float[] observation = new float[observationSize];
         int index = 0;
 
@@ -289,7 +300,6 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
         observation[index++] = plate.HasCombinedIngredients ? 1 : 0;
 
-        int plateMaxIngredients = 4;
         for (int i = 0; i < plateMaxIngredients; i++)
         {
             if (i < plate.StoredItems.Count)
@@ -298,15 +308,28 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
                 if (storedItem?.TryGetComponent(out IngredientItem ingredientItem) == true)
                 {
-                    //INGREDIENT ID
+                    // INGREDIENT ID
                     observation[index++] = ingredientItem.IngredientData.uniqueIntID;
 
-                    //INGREDIENT STATE
+                    // INGREDIENT STATE (one-hot)
                     float[] stateOneHot = GetOneHotIngredientState(ingredientItem.CurrentState);
                     foreach (float val in stateOneHot)
                         observation[index++] = val;
-
                 }
+                else
+                {
+                    // Padding for invalid item
+                    observation[index++] = 0;
+                    for (int j = 0; j < numStates; j++)
+                        observation[index++] = 0;
+                }
+            }
+            else
+            {
+                // Padding for unused ingredient slot
+                observation[index++] = 0;
+                for (int j = 0; j < numStates; j++)
+                    observation[index++] = 0;
             }
         }
 
