@@ -92,8 +92,6 @@ public class PlayerAgent : Agent
             interact.Interact();
         }
 
-        Debug.Log(interactPressed);
-
         OnAgentStep?.Invoke();
     }
 

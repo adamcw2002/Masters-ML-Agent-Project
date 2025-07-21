@@ -43,7 +43,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         if (isProcessing) return;
 
         //If portable storage is currently on the workspace
-        if (canHoldPortableStorage && maxItems == 1 && storedItems.Count > 0 && storedItems[0].TryGetComponent(out PortableStorage storage))
+        if (canHoldPortableStorage && maxItems == 1 && storedItems.Count > 0 && storedItems[0]?.TryGetComponent(out PortableStorage storage) == true)
         {
             //Debug.Log("A Portable storage is currently on workspace, interact with the storage");
             storage.Interact(player, itemHolding);

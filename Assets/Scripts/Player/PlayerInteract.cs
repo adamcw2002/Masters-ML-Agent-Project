@@ -39,8 +39,6 @@ public class PlayerInteract : MonoBehaviour
 
     public void Interact()
     {
-        Debug.Log("Tried interracting");
-
         currentInteractable?.Interact(this, currentItemHolding);
     }
 
