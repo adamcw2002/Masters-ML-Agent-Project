@@ -881,16 +881,16 @@ MonoBehaviour:
   GrabCorrectIngredientReward: 0.1
   CorrectIngredientToWorkspaceReward: 0.1
   CorrectIngredientStateToPlateReward: 0.2
-  CreatedFinalRecipeOnPlateReward: 0.2
-  CorrectFinalProductDeliveredReward: 1
+  CreatedFinalRecipeOnPlateReward: 2
+  CorrectFinalProductDeliveredReward: 5
   BinnedIncorrectPlate: 0.05
   EfficientMovementReward: 0.1
-  CompletingRecipeWithNoMistakes: 1
+  CompletingRecipeWithNoMistakes: 10
   GrabIncorrectIngredientReward: -0.1
   IncorrectIngredientToWorkspaceReward: -0.1
   IncorrectRecipeDelivered: -1
   BinnedCorrectRecipe: -0.5
-  IdleBehaviour: -0.1
+  IdleBehaviour: -0.2
 --- !u!4 &642670677
 Transform:
   m_ObjectHideFlags: 0
