@@ -15,8 +15,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         int maxIngredients = 4;
         int stateCount = System.Enum.GetValues(typeof(IngredientState)).Length;
 
-        // Total: 1 ID + n state one-hot = 1 + 5 = 6 per entry
-        float[] observation = new float[1 + stateCount + (maxIngredients * 2) * (1 + stateCount)];
+        float[] observation = new float[50];
         int index = 0;
 
         // --- Final Product ---
@@ -75,7 +74,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
     {
         int width = range + range + 1;
 
-        float[] observation = new float[(width * width) * 15];
+        float[] observation = new float[(width * width) * 17];
         int index = 0;
 
         GameObject[,] workspaces = new GameObject[width,width];
@@ -91,7 +90,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             {
                 Vector2Int posToCheck = currentVector2Pos + new Vector2Int(x, z);
 
-                var tileOneHot = GetOneHotTileObservation(workspaceGenerator.GetWorkspaceAt(posToCheck), posToCheck.Equals(currentVector2Pos));
+                var tileOneHot = GetOneHotTileObservation(workspaceGenerator.GetWorkspaceAt(posToCheck), posToCheck.Equals(currentVector2Pos), pos + new Vector3(x, 0, z));
 
                 foreach (float val in tileOneHot)
                     observation[index++] = val;
@@ -103,9 +102,11 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         return observation;
     }
 
-    private float[] GetOneHotTileObservation(GameObject workspace, bool playerOccupied)
+    private float[] GetOneHotTileObservation(GameObject workspace, bool playerOccupied, Vector3 workspacePos)
     {
         /*
+        relativePosition
+
         tileType (e.g. 0 = floor, 1 = workspace, 2 = stove...), 
 
         isOccupiedByAgent (bool) 
@@ -122,9 +123,13 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
         */
 
-        float[] observation = new float[15];
+        float[] observation = new float[17];
 
         int index = 0;
+
+        //RELATIVE POSITION
+        observation[index++] = workspacePos.x;
+        observation[index++] = workspacePos.z;
 
         //TYPE
         observation[index++] = GetWorkspaceType(workspace);
@@ -233,6 +238,10 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             {
                 return GetOneHotIngredientState(ingredient.CurrentState);
             }
+        }
+        if (obj != null && obj?.TryGetComponent(out IngredientSpawner spawner) == true)
+        {
+            return GetOneHotIngredientState(spawner.GetSpawnedIngredient().initialState);
         }
 
         return new float[5];

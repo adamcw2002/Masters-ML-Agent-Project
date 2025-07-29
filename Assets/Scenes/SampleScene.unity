@@ -1245,8 +1245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableRecipes:
-  - {fileID: 11400000, guid: 6806f09e682089b4d96a703ee5aad3da, type: 2}
-  - {fileID: 11400000, guid: afe70735a229a904ca702545d3466398, type: 2}
+  - {fileID: 11400000, guid: c1dd946933b460247afd56ffc22b5cd0, type: 2}
   activeRecipe: {fileID: 0}
 --- !u!1 &819504375
 GameObject:
@@ -2642,6 +2641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1620555921}
   - component: {fileID: 1620555920}
+  - component: {fileID: 1620555922}
   m_Layer: 0
   m_Name: AgentObservationManager
   m_TagString: Untagged
@@ -2676,6 +2676,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1620555922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620555919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6c04dbc9124854b8b447616ddb72a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logKey: 108
 --- !u!1 &1621373985
 GameObject:
   m_ObjectHideFlags: 0
