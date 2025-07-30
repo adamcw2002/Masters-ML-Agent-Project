@@ -54,7 +54,6 @@ public class AgentObservationLogger : MonoBehaviour
         sb.AppendLine("\n=== Position Observations ===");
         Vector3 pos = agent.transform.position;
         sb.AppendLine($"[{index++}] Position X: {pos.x}");
-        sb.AppendLine($"[{index++}] Position Y: {pos.y}");
         sb.AppendLine($"[{index++}] Position Z: {pos.z}");
 
         // === Inventory Observations ===
@@ -92,14 +91,40 @@ public class AgentObservationLogger : MonoBehaviour
         // === Plate Observations ===
         sb.AppendLine("\n=== Plate Observations ===");
         var plates = AgentObservationManager.Instance.GetAllPlateObservations(agent.transform.position);
-        for (int i = 0; i < plates.Length; i++)
-            sb.AppendLine($"[{index++}] Plate[{i}]: {plates[i]}");
+        int plateObservationSize = AgentObservationManager.Instance.GetPlateObservationSize();
+        int numPlates = plates.Length / plateObservationSize;
+
+        for (int plateIndex = 0; plateIndex < numPlates; plateIndex++)
+        {
+            sb.AppendLine($"\n-- Plate #{plateIndex + 1} --");
+
+            for (int j = 0; j < plateObservationSize; j++)
+            {
+                int flatIndex = plateIndex * plateObservationSize + j;
+                string label = GetPlateObservationString(j);
+                sb.AppendLine($"[{index++}] {label}: {plates[flatIndex]}");
+            }
+        }
 
         // === Loose Ingredient Observations ===
-        sb.AppendLine("\n=== Loose Ingredient Observations ===");
         var loose = AgentObservationManager.Instance.GetAllIngredientObservations(agent.transform.position);
-        for (int i = 0; i < loose.Length; i++)
-            sb.AppendLine($"[{index++}] Ingredient[{i}]: {loose[i]}");
+        int obsPerIngredient = 9;
+        int numIngredients = loose.Length / obsPerIngredient;
+
+        int numSpawners = LooseIngredientManager.Instance.GetAllIngredientSpawners().Count;
+
+        for (int i = 0; i < numIngredients; i++)
+        {
+            string type = i < numSpawners ? "Spawner" : "Loose Item";
+            sb.AppendLine($"\n-- Ingredient #{i + 1} ({type}) --");
+
+            for (int j = 0; j < obsPerIngredient; j++)
+            {
+                int flatIndex = i * obsPerIngredient + j;
+                string label = GetLooseIngredientObservationLabel(j);
+                sb.AppendLine($"[{index++}] {label}: {loose[flatIndex]}");
+            }
+        }
 
         // === Game Timer Observation ===
         sb.AppendLine("\n=== Game Timer Observation ===");
@@ -184,10 +209,10 @@ public class AgentObservationLogger : MonoBehaviour
     private string GetSingleTileObservationLabel(int index)
     {
         if (index == 0)
-            return "Relative X Position";
+            return "X Position";
 
         if (index == 1)
-            return "Relative Z Position";
+            return "Z Position";
 
         if (index == 2)
             return "Tile Type ID";
@@ -217,5 +242,48 @@ public class AgentObservationLogger : MonoBehaviour
         }
 
         return "NULL";
+    }
+
+    private string GetPlateObservationString(int index)
+    {
+        int statesPerIngredient = System.Enum.GetValues(typeof(IngredientState)).Length;
+        int perIngredientSize = 1 + statesPerIngredient; // ID + state one-hot
+        int plateHeaderSize = 4; // exists, relX, relY, hasCombined
+
+        if (index == 0) return "Plate Exists";
+        if (index == 1) return "Plate Relative X Position";
+        if (index == 2) return "Plate Relative Z Position";
+        if (index == 3) return "Plate Has Combined Ingredients";
+
+        int relativeIndex = index - plateHeaderSize;
+        int ingredientIndex = relativeIndex / perIngredientSize;
+        int withinIngredient = relativeIndex % perIngredientSize;
+
+        if (ingredientIndex >= 0 && ingredientIndex < 4)
+        {
+            if (withinIngredient == 0)
+                return $"Ingredient {ingredientIndex + 1} ID";
+
+            string stateName = GetStateName(withinIngredient - 1);
+            return $"Ingredient {ingredientIndex + 1} State: {stateName}";
+        }
+
+        return "NULL";
+    }
+
+    private string GetLooseIngredientObservationLabel(int index)
+    {
+        if (index == 0)
+            return "Ingredient Exists";
+        if (index == 1)
+            return "Relative X Position";
+        if (index == 2)
+            return "Relative Z Position";
+        if (index == 3)
+            return "Ingredient ID";
+
+        // index 4–8 are one-hot states
+        string stateName = GetStateName(index - 4);
+        return $"Ingredient State: {stateName}";
     }
 }

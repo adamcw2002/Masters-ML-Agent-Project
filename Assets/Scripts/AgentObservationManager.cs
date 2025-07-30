@@ -271,7 +271,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         return observation;
     }
 
-    private int GetPlateObservationSize()
+    public int GetPlateObservationSize()
     {
         int numStates = System.Enum.GetValues(typeof(IngredientState)).Length;
         int plateMaxIngredients = 4;

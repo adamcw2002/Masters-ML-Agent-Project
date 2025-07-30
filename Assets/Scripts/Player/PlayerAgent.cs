@@ -54,7 +54,8 @@ public class PlayerAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         //Current Position - 3 Observations
-        sensor.AddObservation(transform.position);
+        sensor.AddObservation(transform.position.x);
+        sensor.AddObservation(transform.position.z);
 
         //Current Inventory - 8 Observations
         sensor.AddObservation(interact.GetAgentInventoryObservation());
