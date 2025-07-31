@@ -878,19 +878,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc3ab77058fcf0145a2dc6a70b323f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GrabCorrectIngredientReward: 0.1
-  CorrectIngredientToWorkspaceReward: 0.1
-  CorrectIngredientStateToPlateReward: 0.2
-  CreatedFinalRecipeOnPlateReward: 2
-  CorrectFinalProductDeliveredReward: 5
-  BinnedIncorrectPlate: 0.05
-  EfficientMovementReward: 0.1
+  GrabCorrectIngredientReward: 0.2
+  CorrectIngredientToWorkspaceReward: 0.3
+  CorrectIngredientStateToPlateReward: 0.4
+  CreatedFinalRecipeOnPlateReward: 3
+  CorrectFinalProductDeliveredReward: 10
+  BinnedIncorrectPlate: 0
+  EfficientMovementReward: 0.3
   CompletingRecipeWithNoMistakes: 10
-  GrabIncorrectIngredientReward: -0.1
-  IncorrectIngredientToWorkspaceReward: -0.1
+  GrabIncorrectIngredientReward: -0.2
+  IncorrectIngredientToWorkspaceReward: -0.2
   IncorrectRecipeDelivered: -1
-  BinnedCorrectRecipe: -0.5
-  IdleBehaviour: -0.2
+  BinnedCorrectRecipe: -2
+  IdleBehaviour: -0.5
 --- !u!4 &642670677
 Transform:
   m_ObjectHideFlags: 0

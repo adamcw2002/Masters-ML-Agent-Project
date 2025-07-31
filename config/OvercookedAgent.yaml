@@ -23,6 +23,6 @@ behaviors:
         gamma: 0.99
         encoding_size: 64
     keep_checkpoints: 5
-    max_steps: 10000000
+    max_steps: 20000000
     time_horizon: 256
     summary_freq: 25000
