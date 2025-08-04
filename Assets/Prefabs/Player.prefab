@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 2812963191799812868}
   - component: {fileID: -4524081514166327665}
   - component: {fileID: 8696025570196430843}
+  - component: {fileID: -2207418611493355166}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -213,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1158
+    VectorObservationSize: 1173
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -245,7 +246,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 10000
+  MaxStep: 0
   movement: {fileID: 8548804604295298154}
   interact: {fileID: 1486973358302001549}
 --- !u!114 &8696025570196430843
@@ -262,6 +263,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DecisionPeriod: 1
   TakeActionsBetweenDecisions: 1
+--- !u!114 &-2207418611493355166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2824577724537999100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 0
+  NumStepsToRecord: 25000
+  DemonstrationName: AgentStatic
+  DemonstrationDirectory: Demos
 --- !u!1 &5786144628535852920
 GameObject:
   m_ObjectHideFlags: 0

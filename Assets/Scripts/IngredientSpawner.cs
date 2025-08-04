@@ -70,4 +70,9 @@ public class IngredientSpawner : MonoBehaviour, IInteractable
             }
         }
     }
+
+    public GameObject GetInteractable()
+    {
+        return gameObject;
+    }
 }

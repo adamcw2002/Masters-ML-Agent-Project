@@ -10,7 +10,7 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
     [Header("Generation Seed")]
     private int seed;
     [SerializeField] private int startSeed;
-    [SerializeField] private bool randomizeSeedOnNewEpisode;
+    [SerializeField] private bool randomizeSeedOnNewRecipe;
 
     [Header("Floor Plan Settings")]
     [SerializeField] private int gridWidth = 50;    // Width in cells
@@ -62,120 +62,126 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
     public HashSet<Vector2Int> BridgePositions => bridgePositions;
 
 
-    public static event Action OnFloorGenerated;
+    public static event Action<bool, bool> OnFloorGenerated;
 
     private void Start()
     {
         seed = startSeed;
 
-        GenerateFloorPlan(false);
+        GenerateFloorPlan(false, true);
 
+        RecipeManager.OnRecipeCompleted += RecipeManager_OnRecipeCompleted;
         PlayerAgent.OnEpisodeEnd += PlayerAgent_OnEpisodeEnd;
     }
 
     private void PlayerAgent_OnEpisodeEnd(object sender, EventArgs e)
     {
-        GenerateFloorPlan(randomizeSeedOnNewEpisode);
+        GenerateFloorPlan(randomizeSeedOnNewRecipe);
     }
 
-    private void Update()
+    private void RecipeManager_OnRecipeCompleted()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GenerateFloorPlan(randomizeSeedOnNewEpisode);
-        }
+        GenerateFloorPlan(randomizeSeedOnNewRecipe);
     }
 
-    public void GenerateFloorPlan(bool randomizeSeed = true)
+    public void GenerateFloorPlan(bool randomizeSeed, bool firstGeneration = false)
     {
         if (randomizeSeed)
         {
             seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
-
-            Debug.Log("New seed");
         }
 
         UnityEngine.Random.InitState(seed);
 
-        //for (int i = 0; i < 10; i++) Debug.Log(UnityEngine.Random.Range(0, 10));
-
-        // Clear any existing floor plan
-        foreach (Transform child in transform)
+        if (firstGeneration || randomizeSeed)
         {
-            Destroy(child.gameObject);
-        }
-
-        roomQueue.Clear();
-        finalRooms.Clear();
-        doorPositions.Clear();
-        bridgePositions.Clear();
-
-        // Initialize grid
-        floorGrid = new bool[gridWidth, gridLength];
-        for (int x = 0; x < gridWidth; x++)
-        {
-            for (int z = 0; z < gridLength; z++)
+            // Clear any existing floor plan
+            foreach (Transform child in transform)
             {
-                floorGrid[x, z] = false;
+                Destroy(child.gameObject);
             }
-        }
 
-        // Create the root container
-        Room rootRoom = new Room(
-            new Vector2Int(0, 0),
-            new Vector2Int(gridWidth, gridLength)
-        );
+            roomQueue.Clear();
+            finalRooms.Clear();
+            doorPositions.Clear();
+            bridgePositions.Clear();
 
-        // Add root to queue
-        roomQueue.Enqueue(rootRoom);
-
-        // Apply BSP with exact split count
-        SplitRoomsExactly(roomCount - 1);
-
-        // Mark cells as floor in our grid
-        foreach (Room room in finalRooms)
-        {
-            for (int x = room.position.x; x < room.position.x + room.size.x; x++)
+            // Initialize grid
+            floorGrid = new bool[gridWidth, gridLength];
+            for (int x = 0; x < gridWidth; x++)
             {
-                for (int z = room.position.y; z < room.position.y + room.size.y; z++)
+                for (int z = 0; z < gridLength; z++)
                 {
-                    if (x >= 0 && x < gridWidth && z >= 0 && z < gridLength)
+                    floorGrid[x, z] = false;
+                }
+            }
+
+            // Create the root container
+            Room rootRoom = new Room(
+                new Vector2Int(0, 0),
+                new Vector2Int(gridWidth, gridLength)
+            );
+
+            // Add root to queue
+            roomQueue.Enqueue(rootRoom);
+
+            // Apply BSP with exact split count
+            SplitRoomsExactly(roomCount - 1);
+
+            // Mark cells as floor in our grid
+            foreach (Room room in finalRooms)
+            {
+                for (int x = room.position.x; x < room.position.x + room.size.x; x++)
+                {
+                    for (int z = room.position.y; z < room.position.y + room.size.y; z++)
                     {
-                        floorGrid[x, z] = true;
+                        if (x >= 0 && x < gridWidth && z >= 0 && z < gridLength)
+                        {
+                            floorGrid[x, z] = true;
+                        }
                     }
                 }
             }
-        }
 
-        // Generate doors or bridges between rooms
-        if (generateDoors && gapSize <= 0 && finalRooms.Count > 1)
-        {
-            GenerateDoorsBetweenRooms();
-        }
-        else if (generateBridges && finalRooms.Count > 1)
-        {
-            GenerateBridges();
-        }
+            // Generate doors or bridges between rooms
+            if (generateDoors && gapSize <= 0 && finalRooms.Count > 1)
+            {
+                GenerateDoorsBetweenRooms();
+            }
+            else if (generateBridges && finalRooms.Count > 1)
+            {
+                GenerateBridges();
+            }
 
-        // Generate the actual floor cells
-        CreateFloorCells();
+            // Generate the actual floor cells
+            CreateFloorCells();
+        }
 
         SpawnPlayer();
 
-        OnFloorGenerated?.Invoke();
+        OnFloorGenerated?.Invoke(randomizeSeed, firstGeneration);
     }
 
     private void SpawnPlayer()
     {
         if (finalRooms.Count == 0 || playerPrefab == null) return;
 
-        if (player != null) Destroy(player);
-
         Room randomRoom = finalRooms[UnityEngine.Random.Range(0, finalRooms.Count)];
 
         Vector3 spawnPosition = new Vector3(randomRoom.center.x, floorHeight, randomRoom.center.y);
 
-        player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        if (player != null)
+        {
+            CharacterController characterController = player.GetComponent<CharacterController>();
+
+            characterController.enabled = false;
+            player.transform.position = spawnPosition;
+            characterController.enabled = true;
+        }
+        else
+        {
+            player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        }
     }
 
     private void SplitRoomsExactly(int exactSplitCount)
@@ -767,7 +773,6 @@ public class BSPGridFloorPlanGenerator : MonoBehaviour
         gapSize = newGapSize;
         generateBridges = newGenerateBridges;
         bridgeWidth = newBridgeWidth;
-        GenerateFloorPlan();
     }
 
     public float GetFloorHeight() => floorHeight;

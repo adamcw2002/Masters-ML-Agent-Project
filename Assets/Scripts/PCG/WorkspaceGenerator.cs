@@ -165,37 +165,39 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
         }
     }
 
-    private void CreateWorkspaces()
+    private void CreateWorkspaces(bool randomize, bool firstGen)
     {
-        // Clean up previous workspaces
-        CleanupPreviousWorkspaces();
-
-        // Assign correct values fromm floor plan generator
-        AssignFloorPlanValues();
-
-        // Analyze recipes to determine required appliances and ingredients
-        AnalyzeRecipes();
-
-        // Get border and corner positions
-        (List<Vector2Int> borderPositions, HashSet<Vector2Int> cornerPositions) = GetBorderAndCornerPositions();
-
-        // Shuffle the non-corner border positions
-        List<Vector2Int> nonCornerBorderPositions = borderPositions
-            .Where(pos => !cornerPositions.Contains(pos))
-            .ToList();
-        ShufflePositions(nonCornerBorderPositions);
-
-        // Create empty workspaces at corners
-        foreach (Vector2Int cornerPos in cornerPositions)
+        if (randomize || firstGen)
         {
-            CreateWorkspaceCell(cornerPos, emptyWorkspacePrefab, null, true);
+            CleanupPreviousWorkspaces();
+
+            // Assign correct values fromm floor plan generator
+            AssignFloorPlanValues();
+
+            // Analyze recipes to determine required appliances and ingredients
+            AnalyzeRecipes();
+
+            // Get border and corner positions
+            (List<Vector2Int> borderPositions, HashSet<Vector2Int> cornerPositions) = GetBorderAndCornerPositions();
+
+            // Shuffle the non-corner border positions
+            List<Vector2Int> nonCornerBorderPositions = borderPositions
+                .Where(pos => !cornerPositions.Contains(pos))
+                .ToList();
+            ShufflePositions(nonCornerBorderPositions);
+
+            // Create empty workspaces at corners
+            foreach (Vector2Int cornerPos in cornerPositions)
+            {
+                CreateWorkspaceCell(cornerPos, emptyWorkspacePrefab, null, true);
+            }
+
+            // Apply the new placement rules
+            ApplyPlacementRules(nonCornerBorderPositions);
+
+            // Update grid bounds after all workspaces are created
+            UpdateGridBounds();
         }
-
-        // Apply the new placement rules
-        ApplyPlacementRules(nonCornerBorderPositions);
-
-        // Update grid bounds after all workspaces are created
-        UpdateGridBounds();
 
         OnWorkspacesGenerated?.Invoke(this, EventArgs.Empty);
     }
@@ -616,7 +618,7 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
         usedPositions.Clear();
         workspaceGrid.Clear(); // Clear the grid
 
-        Destroy(workspacesParent);
+        if (workspacesParent) Destroy(workspacesParent.gameObject);
         workspacesParent = null;
 
         if (workspacesParent == null)

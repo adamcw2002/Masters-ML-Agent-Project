@@ -49,4 +49,9 @@ public class PlateSpawner : MonoBehaviour, IInteractable
             player.PickupItem(newPlate);
         }
     }
+
+    public GameObject GetInteractable()
+    {
+        return gameObject;
+    }
 }

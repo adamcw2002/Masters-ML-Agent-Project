@@ -221,4 +221,9 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
     }
 
     public abstract int GetStorageID();
+
+    public GameObject GetInteractable()
+    {
+        return gameObject;
+    }
 }

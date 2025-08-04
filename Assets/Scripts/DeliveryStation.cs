@@ -39,4 +39,9 @@ public class DeliveryStation : MonoBehaviour, IInteractable
             plate.DestroyAllItems();
         }
     }
+
+    public GameObject GetInteractable()
+    {
+        return gameObject;
+    }
 }

@@ -29,5 +29,10 @@ public class Bin : MonoBehaviour, IInteractable
 
         }
     }
+
+    public GameObject GetInteractable()
+    {
+        return gameObject;
+    }
 }
 

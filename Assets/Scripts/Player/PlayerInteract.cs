@@ -28,6 +28,7 @@ public class PlayerInteract : MonoBehaviour
     }
 
     public IInteractable GetCurrentInteractable() => currentInteractable;
+    public GameObject GetCurrentInteractableGameObject() => currentInteractable?.GetInteractable();
 
     private void Update()
     {

@@ -52,6 +52,12 @@ public class PlateInitializer : MonoSingleton<PlateInitializer>
 
     private void SpawnPlates()
     {
+        for (int i = 0; i < plates.Count; i++)
+        {
+            Destroy(plates[i].gameObject);
+        }
+        plates.Clear();
+
         AssignEmptyWorkspaces();
 
         int spawnCount = Mathf.Min(plateAmount, emptyWorkspaces.Count);
@@ -64,6 +70,8 @@ public class PlateInitializer : MonoSingleton<PlateInitializer>
 
     private void SpawnNewPlate()
     {
+        Debug.Log("Spawn new plate");
+
         GameObject workspace = GetEmptyWorkspace();
         if (workspace.TryGetComponent(out Workspace ws))
         {

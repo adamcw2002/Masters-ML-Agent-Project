@@ -18,11 +18,13 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-      curiosity:
-        strength: 0.01
-        gamma: 0.99
-        encoding_size: 64
+#      gail:
+#        strength: 0.6
+#        demo_path: Demos/AgentStatic.demo
+#    behavioral_cloning:
+#        strength: 0.6
+#        demo_path: Demos/AgentStatic.demo
     keep_checkpoints: 5
-    max_steps: 20000000
+    max_steps: 10000000
     time_horizon: 256
     summary_freq: 25000

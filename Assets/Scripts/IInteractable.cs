@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IInteractable
 {
     void Interact(PlayerInteract player, GameObject ingredient);
+    GameObject GetInteractable();
 }

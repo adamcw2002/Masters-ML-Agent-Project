@@ -90,7 +90,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             {
                 Vector2Int posToCheck = currentVector2Pos + new Vector2Int(x, z);
 
-                var tileOneHot = GetOneHotTileObservation(workspaceGenerator.GetWorkspaceAt(posToCheck), posToCheck.Equals(currentVector2Pos), pos + new Vector3(x, 0, z));
+                var tileOneHot = GetOneHotTileObservationWithRelativePos(workspaceGenerator.GetWorkspaceAt(posToCheck), posToCheck.Equals(currentVector2Pos), pos + new Vector3(x, 0, z));
 
                 foreach (float val in tileOneHot)
                     observation[index++] = val;
@@ -102,7 +102,23 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         return observation;
     }
 
-    private float[] GetOneHotTileObservation(GameObject workspace, bool playerOccupied, Vector3 workspacePos)
+    private float[] GetOneHotTileObservationWithRelativePos(GameObject workspace, bool playerOccupied, Vector3 relativePos)
+    {
+        float[] observation = new float[17];
+
+        int index = 0;
+
+        observation[index++] = relativePos.x;
+        observation[index++] = relativePos.z;
+
+        float[] tileObservation = GetOneHotTileObservation(workspace, playerOccupied);
+        foreach (float val in tileObservation)
+            observation[index++] = val;
+
+        return observation;
+    }
+
+    public float[] GetOneHotTileObservation(GameObject workspace, bool playerOccupied)
     {
         /*
         relativePosition
@@ -123,13 +139,9 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
         */
 
-        float[] observation = new float[17];
+        float[] observation = new float[15];
 
         int index = 0;
-
-        //RELATIVE POSITION
-        observation[index++] = workspacePos.x;
-        observation[index++] = workspacePos.z;
 
         //TYPE
         observation[index++] = GetWorkspaceType(workspace);

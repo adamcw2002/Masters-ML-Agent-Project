@@ -1,0 +1,65 @@
+{
+    "OvercookedAgent": {
+        "checkpoints": [
+            {
+                "steps": 8999912,
+                "file_path": "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-8999912.onnx",
+                "reward": null,
+                "creation_time": 1754110223.7115788,
+                "auxillary_file_paths": [
+                    "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-8999912.pt"
+                ]
+            },
+            {
+                "steps": 9499842,
+                "file_path": "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-9499842.onnx",
+                "reward": -15.000000223517418,
+                "creation_time": 1754111512.8958051,
+                "auxillary_file_paths": [
+                    "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-9499842.pt"
+                ]
+            },
+            {
+                "steps": 9999810,
+                "file_path": "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-9999810.onnx",
+                "reward": null,
+                "creation_time": 1754112799.6772242,
+                "auxillary_file_paths": [
+                    "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-9999810.pt"
+                ]
+            },
+            {
+                "steps": 10000066,
+                "file_path": "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-10000066.onnx",
+                "reward": null,
+                "creation_time": 1754112799.716935,
+                "auxillary_file_paths": [
+                    "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-10000066.pt"
+                ]
+            },
+            {
+                "steps": 10002626,
+                "file_path": "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-10002626.onnx",
+                "reward": null,
+                "creation_time": 1754257675.7735636,
+                "auxillary_file_paths": [
+                    "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-10002626.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 10002626,
+            "file_path": "results\\ImitationTest1\\OvercookedAgent.onnx",
+            "reward": null,
+            "creation_time": 1754257675.7735636,
+            "auxillary_file_paths": [
+                "results\\ImitationTest1\\OvercookedAgent\\OvercookedAgent-10002626.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.7.1+cpu"
+    }
+}

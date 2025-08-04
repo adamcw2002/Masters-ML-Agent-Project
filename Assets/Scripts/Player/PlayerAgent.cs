@@ -3,6 +3,7 @@ using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 using UnityEngine;
 using System;
+using System.ComponentModel.Design;
 
 public class PlayerAgent : Agent
 {
@@ -29,6 +30,13 @@ public class PlayerAgent : Agent
 
     private void GameTimer_OnTimeEnd()
     {
+        EndCurrentEpisode();
+    }
+
+    private void EndCurrentEpisode()
+    {
+        Debug.Log("Episode ended");
+
         OnEpisodeEnd?.Invoke(this, EventArgs.Empty);
         EndEpisode();
     }
@@ -60,15 +68,14 @@ public class PlayerAgent : Agent
         //Current Inventory - 8 Observations
         sensor.AddObservation(interact.GetAgentInventoryObservation());
 
+        //Current Tile to interact with - 15 Observations
+        GameObject currentInteractable = interact.GetCurrentInteractableGameObject();
+        sensor.AddObservation(AgentObservationManager.Instance.GetOneHotTileObservation(currentInteractable, false));
+
         //Current Recipe - 46 Observations
         sensor.AddObservation(AgentObservationManager.Instance.GetCurrentRecipeObservation());
 
-        //Tile Observations - (Range + Range + 1)^2 * 10 Observations
-        //Range = 1 -> 90 Observations
-        //Range = 2 -> 250 Observations
-        //Range = 3 -> 490 Observations
-        //Range = 4 -> 810 Observations
-        //Range = 5 -> 1210 Observations
+        //Tile Observations - (Range + Range + 1)^2 * 17 Observations
         int tileRange = 3;
         sensor.AddObservation(AgentObservationManager.Instance.GetTileObservations(transform.position, tileRange));
 

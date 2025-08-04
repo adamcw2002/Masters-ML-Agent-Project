@@ -240,7 +240,7 @@ public class RewardManager : MonoSingleton<RewardManager>
         }
     }
 
-    private void AddAgentReward(float amount, string reason, bool checkEfficiency = true, bool resetIdleTimer = true)
+    public void AddAgentReward(float amount, string reason, bool checkEfficiency = true, bool resetIdleTimer = true)
     {
         agent?.AddReward(amount);
 

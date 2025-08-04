@@ -355,4 +355,9 @@ public abstract class Workspace : MonoBehaviour, IInteractable
             itemDisplay.UpdateItemDisplay(storedItems);
         }
     }
+
+    public GameObject GetInteractable()
+    {
+        return gameObject;
+    }
 }

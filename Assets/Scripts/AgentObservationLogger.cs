@@ -3,11 +3,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Unity.MLAgents;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class AgentObservationLogger : MonoBehaviour
 {
     private PlayerAgent agent;
+    private PlayerInteract interact;
 
     public KeyCode logKey = KeyCode.L;
 
@@ -24,6 +26,7 @@ public class AgentObservationLogger : MonoBehaviour
     private void PlayerAgent_OnAgentSpawned(object sender, System.EventArgs e)
     {
         agent = (PlayerAgent)sender;
+        interact = agent.GetComponent<PlayerInteract>();
     }
 
     void Update()
@@ -58,9 +61,15 @@ public class AgentObservationLogger : MonoBehaviour
 
         // === Inventory Observations ===
         sb.AppendLine("\n=== Inventory Observations ===");
-        var inventory = agent.GetComponent<PlayerInteract>().GetAgentInventoryObservation();
+        var inventory = interact.GetAgentInventoryObservation();
         for (int i = 0; i < inventory.Length; i++)
             sb.AppendLine($"[{index++}] Inventory[{i}] {GetInventoryString(i)}: {inventory[i]}");
+
+        // === Current Interactable Observations ===
+        sb.AppendLine("\n=== Current Interactable Observations ===");
+        var interactable = AgentObservationManager.Instance.GetOneHotTileObservation(interact.GetCurrentInteractableGameObject(), false);
+        for (int i = 0; i < interactable.Length; i++)
+            sb.AppendLine($"[{index++}] Current Interactable [{i}] {GetCurrentInteractableString(i)}: {interactable[i]}");
 
         // === Recipe Observations ===
         sb.AppendLine("\n=== Recipe Observations ===");
@@ -168,6 +177,12 @@ public class AgentObservationLogger : MonoBehaviour
 
         return "NULL";
     }
+
+    private string GetCurrentInteractableString(int index)
+    {
+        return GetSingleTileObservationLabel(index + 2);
+    }
+
     private string GetRecipeObservationString(int index)
     {
         if (index == 0)
