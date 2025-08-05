@@ -7,8 +7,12 @@ public class Plate : PortableStorage
 {
     public static event EventHandler<IngredientEventArgs> OnAnyCombineIngredients;
 
+    public static event EventHandler OnAnyExtraIngredientsToActiveRecipe;
+
     private bool hasCombinedIngredients = false;
     public bool HasCombinedIngredients => hasCombinedIngredients;
+
+    private bool createdFinalRecipeOnPlate = false;
 
     public override int GetStorageID()
     {
@@ -21,6 +25,9 @@ public class Plate : PortableStorage
 
         if (baseResult)
         {
+            //IF FINAL RECIPE HAD ALREADY BEEN CREATED, ADDING THE EXTRA INGREDIENT RUINED IT
+            if (createdFinalRecipeOnPlate) OnAnyExtraIngredientsToActiveRecipe?.Invoke(this, EventArgs.Empty);
+
             RecipeManager recipeManager = RecipeManager.Instance;
 
             RecipeData recipeOnPlate = recipeManager.CanCombineIngredients(this);
@@ -29,6 +36,8 @@ public class Plate : PortableStorage
             {
                 CombineIngredients(recipeOnPlate);
             }
+
+            if (RecipeManager.Instance.CheckCompletedRecipe(this, RecipeManager.Instance.GetActiveRecipe())) createdFinalRecipeOnPlate = true;
 
             hasCombinedIngredients = false;
         }
@@ -52,12 +61,14 @@ public class Plate : PortableStorage
 
         hasCombinedIngredients = true;
 
+
         OnAnyCombineIngredients?.Invoke(this, new IngredientEventArgs(ingredient));
     }
 
     public override GameObject RemoveItem(GameObject item)
     {
         hasCombinedIngredients = false;
+        createdFinalRecipeOnPlate = false;
 
         return base.RemoveItem(item);
     }
@@ -65,6 +76,7 @@ public class Plate : PortableStorage
     public override void DestroyAllItems()
     {
         hasCombinedIngredients = false;
+        createdFinalRecipeOnPlate = false;
 
         base.DestroyAllItems(); 
     }

@@ -890,6 +890,7 @@ MonoBehaviour:
   IncorrectIngredientToWorkspaceReward: -0.2
   IncorrectRecipeDelivered: -1
   BinnedCorrectRecipe: -1
+  AddedExtraIngredient: -0.3
   IdleBehaviour: -0.3
 --- !u!4 &642670677
 Transform:

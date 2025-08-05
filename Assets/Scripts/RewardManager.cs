@@ -20,6 +20,7 @@ public class RewardManager : MonoSingleton<RewardManager>
     [SerializeField] private float IncorrectIngredientToWorkspaceReward = -0.1f;
     [SerializeField] private float IncorrectRecipeDelivered = -0.5f;
     [SerializeField] private float BinnedCorrectRecipe = -0.5f;
+    [SerializeField] private float AddedExtraIngredient = -0.1f;
     [SerializeField] private float IdleBehaviour = -0.1f;
 
     private PlayerAgent agent;
@@ -45,12 +46,12 @@ public class RewardManager : MonoSingleton<RewardManager>
         Workspace.OnAnyItemAddedToWorkspace += Workspace_OnItemAddedToWorkspace;
         PortableStorage.OnAnyIngredientAddedToPortableStorage += PortableStorage_OnAnyIngredientAddedToPortableStorage;
         Plate.OnAnyCombineIngredients += Plate_OnAnyCombineIngredients;
+        Plate.OnAnyExtraIngredientsToActiveRecipe += Plate_OnAnyExtraIngredientsToActiveRecipe;
         DeliveryStation.OnRecipeDelivered += DeliveryStation_OnRecipeDelivered;
         Bin.OnPlateBinned += Bin_OnPlateBinned;
 
         ResetIdleTimer();
     }
-
 
     private void OnDisable()
     {
@@ -62,6 +63,7 @@ public class RewardManager : MonoSingleton<RewardManager>
         Workspace.OnAnyItemAddedToWorkspace -= Workspace_OnItemAddedToWorkspace;
         PortableStorage.OnAnyIngredientAddedToPortableStorage -= PortableStorage_OnAnyIngredientAddedToPortableStorage;
         Plate.OnAnyCombineIngredients -= Plate_OnAnyCombineIngredients;
+        Plate.OnAnyExtraIngredientsToActiveRecipe -= Plate_OnAnyExtraIngredientsToActiveRecipe;
         DeliveryStation.OnRecipeDelivered -= DeliveryStation_OnRecipeDelivered;
         Bin.OnPlateBinned -= Bin_OnPlateBinned;
     }
@@ -186,6 +188,13 @@ public class RewardManager : MonoSingleton<RewardManager>
     {
         //CHECK IF THE INGREDIENT ADDED TO A PLATE IS IN THE CORRECT STATE FOR THE FIRST TIME
 
+        Plate plate = (Plate)sender;
+
+        if (plate != null)
+        {
+            
+        }
+
         IngredientData ingredientData = e.IngredientItem.IngredientData;
 
         if (currentRecipeRequirements.TryGetValue(ingredientData, out IngredientState stateRequired)
@@ -196,6 +205,11 @@ public class RewardManager : MonoSingleton<RewardManager>
         }
 
         ResetIdleTimer();
+    }
+
+    private void Plate_OnAnyExtraIngredientsToActiveRecipe(object sender, System.EventArgs e)
+    {
+        AddAgentReward(AddedExtraIngredient, "Adding extra ingredients to a completed recipe");
     }
 
     private void Plate_OnAnyCombineIngredients(object sender, IngredientEventArgs e)
