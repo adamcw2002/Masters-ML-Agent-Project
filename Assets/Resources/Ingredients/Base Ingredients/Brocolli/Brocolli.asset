@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Brocolli
   icon: {fileID: 21300000, guid: 90d206b9373b35e4dbcef327ad1983d4, type: 3}
+  isProduct: 0
+  ingredientType: 1
   possibleStates:
-  - state: 0
+  - preconditionState: 0
+    outputState: 0
     visualPrefab: {fileID: 919132149155446097, guid: 9e1f94b791e4c4147a96182275f39d5f, type: 3}
     plateRequired: 0
   initialState: 0

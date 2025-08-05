@@ -15,7 +15,7 @@ MonoBehaviour:
   ingredientName: Lettuce
   icon: {fileID: 21300000, guid: 0e58626f7594c8c41b51ee40107ac10e, type: 3}
   isProduct: 0
-  uniqueIntID: 1925522377
+  ingredientType: 6
   possibleStates:
   - preconditionState: 0
     outputState: 0

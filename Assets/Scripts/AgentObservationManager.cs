@@ -7,7 +7,28 @@ using UnityEngine;
 
 public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 {
+    private const int observationsPerTile = 17;
+    private const int observationsPerTileWithRelativePos = 19;
+
+
+    private GameObject cachedPlayer;
+
+    private void OnEnable()
+    {
+        PlayerAgent.OnAgentSpawned += PlayerAgent_OnAgentSpawned;
+    }
+    private void OnDisable()
+    {
+        PlayerAgent.OnAgentSpawned -= PlayerAgent_OnAgentSpawned;
+    }
+
+    private void PlayerAgent_OnAgentSpawned(object sender, EventArgs e)
+    {
+        cachedPlayer = sender as GameObject;
+    }
+
     private Vector2Int GetVector2IntPos(Vector3 pos) => new Vector2Int(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.z));
+    public Vector2Int GetPlayerVector2IntPos() => new Vector2Int(Mathf.FloorToInt(cachedPlayer.transform.position.x), Mathf.FloorToInt(cachedPlayer.transform.position.z));
 
     public float[] GetCurrentRecipeObservation()
     {
@@ -19,7 +40,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         int index = 0;
 
         // --- Final Product ---
-        observation[index++] = activeRecipe.finalProductData.uniqueIntID;
+        observation[index++] = activeRecipe.finalProductData.GetNormalizedID();
 
         float[] finalStateOneHot = GetOneHotIngredientState(activeRecipe.finalProductState);
         foreach (float val in finalStateOneHot)
@@ -31,7 +52,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             if (i < activeRecipe.baseRequiredIngredients.Count)
             {
                 var req = activeRecipe.baseRequiredIngredients[i];
-                observation[index++] = req.ingredient.uniqueIntID;
+                observation[index++] = req.ingredient.GetNormalizedID();
 
                 IngredientState requiredState = req.requiredState;
                 IngredientState? preconditionState = req.ingredient.GetPreconditionState(requiredState);
@@ -49,7 +70,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             else
             {
                 // Pad
-                observation[index++] = -1f;
+                observation[index++] = 0f;
                 for (int s = 0; s < stateCount; s++)
                     observation[index++] = 0f;
             }
@@ -74,7 +95,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
     {
         int width = range + range + 1;
 
-        float[] observation = new float[(width * width) * 17];
+        float[] observation = new float[(width * width) * observationsPerTileWithRelativePos];
         int index = 0;
 
         GameObject[,] workspaces = new GameObject[width,width];
@@ -102,9 +123,9 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         return observation;
     }
 
-    private float[] GetOneHotTileObservationWithRelativePos(GameObject workspace, bool playerOccupied, Vector3 relativePos)
+    public float[] GetOneHotTileObservationWithRelativePos(GameObject workspace, bool playerOccupied, Vector3 relativePos)
     {
-        float[] observation = new float[17];
+        float[] observation = new float[observationsPerTileWithRelativePos];
 
         int index = 0;
 
@@ -121,25 +142,25 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
     public float[] GetOneHotTileObservation(GameObject workspace, bool playerOccupied)
     {
         /*
-        relativePosition
-
         tileType (e.g. 0 = floor, 1 = workspace, 2 = stove...), 
 
         isOccupiedByAgent (bool) 
 
         HasItem (bool) 
 
-        cookProgress (0–100 or -1 if not applicable), 
+        can workspace process (bool)
+
+        cookProgress (0-1), 
 
         outputState (one hot)
 
-        itemType (e.g. 0 = nothing, 1 = tomato, 2 = plate...), 
+        itemType (normalised ID), 
 
         itemState [1,0,0,0,0] raw etc
 
         */
 
-        float[] observation = new float[15];
+        float[] observation = new float[observationsPerTile];
 
         int index = 0;
 
@@ -152,6 +173,12 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         //HAS ITEM (0,1)
         observation[index++] = WorkspaceHasItem(workspace);
 
+        //HAS STORAGE (0,1)
+        observation[index++] = WorkspaceHasStorage(workspace);
+
+        //CAN WORKSPACE PROCESS INGREDIENTS
+        observation[index++] = GetWorkspaceCanProcess(workspace);
+
         //WORKSPACE PROCESSING PROGRESS
         observation[index++] = GetWorkspaceProgress(workspace);
 
@@ -162,7 +189,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             observation[index++] = val;
 
         //ID OF ITEM ON WORKSPACE
-        observation[index++] = GetItemOnWorkspace(workspace);
+        observation[index++] = GetItemIDOnWorkspace(workspace);
 
         //STATE OF ITEM ON WORKSPACE IF INGREDIENT
         float[] ingredientState = GetIngredientStateOnWorkpace(workspace);
@@ -172,19 +199,21 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         return observation;
     }
 
-    private int GetWorkspaceType(GameObject obj)
+    private float GetWorkspaceType(GameObject obj)
     {
-        if (obj == null) return 0;
+        const float totalWorkspaces = 7f;
 
-        if (obj.TryGetComponent(out EmptyWorkspace emptyWorkspace)) return 1;
-        else if (obj.TryGetComponent(out ChoppingBoard choppingBoard)) return 2;
-        else if (obj.TryGetComponent(out Stove stove)) return 3;
-        else if (obj.TryGetComponent(out Hob hob)) return 4;
-        else if (obj.TryGetComponent(out Bin bin)) return 5;
-        else if (obj.TryGetComponent(out DeliveryStation delivery)) return 6;
-        else if (obj.TryGetComponent(out IngredientSpawner ingredientSpawner)) return 7;
+        if (obj == null) return 0f;
 
-        return 0;
+        if (obj.TryGetComponent(out EmptyWorkspace _)) return (1f / totalWorkspaces);
+        else if (obj.TryGetComponent(out ChoppingBoard _)) return (2f / totalWorkspaces);
+        else if (obj.TryGetComponent(out Stove _)) return (3f / totalWorkspaces);
+        else if (obj.TryGetComponent(out Hob _)) return (4f / totalWorkspaces);
+        else if (obj.TryGetComponent(out Bin _)) return (5f / totalWorkspaces);
+        else if (obj.TryGetComponent(out DeliveryStation _)) return (6f / totalWorkspaces);
+        else if (obj.TryGetComponent(out IngredientSpawner _)) return (7f / totalWorkspaces);
+
+        return 0f;
     }
 
     private int WorkspaceHasItem(GameObject obj)
@@ -197,37 +226,57 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         return 0;
     }
 
-    private int GetItemOnWorkspace(GameObject obj)
+    private int WorkspaceHasStorage(GameObject obj)
+    {
+        if (obj?.TryGetComponent(out Workspace workspace) == true)
+        {
+            return workspace.GetFirstItem()?.TryGetComponent(out PortableStorage storage) == true ? 1 : 0;
+        }
+
+        return 0;
+    }
+
+    private float GetItemIDOnWorkspace(GameObject obj)
     {
         if (obj?.TryGetComponent(out Workspace workspace) == true && workspace.HasItems)
         {
             GameObject item = workspace.GetFirstItem();
             if (item != null && item?.TryGetComponent(out IngredientItem ingredient) == true)
             {
-                return ingredient.IngredientData.uniqueIntID;
+                return ingredient.IngredientData.GetNormalizedID();
             }
             else if (item != null && item.TryGetComponent(out PortableStorage storage) == true)
             {
                 //PLATE
-                return storage.GetStorageID();
+                return 0f;
             }
         }
         else if (obj?.TryGetComponent(out IngredientSpawner spawner) == true)
         {
-            return spawner.GetSpawnedIngredient().uniqueIntID;
+            return spawner.GetSpawnedIngredient().GetNormalizedID();
         }
 
         return 0;
     }
 
-    private int GetWorkspaceProgress(GameObject obj)
+    private float GetWorkspaceCanProcess(GameObject obj)
     {
         if (obj?.TryGetComponent(out Workspace workspace) == true)
         {
-            return workspace.CanProcessItems() ? workspace.GetProccessAmount() : -1;
+            return workspace.CanProcessItems() ? 1 : 0;
         }
 
-        return -1;
+        return 0;
+    }
+
+    private float GetWorkspaceProgress(GameObject obj)
+    {
+        if (obj?.TryGetComponent(out Workspace workspace) == true)
+        {
+            return workspace.CanProcessItems() ? workspace.GetProccessAmount() : 0;
+        }
+
+        return 0;
     }
 
     private float[] GetWorkspaceOutputStateOneHot(GameObject obj)
@@ -330,7 +379,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
                 if (storedItem?.TryGetComponent(out IngredientItem ingredientItem) == true)
                 {
                     // INGREDIENT ID
-                    observation[index++] = ingredientItem.IngredientData.uniqueIntID;
+                    observation[index++] = ingredientItem.IngredientData.GetNormalizedID();
 
                     // INGREDIENT STATE (one-hot)
                     float[] stateOneHot = GetOneHotIngredientState(ingredientItem.CurrentState);
@@ -410,7 +459,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         observation[index++] = relativePos.y;
 
         //INGREDIENT ID
-        observation[index++] = ingredient.IngredientData.uniqueIntID;
+        observation[index++] = ingredient.IngredientData.GetNormalizedID();
 
         //INGREDIENT STATE
         float[] stateOneHot = GetOneHotIngredientState(ingredient.CurrentState);
@@ -439,7 +488,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         observation[index++] = relativePos.y;
 
         //INGREDIENT ID
-        observation[index++] = spawner.GetSpawnedIngredient().uniqueIntID;
+        observation[index++] = spawner.GetSpawnedIngredient().GetNormalizedID();
 
         //INGREDIENT STATE
         float[] stateOneHot = GetOneHotIngredientState(spawner.GetSpawnedIngredient().initialState);

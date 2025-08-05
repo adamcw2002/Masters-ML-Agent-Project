@@ -15,6 +15,7 @@ MonoBehaviour:
   ingredientName: Mac & Cheese with Broccoli
   icon: {fileID: 21300000, guid: 3802bb5aabec9484685289230dde1c78, type: 3}
   isProduct: 1
+  ingredientType: 11
   possibleStates:
   - preconditionState: 2
     outputState: 2

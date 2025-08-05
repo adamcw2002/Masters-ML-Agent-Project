@@ -15,6 +15,7 @@ MonoBehaviour:
   ingredientName: Hot Dog Bun
   icon: {fileID: 21300000, guid: 9ee8bac01fa68904d8d80176fa3df57a, type: 3}
   isProduct: 0
+  ingredientType: 5
   possibleStates:
   - preconditionState: 0
     outputState: 0

@@ -169,7 +169,7 @@ public class PlayerInteract : MonoBehaviour
 
         if (currentItemHolding != null && currentItemHolding.TryGetComponent<IngredientItem>(out var ingredient))
         {
-            observation[2] = ingredient.IngredientData.uniqueIntID;
+            observation[2] = ingredient.IngredientData.GetNormalizedID();
 
             var oneHotState = AgentObservationManager.Instance.GetOneHotIngredientState(ingredient.CurrentState);
 
@@ -178,7 +178,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else
         {
-            observation[2] = -1f;
+            observation[2] = 0f;
             for (int i = 0; i < numStates; i++)
                 observation[3 + i] = 0f;
         }
