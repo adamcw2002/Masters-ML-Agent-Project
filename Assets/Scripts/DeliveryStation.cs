@@ -15,7 +15,7 @@ public class DeliveryStation : MonoBehaviour, IInteractable
     {
         if (itemHolding == null || itemHolding.TryGetComponent<Plate>(out _) == false)
         {
-            Debug.Log("Player not holding a plate");
+            //Debug.Log("Player not holding a plate");
             return;
         }
 
@@ -23,7 +23,7 @@ public class DeliveryStation : MonoBehaviour, IInteractable
 
         if (plate.StoredItems.Count == 0 )
         {
-            Debug.Log("Cannot deliver empty plate");
+            //Debug.Log("Cannot deliver empty plate");
             return;
         }
 

@@ -48,21 +48,18 @@ public class RandomWalkFloorPlanGenerator : MonoBehaviour
         }
     }
 
-    private void GenerateCenterWorkspaces(bool randomize, bool firstGen)
+    private void GenerateCenterWorkspaces()
     {
-        if (randomize || firstGen)
+        // Clean up previous center workspaces
+        CleanupPreviousCenterWorkspaces();
+
+        // Assign correct values from floor plan generator
+        AssignFloorPlanValues();
+
+        // Generate center workspaces for each room
+        foreach (Room room in floorPlanGenerator.GeneratedRooms)
         {
-            // Clean up previous center workspaces
-            CleanupPreviousCenterWorkspaces();
-
-            // Assign correct values from floor plan generator
-            AssignFloorPlanValues();
-
-            // Generate center workspaces for each room
-            foreach (Room room in floorPlanGenerator.GeneratedRooms)
-            {
-                GenerateWorkspacesForRoom(room);
-            }
+            GenerateWorkspacesForRoom(room);
         }
     }
 

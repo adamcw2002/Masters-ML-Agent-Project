@@ -16,12 +16,16 @@ public class GameTimer : MonoSingleton<GameTimer>
 
     private void OnEnable()
     {
-        RecipeManager.OnRecipeCompleted += ResetTimer;
+        PlayerAgent.OnEpisodeEnd += PlayerAgent_OnEpisodeEnd;
     }
 
     private void OnDisable()
     {
-        RecipeManager.OnRecipeCompleted -= ResetTimer;
+        PlayerAgent.OnEpisodeEnd -= PlayerAgent_OnEpisodeEnd;
+    }
+    private void PlayerAgent_OnEpisodeEnd(object sender, EventArgs e)
+    {
+        ResetTimer();
     }
 
     void Start()
@@ -31,7 +35,7 @@ public class GameTimer : MonoSingleton<GameTimer>
 
     void Update()
     {
-        currentTime -= Time.unscaledDeltaTime;
+        currentTime -= Time.deltaTime;
 
         if (currentTime <= 0f)
         {
@@ -40,6 +44,11 @@ public class GameTimer : MonoSingleton<GameTimer>
         }
 
         UpdateTimerUI();
+    }
+
+    public float GetNormalisedTimeRemaining()
+    {
+        return currentTime / timerDuration;
     }
 
     private void ResetTimer()

@@ -36,6 +36,11 @@ public abstract class Workspace : MonoBehaviour, IInteractable
     protected virtual void Start()
     {
         itemDisplay = GetComponent<ItemDisplayComponent>();
+
+        foreach (GameObject item in storedItems)
+        {
+            if (item == null) Destroy(item);
+        }
     }
 
     public virtual void Interact(PlayerInteract player, GameObject itemHolding)
@@ -43,7 +48,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         if (isProcessing) return;
 
         //If portable storage is currently on the workspace
-        if (canHoldPortableStorage && maxItems == 1 && storedItems.Count > 0 && storedItems[0]?.TryGetComponent(out PortableStorage storage) == true)
+        if (canHoldPortableStorage && maxItems == 1 && storedItems.Count > 0 && storedItems[0] != null && storedItems[0]?.TryGetComponent(out PortableStorage storage) == true)
         {
             //Debug.Log("A Portable storage is currently on workspace, interact with the storage");
             storage.Interact(player, itemHolding);

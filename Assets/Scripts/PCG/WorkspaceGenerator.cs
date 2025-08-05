@@ -165,39 +165,36 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
         }
     }
 
-    private void CreateWorkspaces(bool randomize, bool firstGen)
+    private void CreateWorkspaces()
     {
-        if (randomize || firstGen)
+        CleanupPreviousWorkspaces();
+
+        // Assign correct values fromm floor plan generator
+        AssignFloorPlanValues();
+
+        // Analyze recipes to determine required appliances and ingredients
+        AnalyzeRecipes();
+
+        // Get border and corner positions
+        (List<Vector2Int> borderPositions, HashSet<Vector2Int> cornerPositions) = GetBorderAndCornerPositions();
+
+        // Shuffle the non-corner border positions
+        List<Vector2Int> nonCornerBorderPositions = borderPositions
+            .Where(pos => !cornerPositions.Contains(pos))
+            .ToList();
+        ShufflePositions(nonCornerBorderPositions);
+
+        // Create empty workspaces at corners
+        foreach (Vector2Int cornerPos in cornerPositions)
         {
-            CleanupPreviousWorkspaces();
-
-            // Assign correct values fromm floor plan generator
-            AssignFloorPlanValues();
-
-            // Analyze recipes to determine required appliances and ingredients
-            AnalyzeRecipes();
-
-            // Get border and corner positions
-            (List<Vector2Int> borderPositions, HashSet<Vector2Int> cornerPositions) = GetBorderAndCornerPositions();
-
-            // Shuffle the non-corner border positions
-            List<Vector2Int> nonCornerBorderPositions = borderPositions
-                .Where(pos => !cornerPositions.Contains(pos))
-                .ToList();
-            ShufflePositions(nonCornerBorderPositions);
-
-            // Create empty workspaces at corners
-            foreach (Vector2Int cornerPos in cornerPositions)
-            {
-                CreateWorkspaceCell(cornerPos, emptyWorkspacePrefab, null, true);
-            }
-
-            // Apply the new placement rules
-            ApplyPlacementRules(nonCornerBorderPositions);
-
-            // Update grid bounds after all workspaces are created
-            UpdateGridBounds();
+            CreateWorkspaceCell(cornerPos, emptyWorkspacePrefab, null, true);
         }
+
+        // Apply the new placement rules
+        ApplyPlacementRules(nonCornerBorderPositions);
+
+        // Update grid bounds after all workspaces are created
+        UpdateGridBounds();
 
         OnWorkspacesGenerated?.Invoke(this, EventArgs.Empty);
     }

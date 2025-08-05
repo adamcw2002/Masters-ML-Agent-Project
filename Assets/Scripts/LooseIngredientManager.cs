@@ -28,9 +28,9 @@ public class LooseIngredientManager : MonoSingleton<LooseIngredientManager>
         AddLooseItem(e.IngredientItem);
     }
 
-    private void BSPGridFloorPlanGenerator_OnFloorGenerated(bool randomize, bool firstGen)
+    private void BSPGridFloorPlanGenerator_OnFloorGenerated()
     {
-        if (randomize || firstGen) ClearAllIngredientSpawners();
+        ClearAllIngredientSpawners();
     }
 
     private void IngredientSpawner_OnNewIngredientSpawner(object sender, System.EventArgs e)

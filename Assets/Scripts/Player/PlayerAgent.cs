@@ -19,6 +19,7 @@ public class PlayerAgent : Agent
     private void Start()
     {
         GameTimer.OnTimeEnd += GameTimer_OnTimeEnd;
+        DeliveryStation.OnRecipeDelivered += DeliveryStation_OnRecipeDelivered;
 
         OnAgentSpawned.Invoke(this, EventArgs.Empty);
     }
@@ -27,17 +28,18 @@ public class PlayerAgent : Agent
     {
         interactKeyPressed = false;
     }
-
-    private void GameTimer_OnTimeEnd()
+    private void DeliveryStation_OnRecipeDelivered(object sender, DeliveryEventArgs e)
     {
-        EndCurrentEpisode();
+        if (e.isCorrectRecipe) Invoke("EndCurrentEpisode", 0.1f);
     }
+
+    private void GameTimer_OnTimeEnd() => EndCurrentEpisode();
 
     private void EndCurrentEpisode()
     {
-        Debug.Log("Episode ended");
-
         OnEpisodeEnd?.Invoke(this, EventArgs.Empty);
+
+        Debug.Log("Episode ended");
         EndEpisode();
     }
 

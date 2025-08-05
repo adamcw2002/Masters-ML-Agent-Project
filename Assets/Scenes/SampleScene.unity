@@ -881,16 +881,16 @@ MonoBehaviour:
   GrabCorrectIngredientReward: 0.2
   CorrectIngredientToWorkspaceReward: 0.3
   CorrectIngredientStateToPlateReward: 0.4
-  CreatedFinalRecipeOnPlateReward: 1
-  CorrectFinalProductDeliveredReward: 3
+  CreatedFinalRecipeOnPlateReward: 0.5
+  CorrectFinalProductDeliveredReward: 1
   BinnedIncorrectPlate: 0
-  EfficientMovementReward: 0.3
-  CompletingRecipeWithNoMistakes: 3
+  CompletingRecipeWithNoMistakes: 0
+  GiveNormalisedTimeBonus: 1
   GrabIncorrectIngredientReward: -0.2
   IncorrectIngredientToWorkspaceReward: -0.2
   IncorrectRecipeDelivered: -1
-  BinnedCorrectRecipe: -2
-  IdleBehaviour: -0.2
+  BinnedCorrectRecipe: -1
+  IdleBehaviour: -0.3
 --- !u!4 &642670677
 Transform:
   m_ObjectHideFlags: 0
@@ -2256,7 +2256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1137756168}
-  timerDuration: 60
+  timerDuration: 30
 --- !u!4 &1344275368
 Transform:
   m_ObjectHideFlags: 0
@@ -2417,7 +2417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fa8d3977c9f55a4385ac3e1e04fcd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSeed: 100
+  startSeed: 99
   randomizeSeedOnNewRecipe: 0
   gridWidth: 7
   gridLength: 7

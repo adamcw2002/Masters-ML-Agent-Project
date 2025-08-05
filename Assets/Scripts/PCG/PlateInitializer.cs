@@ -70,8 +70,6 @@ public class PlateInitializer : MonoSingleton<PlateInitializer>
 
     private void SpawnNewPlate()
     {
-        Debug.Log("Spawn new plate");
-
         GameObject workspace = GetEmptyWorkspace();
         if (workspace.TryGetComponent(out Workspace ws))
         {
