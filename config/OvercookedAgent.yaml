@@ -4,7 +4,7 @@ behaviors:
     hyperparameters:
       batch_size: 2048
       buffer_size: 10240
-      learning_rate: 0.0002
+      learning_rate: 0.0003
       beta: 0.005
       epsilon: 0.15
       lambd: 0.95
@@ -18,13 +18,13 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
+      curiosity:
+          gamma: 0.99
+          strength: 0.02
 #      gail:
-#        strength: 0.6
-#        demo_path: Demos/AgentStatic.demo
-#    behavioral_cloning:
-#        strength: 0.6
-#        demo_path: Demos/AgentStatic.demo
+#        strength: 0.5
+#        demo_path: Assets/Demos/AgentStatic.demo
     keep_checkpoints: 5
     max_steps: 10000000
-    time_horizon: 256
+    time_horizon: 512
     summary_freq: 25000

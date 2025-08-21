@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public abstract class PortableStorage : MonoBehaviour, IInteractable
 {
     public static event EventHandler<IngredientEventArgs> OnAnyIngredientAddedToPortableStorage;
+    public static event EventHandler OnAnyStoragePickedUp;
 
     [SerializeField] private int maxIngredients = 4;
     [SerializeField] private List<Transform> itemPositions;  // Optional positions where items should be placed
@@ -37,6 +38,7 @@ public abstract class PortableStorage : MonoBehaviour, IInteractable
         if (itemHolding == null)
         {
             player.PickupItem(gameObject);
+            OnAnyStoragePickedUp?.Invoke(this, EventArgs.Empty);
             return;
         }
 

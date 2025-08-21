@@ -10,6 +10,7 @@ public class RewardManager : MonoSingleton<RewardManager>
     [SerializeField] private float CorrectIngredientToWorkspaceReward = 0.1f;
     [SerializeField] private float CorrectIngredientStateToPlateReward = 0.2f;
     [SerializeField] private float CreatedFinalRecipeOnPlateReward = 0.2f;
+    [SerializeField] private float PickedUpPlateWithFinalRecipe = 0.5f;
     [SerializeField] private float CorrectFinalProductDeliveredReward = 0.5f;
     [SerializeField] private float BinnedIncorrectPlate = 0.05f;
     [SerializeField] private float CompletingRecipeWithNoMistakes = 1f;
@@ -34,6 +35,7 @@ public class RewardManager : MonoSingleton<RewardManager>
 
     private bool madeMistake = false;
     private bool createdFinalRecipe = false;
+    private bool hasPickedUpFinalRecipePlate = false;
 
     private void Start()
     {
@@ -49,6 +51,7 @@ public class RewardManager : MonoSingleton<RewardManager>
         Plate.OnAnyExtraIngredientsToActiveRecipe += Plate_OnAnyExtraIngredientsToActiveRecipe;
         DeliveryStation.OnRecipeDelivered += DeliveryStation_OnRecipeDelivered;
         Bin.OnPlateBinned += Bin_OnPlateBinned;
+        PortableStorage.OnAnyStoragePickedUp += PortableStorage_OnAnyStoragePickedUp;
 
         ResetIdleTimer();
     }
@@ -66,6 +69,7 @@ public class RewardManager : MonoSingleton<RewardManager>
         Plate.OnAnyExtraIngredientsToActiveRecipe -= Plate_OnAnyExtraIngredientsToActiveRecipe;
         DeliveryStation.OnRecipeDelivered -= DeliveryStation_OnRecipeDelivered;
         Bin.OnPlateBinned -= Bin_OnPlateBinned;
+        PortableStorage.OnAnyStoragePickedUp -= PortableStorage_OnAnyStoragePickedUp;
     }
 
     private void PlayerAgent_OnEpisodeEnd(object sender, System.EventArgs e)
@@ -85,6 +89,7 @@ public class RewardManager : MonoSingleton<RewardManager>
 
         madeMistake = false;
         createdFinalRecipe = false;
+        hasPickedUpFinalRecipePlate = false;
     }
 
     public void PlayerAgent_OnAgentStep()
@@ -190,9 +195,9 @@ public class RewardManager : MonoSingleton<RewardManager>
 
         Plate plate = (Plate)sender;
 
-        if (plate != null)
+        if (plate == null)
         {
-            
+            return;
         }
 
         IngredientData ingredientData = e.IngredientItem.IngredientData;
@@ -210,6 +215,22 @@ public class RewardManager : MonoSingleton<RewardManager>
     private void Plate_OnAnyExtraIngredientsToActiveRecipe(object sender, System.EventArgs e)
     {
         AddAgentReward(AddedExtraIngredient, "Adding extra ingredients to a completed recipe");
+    }
+
+    private void PortableStorage_OnAnyStoragePickedUp(object sender, System.EventArgs e)
+    {
+        Plate plate = (Plate)sender;
+
+        if (plate == null || hasPickedUpFinalRecipePlate)
+        {
+            return;
+        }
+
+        if (RecipeManager.Instance.CheckCompletedRecipe(plate, RecipeManager.Instance.GetActiveRecipe()))
+        {
+            AddAgentReward(PickedUpPlateWithFinalRecipe, "Picking up plate with final recipe");
+            hasPickedUpFinalRecipePlate = true;
+        }
     }
 
     private void Plate_OnAnyCombineIngredients(object sender, IngredientEventArgs e)

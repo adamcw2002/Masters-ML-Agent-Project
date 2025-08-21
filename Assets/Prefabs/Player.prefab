@@ -223,9 +223,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 04fb159c111b4ba4495d1c2239514cdd, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: OvercookedAgent
   TeamId: 0
   m_UseChildSensors: 1
@@ -270,15 +270,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2824577724537999100}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Record: 0
-  NumStepsToRecord: 25000
+  NumStepsToRecord: 0
   DemonstrationName: AgentStatic
-  DemonstrationDirectory: Demos
+  DemonstrationDirectory: Assets/Demos
 --- !u!1 &5786144628535852920
 GameObject:
   m_ObjectHideFlags: 0

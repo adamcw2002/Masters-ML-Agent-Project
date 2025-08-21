@@ -882,16 +882,17 @@ MonoBehaviour:
   CorrectIngredientToWorkspaceReward: 0.3
   CorrectIngredientStateToPlateReward: 0.4
   CreatedFinalRecipeOnPlateReward: 0.5
+  PickedUpPlateWithFinalRecipe: 0.5
   CorrectFinalProductDeliveredReward: 1
   BinnedIncorrectPlate: 0
-  CompletingRecipeWithNoMistakes: 0
+  CompletingRecipeWithNoMistakes: 0.5
   GiveNormalisedTimeBonus: 1
   GrabIncorrectIngredientReward: -0.2
   IncorrectIngredientToWorkspaceReward: -0.2
-  IncorrectRecipeDelivered: -1
-  BinnedCorrectRecipe: -1
-  AddedExtraIngredient: -0.3
-  IdleBehaviour: -0.3
+  IncorrectRecipeDelivered: -0.2
+  BinnedCorrectRecipe: -0.7
+  AddedExtraIngredient: -0.1
+  IdleBehaviour: -0.6
 --- !u!4 &642670677
 Transform:
   m_ObjectHideFlags: 0
@@ -2420,8 +2421,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startSeed: 99
   randomizeSeedOnNewRecipe: 0
-  gridWidth: 7
-  gridLength: 7
+  gridWidth: 5
+  gridLength: 4
   roomCount: 1
   floorMaterial: {fileID: 2100000, guid: ea846e04c866fcd4791c7b7345c19cd2, type: 2}
   floorHeight: 0

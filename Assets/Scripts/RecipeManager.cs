@@ -123,7 +123,7 @@ public class RecipeManager : MonoSingleton<RecipeManager>
         {
             plateItems[0].TryGetComponent(out IngredientItem ingredient);
 
-            if (ingredient != null && ingredient.IngredientData == recipe.finalProductData)
+            if (ingredient != null && ingredient.IngredientData == recipe.finalProductData && ingredient.CurrentState == recipe.finalProductState)
             {
                 return true;
             }
