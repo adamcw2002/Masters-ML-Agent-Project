@@ -2422,7 +2422,7 @@ MonoBehaviour:
   startSeed: 99
   randomizeSeedOnNewRecipe: 0
   gridWidth: 5
-  gridLength: 4
+  gridLength: 5
   roomCount: 1
   floorMaterial: {fileID: 2100000, guid: ea846e04c866fcd4791c7b7345c19cd2, type: 2}
   floorHeight: 0
