@@ -15,6 +15,7 @@ MonoBehaviour:
   ingredientName: Sausage
   icon: {fileID: 21300000, guid: 2b9068873a6ea8b4fa0b275024ce5a8c, type: 3}
   isProduct: 0
+  ingredientType: 9
   possibleStates:
   - preconditionState: 0
     outputState: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   ingredientName: Salad
   icon: {fileID: 21300000, guid: 700c1de19aa4f12418010eb2b2b862b3, type: 3}
   isProduct: 1
-  uniqueIntID: 525719055
+  ingredientType: 18
   possibleStates:
   - preconditionState: 0
     outputState: 0

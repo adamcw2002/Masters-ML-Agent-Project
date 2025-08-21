@@ -15,7 +15,7 @@ MonoBehaviour:
   ingredientName: Cheese Pizza
   icon: {fileID: 21300000, guid: 9bc2d5670b3734548bb709f2570eefc4, type: 3}
   isProduct: 1
-  uniqueIntID: -1766491626
+  ingredientType: 15
   possibleStates:
   - preconditionState: 0
     outputState: 0

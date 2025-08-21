@@ -88,7 +88,7 @@ public class PlayerAgent : Agent
         sensor.AddObservation(AgentObservationManager.Instance.GetAllIngredientObservations(transform.position));
 
         //Game Timer
-        sensor.AddObservation(GameTimer.Instance.GetCurrentGameTime());
+        sensor.AddObservation(GameTimer.Instance.GetNormalisedTimeRemaining());
     }
 
     public override void OnActionReceived(ActionBuffers actions)

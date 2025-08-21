@@ -15,7 +15,7 @@ MonoBehaviour:
   ingredientName: Carrot
   icon: {fileID: 21300000, guid: b9b3089627834614bba4e2ff1b3bb3ab, type: 3}
   isProduct: 0
-  uniqueIntID: 1443200468
+  ingredientType: 2
   possibleStates:
   - preconditionState: 0
     outputState: 0

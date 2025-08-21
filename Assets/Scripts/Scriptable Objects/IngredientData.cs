@@ -1,10 +1,34 @@
- using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum IngredientState
 {
     Raw, Chopped, Cooked, Boiled, Fried
+}
+
+public enum IngredientType
+{
+    Bread = 0,
+    Brocolli = 1,
+    Carrot = 2,
+    Cheese = 3,
+    Dough = 4,
+    HotDogBun = 5,
+    Lettuce = 6,
+    Mushroom = 7,
+    Pasta = 8,
+    Sausage = 9,
+    Tomato = 10,
+    BrocolliMacAndCheese = 11,
+    CheeseSandwhich = 12,
+    HotDog = 13,
+    MacAndCheese= 14,
+    Pizza = 15,
+    MushroomPizza = 16,
+    SausagePizza = 17,
+    Salad = 18
 }
 
 [CreateAssetMenu(fileName = "New Ingredient", menuName = "new Ingredient")]
@@ -14,19 +38,14 @@ public class IngredientData : ScriptableObject
     public Sprite icon;
     public bool isProduct;
 
-    public int uniqueIntID;
+    public IngredientType ingredientType;
 
-#if UNITY_EDITOR
-    private void OnValidate()
+    public int GetID() => (int)ingredientType;
+    public float GetNormalizedID()
     {
-        if (uniqueIntID == 0) // 0 means uninitialized
-        {
-            string guidStr = System.Guid.NewGuid().ToString();
-            uniqueIntID = guidStr.GetHashCode(); // Convert GUID string to int hash
-            UnityEditor.EditorUtility.SetDirty(this);
-        }
+        return (float)GetID() / (Enum.GetValues(typeof(IngredientType)).Length - 1);
     }
-#endif
+
 
     [System.Serializable]
     public class StateVariant

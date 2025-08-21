@@ -13,9 +13,9 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
     [SerializeField] protected bool canProcessItems = true;
     [SerializeField] protected float processingTime = 0f;
-    private int processAmount;
+    private float processAmount;
     public bool CanProcessItems() => canProcessItems; 
-    public int GetProccessAmount() => processAmount;
+    public float GetProccessAmount() => processAmount;
 
     [SerializeField] protected IngredientState outputState;
 
@@ -31,7 +31,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 
     public bool HasItems => storedItems.Count > 0;
     public GameObject GetFirstItem() => HasItems ? storedItems[0] : null;
-    public IngredientState GetOutputState() => outputState;
+    public virtual IngredientState? GetOutputState() => outputState;
 
     protected virtual void Start()
     {
@@ -297,8 +297,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         while (elapsed < processingTime)
         {
             elapsed += Time.deltaTime;
-            float rawProgress = Mathf.Clamp01(elapsed / processingTime);
-            processAmount = Mathf.RoundToInt(rawProgress * 100f);
+            processAmount = Mathf.Clamp01(elapsed / processingTime);
 
             yield return null;
         }

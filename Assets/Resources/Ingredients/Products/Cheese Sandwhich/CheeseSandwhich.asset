@@ -15,6 +15,7 @@ MonoBehaviour:
   ingredientName: CheeseSandwhich
   icon: {fileID: 0}
   isProduct: 1
+  ingredientType: 12
   possibleStates:
   - preconditionState: 0
     outputState: 0

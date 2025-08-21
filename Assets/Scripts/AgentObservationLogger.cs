@@ -82,7 +82,7 @@ public class AgentObservationLogger : MonoBehaviour
 
         int tileRange = 3;
         float[] tiles = AgentObservationManager.Instance.GetTileObservations(agent.transform.position, tileRange);
-        int floatsPerTile = 17;
+        int floatsPerTile = 19;
         int numTiles = tiles.Length / floatsPerTile;
 
         for (int tile = 0; tile < numTiles; tile++)
@@ -239,20 +239,26 @@ public class AgentObservationLogger : MonoBehaviour
             return "Has Item";
 
         if (index == 5)
+            return "Has Storage";
+
+        if (index == 6)
+            return "Can Process Ingredients";
+
+        if (index == 7)
             return "Cooking Progress (0–100 or -1)";
 
-        if (index >= 6 && index <= 10)
+        if (index >= 8 && index <= 12)
         {
-            string state = GetStateName(index - 6);
+            string state = GetStateName(index - 8);
             return $"Output State: {state}";
         }
 
-        if (index == 11)
+        if (index == 13)
             return "Item ID";
 
-        if (index >= 12 && index <= 16)
+        if (index >= 14 && index <= 18)
         {
-            string state = GetStateName(index - 12);
+            string state = GetStateName(index - 14);
             return $"Item State: {state}";
         }
 
