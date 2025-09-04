@@ -105,14 +105,14 @@ public class RecipeManager : MonoSingleton<RecipeManager>
         // Check if holding an item
         if (plate == null)
         {
-            Debug.Log("Not holding a plate");
+            //Debug.Log("Not holding a plate");
             return false;
         }
 
         //Check the contents of the plate
         if (plate.IsEmpty)
         {
-            Debug.Log("Plate does not have anything on it");
+            //Debug.Log("Plate does not have anything on it");
             return false;
         }
 

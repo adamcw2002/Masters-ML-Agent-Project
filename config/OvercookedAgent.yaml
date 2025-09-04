@@ -18,13 +18,10 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-      curiosity:
-          gamma: 0.99
-          strength: 0.02
 #      gail:
 #        strength: 0.5
 #        demo_path: Assets/Demos/AgentStatic.demo
     keep_checkpoints: 5
-    max_steps: 10000000
+    max_steps: 120000000
     time_horizon: 512
     summary_freq: 25000

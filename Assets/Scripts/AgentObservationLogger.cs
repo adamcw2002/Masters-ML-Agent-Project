@@ -135,6 +135,13 @@ public class AgentObservationLogger : MonoBehaviour
             }
         }
 
+        // === Delivery Station ===
+        sb.AppendLine("\n=== Delivery Station Observation ===");
+        float[] deliveryStationTile = AgentObservationManager.Instance.GetDeliveryStationObservation(agent.transform.position);
+        sb.AppendLine($"[{index++}] X Position: {deliveryStationTile[0]}");
+        sb.AppendLine($"[{index++}] Z Position: {deliveryStationTile[1]}");
+        sb.AppendLine($"[{index++}] Tile Type ID: {deliveryStationTile[2]}");
+
         // === Game Timer Observation ===
         sb.AppendLine("\n=== Game Timer Observation ===");
         float gameTime = GameTimer.Instance.GetCurrentGameTime();

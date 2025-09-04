@@ -87,6 +87,9 @@ public class PlayerAgent : Agent
         //Loose Items Observations - 9 * Max Loose Ingredients
         sensor.AddObservation(AgentObservationManager.Instance.GetAllIngredientObservations(transform.position));
 
+        //Delivery Station - 3
+        sensor.AddObservation(AgentObservationManager.Instance.GetDeliveryStationObservation(transform.position));
+
         //Game Timer
         sensor.AddObservation(GameTimer.Instance.GetNormalisedTimeRemaining());
     }

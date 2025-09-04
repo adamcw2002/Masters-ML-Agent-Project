@@ -41,6 +41,8 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
 
     private BSPGridFloorPlanGenerator FloorPlanGenerator;
 
+    private GameObject deliveryStation;
+
     private float FloorHeight = 0;
     private float FloorYScale = 0;
     private Transform workspacesParent = null;
@@ -138,6 +140,11 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
         return new Dictionary<Vector2Int, GameObject>(workspaceGrid);
     }
 
+    public GameObject GetDeliveryStation()
+    {
+        return deliveryStation;
+    }
+
     #endregion
 
     private void OnEnable()
@@ -233,7 +240,7 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
             Vector2Int deliveryPos = FindBestPosition(remainingPositions);
             remainingPositions.Remove(deliveryPos);
 
-            CreateWorkspaceCell(deliveryPos, deliveryStationPrefab, null);
+            deliveryStation = CreateWorkspaceCell(deliveryPos, deliveryStationPrefab, null);
             MarkPositionUsed(deliveryPos, false); // Don't add buffer - plates need to be adjacent
 
             // Place plates directly next to delivery station (without buffer)
@@ -625,7 +632,7 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
         }
     }
 
-    private void CreateWorkspaceCell(Vector2Int pos, GameObject prefab, IngredientData ingredient, bool isCornerCell = false)
+    private GameObject CreateWorkspaceCell(Vector2Int pos, GameObject prefab, IngredientData ingredient, bool isCornerCell = false)
     {
         GameObject cell = Instantiate(prefab);
         cell.name = $"Workspace_{pos.x}_{pos.y}";
@@ -652,6 +659,8 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
         {
             spawner.SetIngredientData(ingredient);
         }
+
+        return cell;
     }
 
     private void AnalyzeRecipes()

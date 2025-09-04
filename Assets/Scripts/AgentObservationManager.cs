@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 {
@@ -111,7 +112,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             {
                 Vector2Int posToCheck = currentVector2Pos + new Vector2Int(x, z);
 
-                var tileOneHot = GetOneHotTileObservationWithRelativePos(workspaceGenerator.GetWorkspaceAt(posToCheck), posToCheck.Equals(currentVector2Pos), pos + new Vector3(x, 0, z));
+                var tileOneHot = GetOneHotTileObservationWithRelativePos(workspaceGenerator.GetWorkspaceAt(posToCheck), posToCheck.Equals(currentVector2Pos), new Vector3(x, 0, z));
 
                 foreach (float val in tileOneHot)
                     observation[index++] = val;
@@ -135,6 +136,19 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         float[] tileObservation = GetOneHotTileObservation(workspace, playerOccupied);
         foreach (float val in tileObservation)
             observation[index++] = val;
+
+        return observation;
+    }
+
+    public float[] GetDeliveryStationObservation(Vector3 playerPos)
+    {
+        float[] observation = new float[3];
+
+        GameObject deliveryStation = WorkspaceGenerator.Instance.GetDeliveryStation();
+
+        observation[0] = playerPos.x - deliveryStation.transform.position.x;
+        observation[1] = playerPos.z - deliveryStation.transform.position.z;
+        observation[2] = GetWorkspaceType(deliveryStation);
 
         return observation;
     }

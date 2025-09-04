@@ -891,7 +891,7 @@ MonoBehaviour:
   IncorrectIngredientToWorkspaceReward: -0.2
   IncorrectRecipeDelivered: -0.2
   BinnedCorrectRecipe: -0.7
-  AddedExtraIngredient: -0.1
+  AddedExtraIngredient: -0.2
   IdleBehaviour: -0.6
 --- !u!4 &642670677
 Transform:
@@ -902,7 +902,7 @@ Transform:
   m_GameObject: {fileID: 642670675}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 476.42258, y: 310.9829, z: -13.170715}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2420,7 +2420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startSeed: 99
-  randomizeSeedOnNewRecipe: 0
+  randomizeSeedOnNewRecipe: 1
   gridWidth: 5
   gridLength: 5
   roomCount: 1
