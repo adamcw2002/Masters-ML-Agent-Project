@@ -14,14 +14,14 @@ behaviors:
       normalize: true
       hidden_units: 128
       num_layers: 2
+      use_recurrent: true
+      memory_size: 128
+      sequence_length: 64
     reward_signals:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-#      gail:
-#        strength: 0.5
-#        demo_path: Assets/Demos/AgentStatic.demo
     keep_checkpoints: 5
-    max_steps: 120000000
+    max_steps: 40000000
     time_horizon: 512
     summary_freq: 25000

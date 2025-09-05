@@ -2420,7 +2420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startSeed: 99
-  randomizeSeedOnNewRecipe: 1
+  randomizeSeedOnNewRecipe: 0
   gridWidth: 5
   gridLength: 5
   roomCount: 1

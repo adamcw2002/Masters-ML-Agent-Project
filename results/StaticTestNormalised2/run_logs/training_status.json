@@ -2,15 +2,6 @@
     "OvercookedAgent": {
         "checkpoints": [
             {
-                "steps": 28499907,
-                "file_path": "results\\StaticTestNormalised2\\OvercookedAgent\\OvercookedAgent-28499907.onnx",
-                "reward": 3.638888398806254,
-                "creation_time": 1756447918.3642135,
-                "auxillary_file_paths": [
-                    "results\\StaticTestNormalised2\\OvercookedAgent\\OvercookedAgent-28499907.pt"
-                ]
-            },
-            {
                 "steps": 28999691,
                 "file_path": "results\\StaticTestNormalised2\\OvercookedAgent\\OvercookedAgent-28999691.onnx",
                 "reward": 3.8790120085080466,
@@ -45,15 +36,24 @@
                 "auxillary_file_paths": [
                     "results\\StaticTestNormalised2\\OvercookedAgent\\OvercookedAgent-30000174.pt"
                 ]
+            },
+            {
+                "steps": 30024982,
+                "file_path": "results\\StaticTestNormalised2\\OvercookedAgent\\OvercookedAgent-30024982.onnx",
+                "reward": 3.78989856893366,
+                "creation_time": 1757019190.9054928,
+                "auxillary_file_paths": [
+                    "results\\StaticTestNormalised2\\OvercookedAgent\\OvercookedAgent-30024982.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 30000174,
+            "steps": 30024982,
             "file_path": "results\\StaticTestNormalised2\\OvercookedAgent.onnx",
-            "reward": 3.981249660253525,
-            "creation_time": 1756452612.5617523,
+            "reward": 3.78989856893366,
+            "creation_time": 1757019190.9054928,
             "auxillary_file_paths": [
-                "results\\StaticTestNormalised2\\OvercookedAgent\\OvercookedAgent-30000174.pt"
+                "results\\StaticTestNormalised2\\OvercookedAgent\\OvercookedAgent-30024982.pt"
             ]
         }
     },
