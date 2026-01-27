@@ -21,6 +21,23 @@ mlagents-learn --run-id=Test2
 mlagents-learn config/OvercookedAgent.yaml --run-id=ConfigTest
 
 mlagents-learn config/OvercookedAgent.yaml --run-id=RandomMassTraining --env=Builds/MLAgentProject.exe --num-envs=8
-mlagents-learn config/OvercookedAgent.yaml --run-id=RandomMassTraining --env=Builds/MLAgentProject.exe --num-envs=8 --no-graphics
+mlagents-learn config/OvercookedAgent.yaml --run-id=RandomDoubleNewObsConfig2 --env=Builds/NoDeliveryRandom2IngNewObs6x5/MLAgentProject.exe --num-envs=8 --no-graphics --resume
+
+mlagents-learn config/OvercookedAgent.yaml --run-id=Planning_TomatoAndCarrot_ND --env=Builds/RewardShaping/Planning_TomatoAndCarrotNoDelivery/MLAgentProject.exe --num-envs=20 --no-graphics
 
 tensorboard --logdir results
+
+
+THIS ONE ------
+
+mlagents-learn config/OvercookedAgent.yaml --run-id=ExplorationPlus_SingleCarrot_FromND --env=Builds/RewardShaping/ExplorationPlus_SingleCarrot/MLAgentProject.exe --num-envs=20 --no-graphics --initialize-from=ExplorationPlus_SingleCarrot_ND
+
+
+
+
+
+
+
+
+
+

@@ -94,18 +94,29 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
     public float[] GetTileObservations(Vector3 pos, int range, bool showDebug = false)
     {
-        int width = range + range + 1;
-
-        float[] observation = new float[(width * width) * observationsPerTileWithRelativePos];
+        float[] observation = new float[(range * range) * observationsPerTileWithRelativePos];
         int index = 0;
 
-        GameObject[,] workspaces = new GameObject[width,width];
-
-        Vector2Int currentVector2Pos = GetVector2IntPos(pos);
         WorkspaceGenerator workspaceGenerator = WorkspaceGenerator.Instance;
-        Vector2Int vector2Range = new Vector2Int(range, range);
 
+        for (int i = 0; i < range; i++)
+        {
+            for (int j = 0; j < range; j++)
+            {
+                Vector3 posToCheck = new Vector3(i + 0.5f, 0, j + 0.5f);
+
+                var tileOneHot = GetOneHotTileObservationWithRelativePos(workspaceGenerator.GetWorkspaceAt(new Vector2Int(i, j)), posToCheck.Equals(pos), posToCheck - pos);
+
+                foreach (float val in tileOneHot)
+                    observation[index++] = val;
+
+                if (showDebug) Debug.Log("Tile Observation: [" + string.Join(", ", tileOneHot) + "]");
+            }
+        }
+
+        /*
         //ASSIGN GRID OF GAMEOBJECTS TO AD OBSERVATIONS
+                Vector2Int currentVector2Pos = GetVector2IntPos(pos);
         for (int z = -range; z < range + 1; z++)
         {
             for (int x = -range; x < range + 1; x++)
@@ -120,6 +131,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
                 if (showDebug) Debug.Log("Tile Observation: [" + string.Join(", ", tileOneHot) + "]");
             }
         }
+        */
 
         return observation;
     }
@@ -146,11 +158,20 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
 
         GameObject deliveryStation = WorkspaceGenerator.Instance.GetDeliveryStation();
 
-        observation[0] = playerPos.x - deliveryStation.transform.position.x;
-        observation[1] = playerPos.z - deliveryStation.transform.position.z;
-        observation[2] = GetWorkspaceType(deliveryStation);
+        if (deliveryStation != null)
+        {
+            observation[0] = playerPos.x - deliveryStation.transform.position.x;
+            observation[1] = playerPos.z - deliveryStation.transform.position.z;
+            observation[2] = GetWorkspaceType(deliveryStation);
+        }
+        else
+        {
+            observation[0] = 0;
+            observation[1] = 0;
+            observation[2] = 0;
+        }
 
-        return observation;
+            return observation;
     }
 
     public float[] GetOneHotTileObservation(GameObject workspace, bool playerOccupied)
@@ -280,7 +301,7 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
             return workspace.CanProcessItems() ? 1 : 0;
         }
 
-        return 0;
+        return -1;
     }
 
     private float GetWorkspaceProgress(GameObject obj)

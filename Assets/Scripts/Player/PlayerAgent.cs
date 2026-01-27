@@ -4,15 +4,18 @@ using Unity.MLAgents.Actuators;
 using UnityEngine;
 using System;
 using System.ComponentModel.Design;
+using System.Collections;
 
 public class PlayerAgent : Agent
 {
     public static event EventHandler OnEpisodeEnd;
+    public static event EventHandler OnEpisodeStart;
     public static event EventHandler OnAgentSpawned;
     public static event Action OnAgentStep;
 
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerInteract interact;
+    [SerializeField] private bool endOnRecipeMade = true;
 
     private bool interactKeyPressed = false;
 
@@ -20,26 +23,64 @@ public class PlayerAgent : Agent
     {
         GameTimer.OnTimeEnd += GameTimer_OnTimeEnd;
         DeliveryStation.OnRecipeDelivered += DeliveryStation_OnRecipeDelivered;
+        Plate.OnAnyCombineIngredients += Plate_OnAnyCombineIngredients;
 
         OnAgentSpawned.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnDestroy()
+    {
+        GameTimer.OnTimeEnd -= GameTimer_OnTimeEnd;
+        DeliveryStation.OnRecipeDelivered -= DeliveryStation_OnRecipeDelivered;
+        Plate.OnAnyCombineIngredients -= Plate_OnAnyCombineIngredients;
     }
 
     public override void OnEpisodeBegin()
     {
         interactKeyPressed = false;
+
+        GameObject heldItem = interact?.RemoveItem();
+        if (heldItem != null) Destroy(heldItem);
+
+        OnEpisodeStart?.Invoke(this, EventArgs.Empty);
     }
     private void DeliveryStation_OnRecipeDelivered(object sender, DeliveryEventArgs e)
     {
-        if (e.isCorrectRecipe) Invoke("EndCurrentEpisode", 0.1f);
+        if (e.isCorrectRecipe) StartCoroutine(EndEpisodeAfterFrame());
+    }
+
+    private IEnumerator EndEpisodeAfterFrame()
+    {
+        yield return new WaitForEndOfFrame();
+
+        EndCurrentEpisode();
+    }
+
+    private void Plate_OnAnyCombineIngredients(object sender, IngredientEventArgs e)
+    {
+        if (endOnRecipeMade)
+        {
+            //CHECK IF PLATE HAS COMBINED ALL INGREDIENTS TO FORM THE CORRECT RECIPE
+            IngredientData ingredientData = e.IngredientItem.IngredientData;
+            RecipeData activeRecipeData = RecipeManager.Instance.GetActiveRecipe();
+
+            if (ingredientData == activeRecipeData.finalProductData && e.IngredientItem.CurrentState == activeRecipeData.finalProductState)
+            {
+                RewardManager.Instance.AddAgentReward(GameTimer.Instance.GetNormalisedTimeRemaining(), "Time Bonus");
+
+                EndCurrentEpisode();
+            }
+        }
     }
 
     private void GameTimer_OnTimeEnd() => EndCurrentEpisode();
 
     private void EndCurrentEpisode()
     {
+        Debug.Log("Episode ended");
+
         OnEpisodeEnd?.Invoke(this, EventArgs.Empty);
 
-        Debug.Log("Episode ended");
         EndEpisode();
     }
 
@@ -78,7 +119,7 @@ public class PlayerAgent : Agent
         sensor.AddObservation(AgentObservationManager.Instance.GetCurrentRecipeObservation());
 
         //Tile Observations - (Range + Range + 1)^2 * 17 Observations
-        int tileRange = 3;
+        int tileRange = 6;
         sensor.AddObservation(AgentObservationManager.Instance.GetTileObservations(transform.position, tileRange));
 
         //Plate Observations - 24 * 3 = 72 Observations
@@ -96,8 +137,7 @@ public class PlayerAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        movement.SetMoveX(actions.ContinuousActions[0]);
-        movement.SetMoveZ(actions.ContinuousActions[1]);
+        movement.SetMoveInput(actions.ContinuousActions[0], actions.ContinuousActions[1]);
 
         int interactPressed = actions.DiscreteActions[0];
         if (interactPressed == 1 && interact != null && interact.enabled)

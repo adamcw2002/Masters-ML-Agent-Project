@@ -80,7 +80,7 @@ public class AgentObservationLogger : MonoBehaviour
         // === Tile Observations ===
         sb.AppendLine("\n=== Tile Observations ===");
 
-        int tileRange = 3;
+        int tileRange = 6;
         float[] tiles = AgentObservationManager.Instance.GetTileObservations(agent.transform.position, tileRange);
         int floatsPerTile = 19;
         int numTiles = tiles.Length / floatsPerTile;

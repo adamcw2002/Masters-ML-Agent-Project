@@ -1,0 +1,1167 @@
+Agent Observations Log
+Date: 22/09/2025
+Time: 23:35:44
+========================================
+
+=== Position Observations ===
+[0] Position X: 2.376427
+[1] Position Z: 2.477551
+
+=== Inventory Observations ===
+[2] Inventory[0] Is Holding Item: 0
+[3] Inventory[1] Is Holding Storage: 0
+[4] Inventory[2] Ingredient ID: 0
+[5] Inventory[3] State: Raw: 0
+[6] Inventory[4] State: Chopped: 0
+[7] Inventory[5] State: Cooked: 0
+[8] Inventory[6] State: Boiled: 0
+[9] Inventory[7] State: Fried: 0
+
+=== Current Interactable Observations ===
+[10] Current Interactable [0] Tile Type ID: 0
+[11] Current Interactable [1] Occupied by Agent: 0
+[12] Current Interactable [2] Has Item: 0
+[13] Current Interactable [3] Has Storage: 0
+[14] Current Interactable [4] Can Process Ingredients: -1
+[15] Current Interactable [5] Cooking Progress (0–100 or -1): 0
+[16] Current Interactable [6] Output State: Raw: 0
+[17] Current Interactable [7] Output State: Chopped: 0
+[18] Current Interactable [8] Output State: Cooked: 0
+[19] Current Interactable [9] Output State: Boiled: 0
+[20] Current Interactable [10] Output State: Fried: 0
+[21] Current Interactable [11] Item ID: 0
+[22] Current Interactable [12] Item State: Raw: 0
+[23] Current Interactable [13] Item State: Chopped: 0
+[24] Current Interactable [14] Item State: Cooked: 0
+[25] Current Interactable [15] Item State: Boiled: 0
+[26] Current Interactable [16] Item State: Fried: 0
+
+=== Recipe Observations ===
+[27] Recipe[0] Final Product ID: 0.5555556
+[28] Recipe[1] Final Product State: Raw: 0
+[29] Recipe[2] Final Product State: Chopped: 1
+[30] Recipe[3] Final Product State: Cooked: 0
+[31] Recipe[4] Final Product State: Boiled: 0
+[32] Recipe[5] Final Product State: Fried: 0
+[33] Recipe[6] Ingredient 1 ID: 0.5555556
+[34] Recipe[7] Ingredient 1 Precondition State: Raw: 1
+[35] Recipe[8] Ingredient 1 Precondition State: Chopped: 0
+[36] Recipe[9] Ingredient 1 Precondition State: Cooked: 0
+[37] Recipe[10] Ingredient 1 Precondition State: Boiled: 0
+[38] Recipe[11] Ingredient 1 Precondition State: Fried: 0
+[39] Recipe[12] Ingredient 1 Final State: Raw: 0
+[40] Recipe[13] Ingredient 1 Final State: Chopped: 1
+[41] Recipe[14] Ingredient 1 Final State: Cooked: 0
+[42] Recipe[15] Ingredient 1 Final State: Boiled: 0
+[43] Recipe[16] Ingredient 1 Final State: Fried: 0
+[44] Recipe[17] Ingredient 2 ID: 0
+[45] Recipe[18] Ingredient 2 Precondition State: Raw: 0
+[46] Recipe[19] Ingredient 2 Precondition State: Chopped: 0
+[47] Recipe[20] Ingredient 2 Precondition State: Cooked: 0
+[48] Recipe[21] Ingredient 2 Precondition State: Boiled: 0
+[49] Recipe[22] Ingredient 2 Precondition State: Fried: 0
+[50] Recipe[23] Ingredient 2 Final State: Raw: 0
+[51] Recipe[24] Ingredient 2 Final State: Chopped: 0
+[52] Recipe[25] Ingredient 2 Final State: Cooked: 0
+[53] Recipe[26] Ingredient 2 Final State: Boiled: 0
+[54] Recipe[27] Ingredient 2 Final State: Fried: 0
+[55] Recipe[28] Ingredient 3 ID: 0
+[56] Recipe[29] Ingredient 3 Precondition State: Raw: 0
+[57] Recipe[30] Ingredient 3 Precondition State: Chopped: 0
+[58] Recipe[31] Ingredient 3 Precondition State: Cooked: 0
+[59] Recipe[32] Ingredient 3 Precondition State: Boiled: 0
+[60] Recipe[33] Ingredient 3 Precondition State: Fried: 0
+[61] Recipe[34] Ingredient 3 Final State: Raw: 0
+[62] Recipe[35] Ingredient 3 Final State: Chopped: 0
+[63] Recipe[36] Ingredient 3 Final State: Cooked: 0
+[64] Recipe[37] Ingredient 3 Final State: Boiled: 0
+[65] Recipe[38] Ingredient 3 Final State: Fried: 0
+[66] Recipe[39] Ingredient 4 ID: 0
+[67] Recipe[40] Ingredient 4 Precondition State: Raw: 0
+[68] Recipe[41] Ingredient 4 Precondition State: Chopped: 0
+[69] Recipe[42] Ingredient 4 Precondition State: Cooked: 0
+[70] Recipe[43] Ingredient 4 Precondition State: Boiled: 0
+[71] Recipe[44] Ingredient 4 Precondition State: Fried: 0
+[72] Recipe[45] Ingredient 4 Final State: Raw: 0
+[73] Recipe[46] Ingredient 4 Final State: Chopped: 0
+[74] Recipe[47] Ingredient 4 Final State: Cooked: 0
+[75] Recipe[48] Ingredient 4 Final State: Boiled: 0
+[76] Recipe[49] Ingredient 4 Final State: Fried: 0
+
+=== Tile Observations ===
+
+-- Tile #0 --
+[77] X Position: -1.876427
+[78] Z Position: -1.977551
+[79] Tile Type ID: 0
+[80] Occupied by Agent: 0
+[81] Has Item: 0
+[82] Has Storage: 0
+[83] Can Process Ingredients: -1
+[84] Cooking Progress (0–100 or -1): 0
+[85] Output State: Raw: 0
+[86] Output State: Chopped: 0
+[87] Output State: Cooked: 0
+[88] Output State: Boiled: 0
+[89] Output State: Fried: 0
+[90] Item ID: 0
+[91] Item State: Raw: 0
+[92] Item State: Chopped: 0
+[93] Item State: Cooked: 0
+[94] Item State: Boiled: 0
+[95] Item State: Fried: 0
+
+-- Tile #1 --
+[96] X Position: -1.876427
+[97] Z Position: -0.9775507
+[98] Tile Type ID: 0.2857143
+[99] Occupied by Agent: 0
+[100] Has Item: 0
+[101] Has Storage: 0
+[102] Can Process Ingredients: 1
+[103] Cooking Progress (0–100 or -1): 0
+[104] Output State: Raw: 0
+[105] Output State: Chopped: 1
+[106] Output State: Cooked: 0
+[107] Output State: Boiled: 0
+[108] Output State: Fried: 0
+[109] Item ID: 0
+[110] Item State: Raw: 0
+[111] Item State: Chopped: 0
+[112] Item State: Cooked: 0
+[113] Item State: Boiled: 0
+[114] Item State: Fried: 0
+
+-- Tile #2 --
+[115] X Position: -1.876427
+[116] Z Position: 0.02244925
+[117] Tile Type ID: 0.1428571
+[118] Occupied by Agent: 0
+[119] Has Item: 1
+[120] Has Storage: 1
+[121] Can Process Ingredients: 0
+[122] Cooking Progress (0–100 or -1): 0
+[123] Output State: Raw: 0
+[124] Output State: Chopped: 0
+[125] Output State: Cooked: 0
+[126] Output State: Boiled: 0
+[127] Output State: Fried: 0
+[128] Item ID: 0
+[129] Item State: Raw: 0
+[130] Item State: Chopped: 0
+[131] Item State: Cooked: 0
+[132] Item State: Boiled: 0
+[133] Item State: Fried: 0
+
+-- Tile #3 --
+[134] X Position: -1.876427
+[135] Z Position: 1.022449
+[136] Tile Type ID: 0.1428571
+[137] Occupied by Agent: 0
+[138] Has Item: 0
+[139] Has Storage: 0
+[140] Can Process Ingredients: 0
+[141] Cooking Progress (0–100 or -1): 0
+[142] Output State: Raw: 0
+[143] Output State: Chopped: 0
+[144] Output State: Cooked: 0
+[145] Output State: Boiled: 0
+[146] Output State: Fried: 0
+[147] Item ID: 0
+[148] Item State: Raw: 0
+[149] Item State: Chopped: 0
+[150] Item State: Cooked: 0
+[151] Item State: Boiled: 0
+[152] Item State: Fried: 0
+
+-- Tile #4 --
+[153] X Position: -1.876427
+[154] Z Position: 2.022449
+[155] Tile Type ID: 0
+[156] Occupied by Agent: 0
+[157] Has Item: 0
+[158] Has Storage: 0
+[159] Can Process Ingredients: -1
+[160] Cooking Progress (0–100 or -1): 0
+[161] Output State: Raw: 0
+[162] Output State: Chopped: 0
+[163] Output State: Cooked: 0
+[164] Output State: Boiled: 0
+[165] Output State: Fried: 0
+[166] Item ID: 0
+[167] Item State: Raw: 0
+[168] Item State: Chopped: 0
+[169] Item State: Cooked: 0
+[170] Item State: Boiled: 0
+[171] Item State: Fried: 0
+
+-- Tile #5 --
+[172] X Position: -1.876427
+[173] Z Position: 3.022449
+[174] Tile Type ID: 0
+[175] Occupied by Agent: 0
+[176] Has Item: 0
+[177] Has Storage: 0
+[178] Can Process Ingredients: -1
+[179] Cooking Progress (0–100 or -1): 0
+[180] Output State: Raw: 0
+[181] Output State: Chopped: 0
+[182] Output State: Cooked: 0
+[183] Output State: Boiled: 0
+[184] Output State: Fried: 0
+[185] Item ID: 0
+[186] Item State: Raw: 0
+[187] Item State: Chopped: 0
+[188] Item State: Cooked: 0
+[189] Item State: Boiled: 0
+[190] Item State: Fried: 0
+
+-- Tile #6 --
+[191] X Position: -0.8764269
+[192] Z Position: -1.977551
+[193] Tile Type ID: 0.1428571
+[194] Occupied by Agent: 0
+[195] Has Item: 1
+[196] Has Storage: 1
+[197] Can Process Ingredients: 0
+[198] Cooking Progress (0–100 or -1): 0
+[199] Output State: Raw: 0
+[200] Output State: Chopped: 0
+[201] Output State: Cooked: 0
+[202] Output State: Boiled: 0
+[203] Output State: Fried: 0
+[204] Item ID: 0
+[205] Item State: Raw: 0
+[206] Item State: Chopped: 0
+[207] Item State: Cooked: 0
+[208] Item State: Boiled: 0
+[209] Item State: Fried: 0
+
+-- Tile #7 --
+[210] X Position: -0.8764269
+[211] Z Position: -0.9775507
+[212] Tile Type ID: 0
+[213] Occupied by Agent: 0
+[214] Has Item: 0
+[215] Has Storage: 0
+[216] Can Process Ingredients: -1
+[217] Cooking Progress (0–100 or -1): 0
+[218] Output State: Raw: 0
+[219] Output State: Chopped: 0
+[220] Output State: Cooked: 0
+[221] Output State: Boiled: 0
+[222] Output State: Fried: 0
+[223] Item ID: 0
+[224] Item State: Raw: 0
+[225] Item State: Chopped: 0
+[226] Item State: Cooked: 0
+[227] Item State: Boiled: 0
+[228] Item State: Fried: 0
+
+-- Tile #8 --
+[229] X Position: -0.8764269
+[230] Z Position: 0.02244925
+[231] Tile Type ID: 0
+[232] Occupied by Agent: 0
+[233] Has Item: 0
+[234] Has Storage: 0
+[235] Can Process Ingredients: -1
+[236] Cooking Progress (0–100 or -1): 0
+[237] Output State: Raw: 0
+[238] Output State: Chopped: 0
+[239] Output State: Cooked: 0
+[240] Output State: Boiled: 0
+[241] Output State: Fried: 0
+[242] Item ID: 0
+[243] Item State: Raw: 0
+[244] Item State: Chopped: 0
+[245] Item State: Cooked: 0
+[246] Item State: Boiled: 0
+[247] Item State: Fried: 0
+
+-- Tile #9 --
+[248] X Position: -0.8764269
+[249] Z Position: 1.022449
+[250] Tile Type ID: 0
+[251] Occupied by Agent: 0
+[252] Has Item: 0
+[253] Has Storage: 0
+[254] Can Process Ingredients: -1
+[255] Cooking Progress (0–100 or -1): 0
+[256] Output State: Raw: 0
+[257] Output State: Chopped: 0
+[258] Output State: Cooked: 0
+[259] Output State: Boiled: 0
+[260] Output State: Fried: 0
+[261] Item ID: 0
+[262] Item State: Raw: 0
+[263] Item State: Chopped: 0
+[264] Item State: Cooked: 0
+[265] Item State: Boiled: 0
+[266] Item State: Fried: 0
+
+-- Tile #10 --
+[267] X Position: -0.8764269
+[268] Z Position: 2.022449
+[269] Tile Type ID: 0.1428571
+[270] Occupied by Agent: 0
+[271] Has Item: 0
+[272] Has Storage: 0
+[273] Can Process Ingredients: 0
+[274] Cooking Progress (0–100 or -1): 0
+[275] Output State: Raw: 0
+[276] Output State: Chopped: 0
+[277] Output State: Cooked: 0
+[278] Output State: Boiled: 0
+[279] Output State: Fried: 0
+[280] Item ID: 0
+[281] Item State: Raw: 0
+[282] Item State: Chopped: 0
+[283] Item State: Cooked: 0
+[284] Item State: Boiled: 0
+[285] Item State: Fried: 0
+
+-- Tile #11 --
+[286] X Position: -0.8764269
+[287] Z Position: 3.022449
+[288] Tile Type ID: 0
+[289] Occupied by Agent: 0
+[290] Has Item: 0
+[291] Has Storage: 0
+[292] Can Process Ingredients: -1
+[293] Cooking Progress (0–100 or -1): 0
+[294] Output State: Raw: 0
+[295] Output State: Chopped: 0
+[296] Output State: Cooked: 0
+[297] Output State: Boiled: 0
+[298] Output State: Fried: 0
+[299] Item ID: 0
+[300] Item State: Raw: 0
+[301] Item State: Chopped: 0
+[302] Item State: Cooked: 0
+[303] Item State: Boiled: 0
+[304] Item State: Fried: 0
+
+-- Tile #12 --
+[305] X Position: 0.1235731
+[306] Z Position: -1.977551
+[307] Tile Type ID: 0.1428571
+[308] Occupied by Agent: 0
+[309] Has Item: 0
+[310] Has Storage: 0
+[311] Can Process Ingredients: 0
+[312] Cooking Progress (0–100 or -1): 0
+[313] Output State: Raw: 0
+[314] Output State: Chopped: 0
+[315] Output State: Cooked: 0
+[316] Output State: Boiled: 0
+[317] Output State: Fried: 0
+[318] Item ID: 0
+[319] Item State: Raw: 0
+[320] Item State: Chopped: 0
+[321] Item State: Cooked: 0
+[322] Item State: Boiled: 0
+[323] Item State: Fried: 0
+
+-- Tile #13 --
+[324] X Position: 0.1235731
+[325] Z Position: -0.9775507
+[326] Tile Type ID: 0
+[327] Occupied by Agent: 0
+[328] Has Item: 0
+[329] Has Storage: 0
+[330] Can Process Ingredients: -1
+[331] Cooking Progress (0–100 or -1): 0
+[332] Output State: Raw: 0
+[333] Output State: Chopped: 0
+[334] Output State: Cooked: 0
+[335] Output State: Boiled: 0
+[336] Output State: Fried: 0
+[337] Item ID: 0
+[338] Item State: Raw: 0
+[339] Item State: Chopped: 0
+[340] Item State: Cooked: 0
+[341] Item State: Boiled: 0
+[342] Item State: Fried: 0
+
+-- Tile #14 --
+[343] X Position: 0.1235731
+[344] Z Position: 0.02244925
+[345] Tile Type ID: 0
+[346] Occupied by Agent: 0
+[347] Has Item: 0
+[348] Has Storage: 0
+[349] Can Process Ingredients: -1
+[350] Cooking Progress (0–100 or -1): 0
+[351] Output State: Raw: 0
+[352] Output State: Chopped: 0
+[353] Output State: Cooked: 0
+[354] Output State: Boiled: 0
+[355] Output State: Fried: 0
+[356] Item ID: 0
+[357] Item State: Raw: 0
+[358] Item State: Chopped: 0
+[359] Item State: Cooked: 0
+[360] Item State: Boiled: 0
+[361] Item State: Fried: 0
+
+-- Tile #15 --
+[362] X Position: 0.1235731
+[363] Z Position: 1.022449
+[364] Tile Type ID: 0
+[365] Occupied by Agent: 0
+[366] Has Item: 0
+[367] Has Storage: 0
+[368] Can Process Ingredients: -1
+[369] Cooking Progress (0–100 or -1): 0
+[370] Output State: Raw: 0
+[371] Output State: Chopped: 0
+[372] Output State: Cooked: 0
+[373] Output State: Boiled: 0
+[374] Output State: Fried: 0
+[375] Item ID: 0
+[376] Item State: Raw: 0
+[377] Item State: Chopped: 0
+[378] Item State: Cooked: 0
+[379] Item State: Boiled: 0
+[380] Item State: Fried: 0
+
+-- Tile #16 --
+[381] X Position: 0.1235731
+[382] Z Position: 2.022449
+[383] Tile Type ID: 1
+[384] Occupied by Agent: 0
+[385] Has Item: 0
+[386] Has Storage: 0
+[387] Can Process Ingredients: -1
+[388] Cooking Progress (0–100 or -1): 0
+[389] Output State: Raw: 0
+[390] Output State: Chopped: 0
+[391] Output State: Cooked: 0
+[392] Output State: Boiled: 0
+[393] Output State: Fried: 0
+[394] Item ID: 0.5555556
+[395] Item State: Raw: 1
+[396] Item State: Chopped: 0
+[397] Item State: Cooked: 0
+[398] Item State: Boiled: 0
+[399] Item State: Fried: 0
+
+-- Tile #17 --
+[400] X Position: 0.1235731
+[401] Z Position: 3.022449
+[402] Tile Type ID: 0
+[403] Occupied by Agent: 0
+[404] Has Item: 0
+[405] Has Storage: 0
+[406] Can Process Ingredients: -1
+[407] Cooking Progress (0–100 or -1): 0
+[408] Output State: Raw: 0
+[409] Output State: Chopped: 0
+[410] Output State: Cooked: 0
+[411] Output State: Boiled: 0
+[412] Output State: Fried: 0
+[413] Item ID: 0
+[414] Item State: Raw: 0
+[415] Item State: Chopped: 0
+[416] Item State: Cooked: 0
+[417] Item State: Boiled: 0
+[418] Item State: Fried: 0
+
+-- Tile #18 --
+[419] X Position: 1.123573
+[420] Z Position: -1.977551
+[421] Tile Type ID: 0.1428571
+[422] Occupied by Agent: 0
+[423] Has Item: 1
+[424] Has Storage: 1
+[425] Can Process Ingredients: 0
+[426] Cooking Progress (0–100 or -1): 0
+[427] Output State: Raw: 0
+[428] Output State: Chopped: 0
+[429] Output State: Cooked: 0
+[430] Output State: Boiled: 0
+[431] Output State: Fried: 0
+[432] Item ID: 0
+[433] Item State: Raw: 0
+[434] Item State: Chopped: 0
+[435] Item State: Cooked: 0
+[436] Item State: Boiled: 0
+[437] Item State: Fried: 0
+
+-- Tile #19 --
+[438] X Position: 1.123573
+[439] Z Position: -0.9775507
+[440] Tile Type ID: 0
+[441] Occupied by Agent: 0
+[442] Has Item: 0
+[443] Has Storage: 0
+[444] Can Process Ingredients: -1
+[445] Cooking Progress (0–100 or -1): 0
+[446] Output State: Raw: 0
+[447] Output State: Chopped: 0
+[448] Output State: Cooked: 0
+[449] Output State: Boiled: 0
+[450] Output State: Fried: 0
+[451] Item ID: 0
+[452] Item State: Raw: 0
+[453] Item State: Chopped: 0
+[454] Item State: Cooked: 0
+[455] Item State: Boiled: 0
+[456] Item State: Fried: 0
+
+-- Tile #20 --
+[457] X Position: 1.123573
+[458] Z Position: 0.02244925
+[459] Tile Type ID: 0
+[460] Occupied by Agent: 0
+[461] Has Item: 0
+[462] Has Storage: 0
+[463] Can Process Ingredients: -1
+[464] Cooking Progress (0–100 or -1): 0
+[465] Output State: Raw: 0
+[466] Output State: Chopped: 0
+[467] Output State: Cooked: 0
+[468] Output State: Boiled: 0
+[469] Output State: Fried: 0
+[470] Item ID: 0
+[471] Item State: Raw: 0
+[472] Item State: Chopped: 0
+[473] Item State: Cooked: 0
+[474] Item State: Boiled: 0
+[475] Item State: Fried: 0
+
+-- Tile #21 --
+[476] X Position: 1.123573
+[477] Z Position: 1.022449
+[478] Tile Type ID: 0
+[479] Occupied by Agent: 0
+[480] Has Item: 0
+[481] Has Storage: 0
+[482] Can Process Ingredients: -1
+[483] Cooking Progress (0–100 or -1): 0
+[484] Output State: Raw: 0
+[485] Output State: Chopped: 0
+[486] Output State: Cooked: 0
+[487] Output State: Boiled: 0
+[488] Output State: Fried: 0
+[489] Item ID: 0
+[490] Item State: Raw: 0
+[491] Item State: Chopped: 0
+[492] Item State: Cooked: 0
+[493] Item State: Boiled: 0
+[494] Item State: Fried: 0
+
+-- Tile #22 --
+[495] X Position: 1.123573
+[496] Z Position: 2.022449
+[497] Tile Type ID: 0.1428571
+[498] Occupied by Agent: 0
+[499] Has Item: 0
+[500] Has Storage: 0
+[501] Can Process Ingredients: 0
+[502] Cooking Progress (0–100 or -1): 0
+[503] Output State: Raw: 0
+[504] Output State: Chopped: 0
+[505] Output State: Cooked: 0
+[506] Output State: Boiled: 0
+[507] Output State: Fried: 0
+[508] Item ID: 0
+[509] Item State: Raw: 0
+[510] Item State: Chopped: 0
+[511] Item State: Cooked: 0
+[512] Item State: Boiled: 0
+[513] Item State: Fried: 0
+
+-- Tile #23 --
+[514] X Position: 1.123573
+[515] Z Position: 3.022449
+[516] Tile Type ID: 0
+[517] Occupied by Agent: 0
+[518] Has Item: 0
+[519] Has Storage: 0
+[520] Can Process Ingredients: -1
+[521] Cooking Progress (0–100 or -1): 0
+[522] Output State: Raw: 0
+[523] Output State: Chopped: 0
+[524] Output State: Cooked: 0
+[525] Output State: Boiled: 0
+[526] Output State: Fried: 0
+[527] Item ID: 0
+[528] Item State: Raw: 0
+[529] Item State: Chopped: 0
+[530] Item State: Cooked: 0
+[531] Item State: Boiled: 0
+[532] Item State: Fried: 0
+
+-- Tile #24 --
+[533] X Position: 2.123573
+[534] Z Position: -1.977551
+[535] Tile Type ID: 0
+[536] Occupied by Agent: 0
+[537] Has Item: 0
+[538] Has Storage: 0
+[539] Can Process Ingredients: -1
+[540] Cooking Progress (0–100 or -1): 0
+[541] Output State: Raw: 0
+[542] Output State: Chopped: 0
+[543] Output State: Cooked: 0
+[544] Output State: Boiled: 0
+[545] Output State: Fried: 0
+[546] Item ID: 0
+[547] Item State: Raw: 0
+[548] Item State: Chopped: 0
+[549] Item State: Cooked: 0
+[550] Item State: Boiled: 0
+[551] Item State: Fried: 0
+
+-- Tile #25 --
+[552] X Position: 2.123573
+[553] Z Position: -0.9775507
+[554] Tile Type ID: 0.1428571
+[555] Occupied by Agent: 0
+[556] Has Item: 0
+[557] Has Storage: 0
+[558] Can Process Ingredients: 0
+[559] Cooking Progress (0–100 or -1): 0
+[560] Output State: Raw: 0
+[561] Output State: Chopped: 0
+[562] Output State: Cooked: 0
+[563] Output State: Boiled: 0
+[564] Output State: Fried: 0
+[565] Item ID: 0
+[566] Item State: Raw: 0
+[567] Item State: Chopped: 0
+[568] Item State: Cooked: 0
+[569] Item State: Boiled: 0
+[570] Item State: Fried: 0
+
+-- Tile #26 --
+[571] X Position: 2.123573
+[572] Z Position: 0.02244925
+[573] Tile Type ID: 0.7142857
+[574] Occupied by Agent: 0
+[575] Has Item: 0
+[576] Has Storage: 0
+[577] Can Process Ingredients: -1
+[578] Cooking Progress (0–100 or -1): 0
+[579] Output State: Raw: 0
+[580] Output State: Chopped: 0
+[581] Output State: Cooked: 0
+[582] Output State: Boiled: 0
+[583] Output State: Fried: 0
+[584] Item ID: 0
+[585] Item State: Raw: 0
+[586] Item State: Chopped: 0
+[587] Item State: Cooked: 0
+[588] Item State: Boiled: 0
+[589] Item State: Fried: 0
+
+-- Tile #27 --
+[590] X Position: 2.123573
+[591] Z Position: 1.022449
+[592] Tile Type ID: 0.1428571
+[593] Occupied by Agent: 0
+[594] Has Item: 0
+[595] Has Storage: 0
+[596] Can Process Ingredients: 0
+[597] Cooking Progress (0–100 or -1): 0
+[598] Output State: Raw: 0
+[599] Output State: Chopped: 0
+[600] Output State: Cooked: 0
+[601] Output State: Boiled: 0
+[602] Output State: Fried: 0
+[603] Item ID: 0
+[604] Item State: Raw: 0
+[605] Item State: Chopped: 0
+[606] Item State: Cooked: 0
+[607] Item State: Boiled: 0
+[608] Item State: Fried: 0
+
+-- Tile #28 --
+[609] X Position: 2.123573
+[610] Z Position: 2.022449
+[611] Tile Type ID: 0
+[612] Occupied by Agent: 0
+[613] Has Item: 0
+[614] Has Storage: 0
+[615] Can Process Ingredients: -1
+[616] Cooking Progress (0–100 or -1): 0
+[617] Output State: Raw: 0
+[618] Output State: Chopped: 0
+[619] Output State: Cooked: 0
+[620] Output State: Boiled: 0
+[621] Output State: Fried: 0
+[622] Item ID: 0
+[623] Item State: Raw: 0
+[624] Item State: Chopped: 0
+[625] Item State: Cooked: 0
+[626] Item State: Boiled: 0
+[627] Item State: Fried: 0
+
+-- Tile #29 --
+[628] X Position: 2.123573
+[629] Z Position: 3.022449
+[630] Tile Type ID: 0
+[631] Occupied by Agent: 0
+[632] Has Item: 0
+[633] Has Storage: 0
+[634] Can Process Ingredients: -1
+[635] Cooking Progress (0–100 or -1): 0
+[636] Output State: Raw: 0
+[637] Output State: Chopped: 0
+[638] Output State: Cooked: 0
+[639] Output State: Boiled: 0
+[640] Output State: Fried: 0
+[641] Item ID: 0
+[642] Item State: Raw: 0
+[643] Item State: Chopped: 0
+[644] Item State: Cooked: 0
+[645] Item State: Boiled: 0
+[646] Item State: Fried: 0
+
+-- Tile #30 --
+[647] X Position: 3.123573
+[648] Z Position: -1.977551
+[649] Tile Type ID: 0
+[650] Occupied by Agent: 0
+[651] Has Item: 0
+[652] Has Storage: 0
+[653] Can Process Ingredients: -1
+[654] Cooking Progress (0–100 or -1): 0
+[655] Output State: Raw: 0
+[656] Output State: Chopped: 0
+[657] Output State: Cooked: 0
+[658] Output State: Boiled: 0
+[659] Output State: Fried: 0
+[660] Item ID: 0
+[661] Item State: Raw: 0
+[662] Item State: Chopped: 0
+[663] Item State: Cooked: 0
+[664] Item State: Boiled: 0
+[665] Item State: Fried: 0
+
+-- Tile #31 --
+[666] X Position: 3.123573
+[667] Z Position: -0.9775507
+[668] Tile Type ID: 0
+[669] Occupied by Agent: 0
+[670] Has Item: 0
+[671] Has Storage: 0
+[672] Can Process Ingredients: -1
+[673] Cooking Progress (0–100 or -1): 0
+[674] Output State: Raw: 0
+[675] Output State: Chopped: 0
+[676] Output State: Cooked: 0
+[677] Output State: Boiled: 0
+[678] Output State: Fried: 0
+[679] Item ID: 0
+[680] Item State: Raw: 0
+[681] Item State: Chopped: 0
+[682] Item State: Cooked: 0
+[683] Item State: Boiled: 0
+[684] Item State: Fried: 0
+
+-- Tile #32 --
+[685] X Position: 3.123573
+[686] Z Position: 0.02244925
+[687] Tile Type ID: 0
+[688] Occupied by Agent: 0
+[689] Has Item: 0
+[690] Has Storage: 0
+[691] Can Process Ingredients: -1
+[692] Cooking Progress (0–100 or -1): 0
+[693] Output State: Raw: 0
+[694] Output State: Chopped: 0
+[695] Output State: Cooked: 0
+[696] Output State: Boiled: 0
+[697] Output State: Fried: 0
+[698] Item ID: 0
+[699] Item State: Raw: 0
+[700] Item State: Chopped: 0
+[701] Item State: Cooked: 0
+[702] Item State: Boiled: 0
+[703] Item State: Fried: 0
+
+-- Tile #33 --
+[704] X Position: 3.123573
+[705] Z Position: 1.022449
+[706] Tile Type ID: 0
+[707] Occupied by Agent: 0
+[708] Has Item: 0
+[709] Has Storage: 0
+[710] Can Process Ingredients: -1
+[711] Cooking Progress (0–100 or -1): 0
+[712] Output State: Raw: 0
+[713] Output State: Chopped: 0
+[714] Output State: Cooked: 0
+[715] Output State: Boiled: 0
+[716] Output State: Fried: 0
+[717] Item ID: 0
+[718] Item State: Raw: 0
+[719] Item State: Chopped: 0
+[720] Item State: Cooked: 0
+[721] Item State: Boiled: 0
+[722] Item State: Fried: 0
+
+-- Tile #34 --
+[723] X Position: 3.123573
+[724] Z Position: 2.022449
+[725] Tile Type ID: 0
+[726] Occupied by Agent: 0
+[727] Has Item: 0
+[728] Has Storage: 0
+[729] Can Process Ingredients: -1
+[730] Cooking Progress (0–100 or -1): 0
+[731] Output State: Raw: 0
+[732] Output State: Chopped: 0
+[733] Output State: Cooked: 0
+[734] Output State: Boiled: 0
+[735] Output State: Fried: 0
+[736] Item ID: 0
+[737] Item State: Raw: 0
+[738] Item State: Chopped: 0
+[739] Item State: Cooked: 0
+[740] Item State: Boiled: 0
+[741] Item State: Fried: 0
+
+-- Tile #35 --
+[742] X Position: 3.123573
+[743] Z Position: 3.022449
+[744] Tile Type ID: 0
+[745] Occupied by Agent: 0
+[746] Has Item: 0
+[747] Has Storage: 0
+[748] Can Process Ingredients: -1
+[749] Cooking Progress (0–100 or -1): 0
+[750] Output State: Raw: 0
+[751] Output State: Chopped: 0
+[752] Output State: Cooked: 0
+[753] Output State: Boiled: 0
+[754] Output State: Fried: 0
+[755] Item ID: 0
+[756] Item State: Raw: 0
+[757] Item State: Chopped: 0
+[758] Item State: Cooked: 0
+[759] Item State: Boiled: 0
+[760] Item State: Fried: 0
+
+=== Plate Observations ===
+
+-- Plate #1 --
+[761] Plate Exists: 1
+[762] Plate Relative X Position: -2
+[763] Plate Relative Z Position: 0
+[764] Plate Has Combined Ingredients: 0
+[765] Ingredient 1 ID: 0
+[766] Ingredient 1 State: Raw: 0
+[767] Ingredient 1 State: Chopped: 0
+[768] Ingredient 1 State: Cooked: 0
+[769] Ingredient 1 State: Boiled: 0
+[770] Ingredient 1 State: Fried: 0
+[771] Ingredient 2 ID: 0
+[772] Ingredient 2 State: Raw: 0
+[773] Ingredient 2 State: Chopped: 0
+[774] Ingredient 2 State: Cooked: 0
+[775] Ingredient 2 State: Boiled: 0
+[776] Ingredient 2 State: Fried: 0
+[777] Ingredient 3 ID: 0
+[778] Ingredient 3 State: Raw: 0
+[779] Ingredient 3 State: Chopped: 0
+[780] Ingredient 3 State: Cooked: 0
+[781] Ingredient 3 State: Boiled: 0
+[782] Ingredient 3 State: Fried: 0
+[783] Ingredient 4 ID: 0
+[784] Ingredient 4 State: Raw: 0
+[785] Ingredient 4 State: Chopped: 0
+[786] Ingredient 4 State: Cooked: 0
+[787] Ingredient 4 State: Boiled: 0
+[788] Ingredient 4 State: Fried: 0
+
+-- Plate #2 --
+[789] Plate Exists: 1
+[790] Plate Relative X Position: 1
+[791] Plate Relative Z Position: -2
+[792] Plate Has Combined Ingredients: 0
+[793] Ingredient 1 ID: 0
+[794] Ingredient 1 State: Raw: 0
+[795] Ingredient 1 State: Chopped: 0
+[796] Ingredient 1 State: Cooked: 0
+[797] Ingredient 1 State: Boiled: 0
+[798] Ingredient 1 State: Fried: 0
+[799] Ingredient 2 ID: 0
+[800] Ingredient 2 State: Raw: 0
+[801] Ingredient 2 State: Chopped: 0
+[802] Ingredient 2 State: Cooked: 0
+[803] Ingredient 2 State: Boiled: 0
+[804] Ingredient 2 State: Fried: 0
+[805] Ingredient 3 ID: 0
+[806] Ingredient 3 State: Raw: 0
+[807] Ingredient 3 State: Chopped: 0
+[808] Ingredient 3 State: Cooked: 0
+[809] Ingredient 3 State: Boiled: 0
+[810] Ingredient 3 State: Fried: 0
+[811] Ingredient 4 ID: 0
+[812] Ingredient 4 State: Raw: 0
+[813] Ingredient 4 State: Chopped: 0
+[814] Ingredient 4 State: Cooked: 0
+[815] Ingredient 4 State: Boiled: 0
+[816] Ingredient 4 State: Fried: 0
+
+-- Plate #3 --
+[817] Plate Exists: 1
+[818] Plate Relative X Position: -1
+[819] Plate Relative Z Position: -2
+[820] Plate Has Combined Ingredients: 0
+[821] Ingredient 1 ID: 0
+[822] Ingredient 1 State: Raw: 0
+[823] Ingredient 1 State: Chopped: 0
+[824] Ingredient 1 State: Cooked: 0
+[825] Ingredient 1 State: Boiled: 0
+[826] Ingredient 1 State: Fried: 0
+[827] Ingredient 2 ID: 0
+[828] Ingredient 2 State: Raw: 0
+[829] Ingredient 2 State: Chopped: 0
+[830] Ingredient 2 State: Cooked: 0
+[831] Ingredient 2 State: Boiled: 0
+[832] Ingredient 2 State: Fried: 0
+[833] Ingredient 3 ID: 0
+[834] Ingredient 3 State: Raw: 0
+[835] Ingredient 3 State: Chopped: 0
+[836] Ingredient 3 State: Cooked: 0
+[837] Ingredient 3 State: Boiled: 0
+[838] Ingredient 3 State: Fried: 0
+[839] Ingredient 4 ID: 0
+[840] Ingredient 4 State: Raw: 0
+[841] Ingredient 4 State: Chopped: 0
+[842] Ingredient 4 State: Cooked: 0
+[843] Ingredient 4 State: Boiled: 0
+[844] Ingredient 4 State: Fried: 0
+
+-- Ingredient #1 (Spawner) --
+[845] Ingredient Exists: 1
+[846] Relative X Position: 0
+[847] Relative Z Position: 2
+[848] Ingredient ID: 0.5555556
+[849] Ingredient State: Raw: 1
+[850] Ingredient State: Chopped: 0
+[851] Ingredient State: Cooked: 0
+[852] Ingredient State: Boiled: 0
+[853] Ingredient State: Fried: 0
+
+-- Ingredient #2 (Loose Item) --
+[854] Ingredient Exists: 0
+[855] Relative X Position: 0
+[856] Relative Z Position: 0
+[857] Ingredient ID: 0
+[858] Ingredient State: Raw: 0
+[859] Ingredient State: Chopped: 0
+[860] Ingredient State: Cooked: 0
+[861] Ingredient State: Boiled: 0
+[862] Ingredient State: Fried: 0
+
+-- Ingredient #3 (Loose Item) --
+[863] Ingredient Exists: 0
+[864] Relative X Position: 0
+[865] Relative Z Position: 0
+[866] Ingredient ID: 0
+[867] Ingredient State: Raw: 0
+[868] Ingredient State: Chopped: 0
+[869] Ingredient State: Cooked: 0
+[870] Ingredient State: Boiled: 0
+[871] Ingredient State: Fried: 0
+
+-- Ingredient #4 (Loose Item) --
+[872] Ingredient Exists: 0
+[873] Relative X Position: 0
+[874] Relative Z Position: 0
+[875] Ingredient ID: 0
+[876] Ingredient State: Raw: 0
+[877] Ingredient State: Chopped: 0
+[878] Ingredient State: Cooked: 0
+[879] Ingredient State: Boiled: 0
+[880] Ingredient State: Fried: 0
+
+-- Ingredient #5 (Loose Item) --
+[881] Ingredient Exists: 0
+[882] Relative X Position: 0
+[883] Relative Z Position: 0
+[884] Ingredient ID: 0
+[885] Ingredient State: Raw: 0
+[886] Ingredient State: Chopped: 0
+[887] Ingredient State: Cooked: 0
+[888] Ingredient State: Boiled: 0
+[889] Ingredient State: Fried: 0
+
+-- Ingredient #6 (Loose Item) --
+[890] Ingredient Exists: 0
+[891] Relative X Position: 0
+[892] Relative Z Position: 0
+[893] Ingredient ID: 0
+[894] Ingredient State: Raw: 0
+[895] Ingredient State: Chopped: 0
+[896] Ingredient State: Cooked: 0
+[897] Ingredient State: Boiled: 0
+[898] Ingredient State: Fried: 0
+
+-- Ingredient #7 (Loose Item) --
+[899] Ingredient Exists: 0
+[900] Relative X Position: 0
+[901] Relative Z Position: 0
+[902] Ingredient ID: 0
+[903] Ingredient State: Raw: 0
+[904] Ingredient State: Chopped: 0
+[905] Ingredient State: Cooked: 0
+[906] Ingredient State: Boiled: 0
+[907] Ingredient State: Fried: 0
+
+-- Ingredient #8 (Loose Item) --
+[908] Ingredient Exists: 0
+[909] Relative X Position: 0
+[910] Relative Z Position: 0
+[911] Ingredient ID: 0
+[912] Ingredient State: Raw: 0
+[913] Ingredient State: Chopped: 0
+[914] Ingredient State: Cooked: 0
+[915] Ingredient State: Boiled: 0
+[916] Ingredient State: Fried: 0
+
+-- Ingredient #9 (Loose Item) --
+[917] Ingredient Exists: 0
+[918] Relative X Position: 0
+[919] Relative Z Position: 0
+[920] Ingredient ID: 0
+[921] Ingredient State: Raw: 0
+[922] Ingredient State: Chopped: 0
+[923] Ingredient State: Cooked: 0
+[924] Ingredient State: Boiled: 0
+[925] Ingredient State: Fried: 0
+
+-- Ingredient #10 (Loose Item) --
+[926] Ingredient Exists: 0
+[927] Relative X Position: 0
+[928] Relative Z Position: 0
+[929] Ingredient ID: 0
+[930] Ingredient State: Raw: 0
+[931] Ingredient State: Chopped: 0
+[932] Ingredient State: Cooked: 0
+[933] Ingredient State: Boiled: 0
+[934] Ingredient State: Fried: 0
+
+-- Ingredient #11 (Loose Item) --
+[935] Ingredient Exists: 0
+[936] Relative X Position: 0
+[937] Relative Z Position: 0
+[938] Ingredient ID: 0
+[939] Ingredient State: Raw: 0
+[940] Ingredient State: Chopped: 0
+[941] Ingredient State: Cooked: 0
+[942] Ingredient State: Boiled: 0
+[943] Ingredient State: Fried: 0
+
+-- Ingredient #12 (Loose Item) --
+[944] Ingredient Exists: 0
+[945] Relative X Position: 0
+[946] Relative Z Position: 0
+[947] Ingredient ID: 0
+[948] Ingredient State: Raw: 0
+[949] Ingredient State: Chopped: 0
+[950] Ingredient State: Cooked: 0
+[951] Ingredient State: Boiled: 0
+[952] Ingredient State: Fried: 0
+
+-- Ingredient #13 (Loose Item) --
+[953] Ingredient Exists: 0
+[954] Relative X Position: 0
+[955] Relative Z Position: 0
+[956] Ingredient ID: 0
+[957] Ingredient State: Raw: 0
+[958] Ingredient State: Chopped: 0
+[959] Ingredient State: Cooked: 0
+[960] Ingredient State: Boiled: 0
+[961] Ingredient State: Fried: 0
+
+-- Ingredient #14 (Loose Item) --
+[962] Ingredient Exists: 0
+[963] Relative X Position: 0
+[964] Relative Z Position: 0
+[965] Ingredient ID: 0
+[966] Ingredient State: Raw: 0
+[967] Ingredient State: Chopped: 0
+[968] Ingredient State: Cooked: 0
+[969] Ingredient State: Boiled: 0
+[970] Ingredient State: Fried: 0
+
+-- Ingredient #15 (Loose Item) --
+[971] Ingredient Exists: 0
+[972] Relative X Position: 0
+[973] Relative Z Position: 0
+[974] Ingredient ID: 0
+[975] Ingredient State: Raw: 0
+[976] Ingredient State: Chopped: 0
+[977] Ingredient State: Cooked: 0
+[978] Ingredient State: Boiled: 0
+[979] Ingredient State: Fried: 0
+
+-- Ingredient #16 (Loose Item) --
+[980] Ingredient Exists: 0
+[981] Relative X Position: 0
+[982] Relative Z Position: 0
+[983] Ingredient ID: 0
+[984] Ingredient State: Raw: 0
+[985] Ingredient State: Chopped: 0
+[986] Ingredient State: Cooked: 0
+[987] Ingredient State: Boiled: 0
+[988] Ingredient State: Fried: 0
+
+-- Ingredient #17 (Loose Item) --
+[989] Ingredient Exists: 0
+[990] Relative X Position: 0
+[991] Relative Z Position: 0
+[992] Ingredient ID: 0
+[993] Ingredient State: Raw: 0
+[994] Ingredient State: Chopped: 0
+[995] Ingredient State: Cooked: 0
+[996] Ingredient State: Boiled: 0
+[997] Ingredient State: Fried: 0
+
+-- Ingredient #18 (Loose Item) --
+[998] Ingredient Exists: 0
+[999] Relative X Position: 0
+[1000] Relative Z Position: 0
+[1001] Ingredient ID: 0
+[1002] Ingredient State: Raw: 0
+[1003] Ingredient State: Chopped: 0
+[1004] Ingredient State: Cooked: 0
+[1005] Ingredient State: Boiled: 0
+[1006] Ingredient State: Fried: 0
+
+-- Ingredient #19 (Loose Item) --
+[1007] Ingredient Exists: 0
+[1008] Relative X Position: 0
+[1009] Relative Z Position: 0
+[1010] Ingredient ID: 0
+[1011] Ingredient State: Raw: 0
+[1012] Ingredient State: Chopped: 0
+[1013] Ingredient State: Cooked: 0
+[1014] Ingredient State: Boiled: 0
+[1015] Ingredient State: Fried: 0
+
+-- Ingredient #20 (Loose Item) --
+[1016] Ingredient Exists: 0
+[1017] Relative X Position: 0
+[1018] Relative Z Position: 0
+[1019] Ingredient ID: 0
+[1020] Ingredient State: Raw: 0
+[1021] Ingredient State: Chopped: 0
+[1022] Ingredient State: Cooked: 0
+[1023] Ingredient State: Boiled: 0
+[1024] Ingredient State: Fried: 0
+
+=== Delivery Station Observation ===
+[1025] X Position: 0
+[1026] Z Position: 0
+[1027] Tile Type ID: 0
+
+=== Game Timer Observation ===
+[1028] Game Time: 26.85838

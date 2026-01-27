@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class RewardManager : MonoSingleton<RewardManager>
 {
+    [SerializeField] private RewardData rewardData;
+
+    /*
     [Header("Positive Rewards")]
     [SerializeField] private float GrabCorrectIngredientReward = 0.1f;
     [SerializeField] private float CorrectIngredientToWorkspaceReward = 0.1f;
@@ -14,6 +17,7 @@ public class RewardManager : MonoSingleton<RewardManager>
     [SerializeField] private float CorrectFinalProductDeliveredReward = 0.5f;
     [SerializeField] private float BinnedIncorrectPlate = 0.05f;
     [SerializeField] private float CompletingRecipeWithNoMistakes = 1f;
+    [SerializeField] private float TimeBonusMultiplier = 1f;
     [SerializeField] private bool GiveNormalisedTimeBonus;
 
     [Header("Negative Rewards")]
@@ -23,6 +27,8 @@ public class RewardManager : MonoSingleton<RewardManager>
     [SerializeField] private float BinnedCorrectRecipe = -0.5f;
     [SerializeField] private float AddedExtraIngredient = -0.1f;
     [SerializeField] private float IdleBehaviour = -0.1f;
+    [SerializeField] private int IdleStepThreshold = 300;
+    */
 
     private PlayerAgent agent;
 
@@ -30,7 +36,6 @@ public class RewardManager : MonoSingleton<RewardManager>
     private Dictionary<IngredientData, IngredientState> currentIngredientStateRequirements = new Dictionary<IngredientData, IngredientState>();
     private Dictionary<IngredientData, IngredientState> currentRecipeRequirements = new Dictionary<IngredientData, IngredientState>();
 
-    private int idleStepThreshold = 300;
     private int idleStepCount;
 
     private bool madeMistake = false;
@@ -53,6 +58,8 @@ public class RewardManager : MonoSingleton<RewardManager>
         Bin.OnPlateBinned += Bin_OnPlateBinned;
         PortableStorage.OnAnyStoragePickedUp += PortableStorage_OnAnyStoragePickedUp;
 
+        Workspace.OnAnyWorkspaceProcessing += Workspace_OnAnyWorkspaceProcessing;
+
         ResetIdleTimer();
     }
 
@@ -70,6 +77,8 @@ public class RewardManager : MonoSingleton<RewardManager>
         DeliveryStation.OnRecipeDelivered -= DeliveryStation_OnRecipeDelivered;
         Bin.OnPlateBinned -= Bin_OnPlateBinned;
         PortableStorage.OnAnyStoragePickedUp -= PortableStorage_OnAnyStoragePickedUp;
+
+        Workspace.OnAnyWorkspaceProcessing -= Workspace_OnAnyWorkspaceProcessing;
     }
 
     private void PlayerAgent_OnEpisodeEnd(object sender, System.EventArgs e)
@@ -96,9 +105,9 @@ public class RewardManager : MonoSingleton<RewardManager>
     {
         idleStepCount++;
 
-        if (idleStepCount > idleStepThreshold)
+        if (idleStepCount > rewardData.IdleStepThreshold)
         {
-            AddAgentReward(IdleBehaviour, "Idle too long", false);
+            AddAgentReward(rewardData.IdleBehaviour, "Idle too long", false);
             idleStepCount = 0;
         }
     }
@@ -125,7 +134,7 @@ public class RewardManager : MonoSingleton<RewardManager>
                 if (!currentRequiredIngredients.Contains(ingredientData))
                 {
                     currentRequiredIngredients.Add(ingredientData);
-                    AddAgentReward(GrabCorrectIngredientReward * currentRequiredIngredients.Count, "Picking up the correct ingredient");
+                    AddAgentReward(rewardData.GrabCorrectIngredientReward * currentRequiredIngredients.Count, "Picking up the correct ingredient");
                 }
 
                 //INGREDIENT IS NEEDED BUT ALREADY USED. NO REWARD
@@ -136,7 +145,7 @@ public class RewardManager : MonoSingleton<RewardManager>
         }
 
         //INGREDIENT IS NOT NEEDED FOR CURRENT RECIPE, NEGATIVELY REWARD
-        AddAgentReward(GrabIncorrectIngredientReward, "Picking up the wrong ingredient");
+        AddAgentReward(rewardData.GrabIncorrectIngredientReward, "Picking up the wrong ingredient");
     }
 
     private void Workspace_OnItemAddedToWorkspace(object sender, IngredientEventArgs e)
@@ -156,7 +165,7 @@ public class RewardManager : MonoSingleton<RewardManager>
             if (!currentIngredientStateRequirements.ContainsKey(ingredientData))
             {
                 currentIngredientStateRequirements[ingredientData] = recipe.finalProductState;
-                AddAgentReward(CorrectIngredientToWorkspaceReward * currentIngredientStateRequirements.Count, "Adding the correct ingredient to a workspace");
+                AddAgentReward(rewardData.CorrectIngredientToWorkspaceReward * currentIngredientStateRequirements.Count, "Adding the correct ingredient to a workspace");
             }
 
             ResetIdleTimer();
@@ -175,7 +184,7 @@ public class RewardManager : MonoSingleton<RewardManager>
                 if (!currentIngredientStateRequirements.ContainsKey(ingredientData))
                 {
                     currentIngredientStateRequirements[requiredIngredient.ingredient] = requiredIngredient.requiredState;
-                    AddAgentReward(CorrectIngredientToWorkspaceReward * currentIngredientStateRequirements.Count, "Adding the correct ingredient to a workspace");
+                    AddAgentReward(rewardData.CorrectIngredientToWorkspaceReward * currentIngredientStateRequirements.Count, "Adding the correct ingredient to a workspace");
                 }
 
                 ResetIdleTimer();
@@ -186,7 +195,7 @@ public class RewardManager : MonoSingleton<RewardManager>
         }
 
         //INGREDIENT STATE IS NOT NEEDED
-        AddAgentReward(IncorrectIngredientToWorkspaceReward, "Adding the wrong ingredient to a workspace");
+        AddAgentReward(rewardData.IncorrectIngredientToWorkspaceReward, "Adding the wrong ingredient to a workspace");
     }
 
     private void PortableStorage_OnAnyIngredientAddedToPortableStorage(object sender, IngredientEventArgs e)
@@ -205,7 +214,7 @@ public class RewardManager : MonoSingleton<RewardManager>
         if (currentRecipeRequirements.TryGetValue(ingredientData, out IngredientState stateRequired)
             && e.IngredientItem.CurrentState == stateRequired)
         {
-            AddAgentReward(CorrectIngredientStateToPlateReward, "Adding a correct ingredient to a plate");
+            AddAgentReward(rewardData.CorrectIngredientStateToPlateReward, "Adding a correct ingredient to a plate");
             currentRecipeRequirements.Remove(ingredientData);
         }
 
@@ -214,7 +223,7 @@ public class RewardManager : MonoSingleton<RewardManager>
 
     private void Plate_OnAnyExtraIngredientsToActiveRecipe(object sender, System.EventArgs e)
     {
-        AddAgentReward(AddedExtraIngredient, "Adding extra ingredients to a completed recipe");
+        AddAgentReward(rewardData.AddedExtraIngredient, "Adding extra ingredients to a completed recipe");
     }
 
     private void PortableStorage_OnAnyStoragePickedUp(object sender, System.EventArgs e)
@@ -228,7 +237,7 @@ public class RewardManager : MonoSingleton<RewardManager>
 
         if (RecipeManager.Instance.CheckCompletedRecipe(plate, RecipeManager.Instance.GetActiveRecipe()))
         {
-            AddAgentReward(PickedUpPlateWithFinalRecipe, "Picking up plate with final recipe");
+            AddAgentReward(rewardData.PickedUpPlateWithFinalRecipe, "Picking up plate with final recipe");
             hasPickedUpFinalRecipePlate = true;
         }
     }
@@ -244,7 +253,7 @@ public class RewardManager : MonoSingleton<RewardManager>
 
         if (ingredientData == activeRecipeData.finalProductData && e.IngredientItem.CurrentState == activeRecipeData.finalProductState)
         {
-            AddAgentReward(CreatedFinalRecipeOnPlateReward, "Creating final recipe on plate");
+            AddAgentReward(rewardData.CreatedFinalRecipeOnPlateReward, "Creating final recipe on plate");
             createdFinalRecipe = true;
         }
 
@@ -255,18 +264,18 @@ public class RewardManager : MonoSingleton<RewardManager>
     {
         if (e.isCorrectRecipe)
         {
-            AddAgentReward(CorrectFinalProductDeliveredReward, "Delivering correct recipe");
+            AddAgentReward(rewardData.CorrectFinalProductDeliveredReward, "Delivering correct recipe");
 
-            if (madeMistake == false) AddAgentReward(CompletingRecipeWithNoMistakes, "Making no mistakes");
+            if (madeMistake == false) AddAgentReward(rewardData.CompletingRecipeWithNoMistakes, "Making no mistakes");
 
-            if (GiveNormalisedTimeBonus)
+            if (rewardData.GiveNormalisedTimeBonus)
             {
-                AddAgentReward(GameTimer.Instance.GetNormalisedTimeRemaining(), "Time Bonus");
+                AddAgentReward(GameTimer.Instance.GetNormalisedTimeRemaining() * rewardData.TimeBonusMultiplier, "Time Bonus");
             }
         }
         else
         {
-            AddAgentReward(IncorrectRecipeDelivered, "Delivering wrong recipe");
+            AddAgentReward(rewardData.IncorrectRecipeDelivered, "Delivering wrong recipe");
         }
     }
 
@@ -278,12 +287,17 @@ public class RewardManager : MonoSingleton<RewardManager>
 
         if (isCorrectRecipe == false)
         {
-            AddAgentReward(BinnedIncorrectPlate, "Binning incorrect recipe");
+            AddAgentReward(rewardData.BinnedIncorrectPlate, "Binning incorrect recipe");
         }
         else
         {
-            AddAgentReward(BinnedCorrectRecipe, "Binning correct recipe");
+            AddAgentReward(rewardData.BinnedCorrectRecipe, "Binning correct recipe");
         }
+    }
+
+    private void Workspace_OnAnyWorkspaceProcessing(object sender, System.EventArgs e)
+    {
+        ResetIdleTimer();
     }
 
     public void AddAgentReward(float amount, string reason, bool resetIdleTimer = true)
@@ -301,6 +315,10 @@ public class RewardManager : MonoSingleton<RewardManager>
 
             ResetIdleTimer();
         }
+
+        RewardDataUI.Instance.SetLatestReward(amount);
+        RewardDataUI.Instance.SetRewardReason(reason);
+        RewardDataUI.Instance.LogReward(amount, reason);
 
         if (amount < 0) madeMistake = true;
     }

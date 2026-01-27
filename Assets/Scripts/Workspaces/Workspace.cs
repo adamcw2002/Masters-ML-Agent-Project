@@ -8,6 +8,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
 {
     public static event EventHandler<IngredientEventArgs> OnAnyItemAddedToWorkspace;
     public static event EventHandler<IngredientEventArgs> OnAnyItemRemovedFromWorkspace;
+    public static event EventHandler OnAnyWorkspaceProcessing;
 
     [SerializeField] protected int maxItems = 1;
 
@@ -298,6 +299,7 @@ public abstract class Workspace : MonoBehaviour, IInteractable
         {
             elapsed += Time.deltaTime;
             processAmount = Mathf.Clamp01(elapsed / processingTime);
+            OnAnyWorkspaceProcessing?.Invoke(this, EventArgs.Empty);
 
             yield return null;
         }

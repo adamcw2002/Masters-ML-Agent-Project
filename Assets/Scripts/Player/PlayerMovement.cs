@@ -1,23 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float gravity = -9.81f;
+    public float acceleration = 10f;
+    public float turnSmooth = 0.15f;
 
-    private float moveX;
-    private float moveZ;
-
-    private CharacterController controller;
+    private float moveX, moveZ;
     private Vector3 moveDirection;
     private Vector3 velocity;
-
-    [HideInInspector]
-    public Vector3 lastFacingDirection = Vector3.forward; // default facing
-
+    private CharacterController controller;
     private PlayerAgent agent;
+
+    [HideInInspector] public Vector3 lastFacingDirection = Vector3.forward;
 
     void Awake()
     {
@@ -27,47 +23,40 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!agent)
-        {
-            moveX = Input.GetAxis("Horizontal");
-            moveZ = Input.GetAxis("Vertical");
-        }
-
-        Move();
+        Move(Time.deltaTime);
     }
 
-    public void SetMoveX(float moveX) => this.moveX = moveX;
-    public void SetMoveZ(float moveZ) => this.moveZ = moveZ;
-
-    public void Move()
+    public void SetMoveInput(float x, float z)
     {
-        moveDirection = new Vector3(moveX, 0f, moveZ);
+        this.moveX = x;
+        this.moveZ = z;
+    }
 
-        if (moveDirection.magnitude > 1)
-            moveDirection.Normalize();
+    public void Move(float deltaTime)
+    {
+        Vector3 targetDirection = new Vector3(moveX, 0f, moveZ);
+        if (targetDirection.magnitude > 1)
+            targetDirection.Normalize();
 
+        // Frame-rate independent interpolation
+        float movementBlend = 1f - Mathf.Exp(-acceleration * deltaTime);
+        moveDirection = Vector3.Lerp(moveDirection, targetDirection, movementBlend);
+
+        // Frame-rate independent rotation
         if (moveDirection.sqrMagnitude > 0.01f)
-            lastFacingDirection = moveDirection;
+        {
+            float rotationBlend = 1f - Mathf.Exp(-1f / turnSmooth * deltaTime);
+            lastFacingDirection = Vector3.Slerp(lastFacingDirection, moveDirection, rotationBlend);
+            transform.forward = lastFacingDirection;
+        }
 
-        controller?.Move(moveDirection * moveSpeed * Time.deltaTime);
-
+        // Apply gravity
         if (controller.isGrounded && velocity.y < 0)
             velocity.y = -2f;
+        velocity.y += gravity * deltaTime;
 
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-    }
-
-    private void ClampLastDirection()
-    {
-        // Snap to cardinal directions only
-        if (Mathf.Abs(lastFacingDirection.x) > Mathf.Abs(lastFacingDirection.z))
-        {
-            lastFacingDirection = new Vector3(Mathf.Sign(lastFacingDirection.x), 0, 0);
-        }
-        else
-        {
-            lastFacingDirection = new Vector3(0, 0, Mathf.Sign(lastFacingDirection.z));
-        }
+        // Combine horizontal + vertical
+        Vector3 move = (moveDirection * moveSpeed + new Vector3(0, velocity.y, 0)) * deltaTime;
+        controller.Move(move);
     }
 }

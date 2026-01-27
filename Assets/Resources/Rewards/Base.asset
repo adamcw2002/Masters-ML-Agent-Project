@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125607276724e9a4595b010eda19b2f2, type: 3}
+  m_Name: Base
+  m_EditorClassIdentifier: 
+  grabCorrectIngredientReward: 0.2
+  correctIngredientToWorkspaceReward: 0.2
+  correctIngredientStateToPlateReward: 0.2
+  createdFinalRecipeOnPlateReward: 0.2
+  pickedUpPlateWithFinalRecipe: 0.2
+  correctFinalProductDeliveredReward: 1
+  binnedIncorrectPlate: 0
+  completingRecipeWithNoMistakes: 0.5
+  timeBonusMultiplier: 1
+  giveNormalisedTimeBonus: 1
+  grabIncorrectIngredientReward: -0.2
+  incorrectIngredientToWorkspaceReward: -0.2
+  incorrectRecipeDelivered: -0.2
+  binnedCorrectRecipe: -0.7
+  addedExtraIngredient: -0.2
+  idleBehaviour: -0.6
+  idleStepThreshold: 300

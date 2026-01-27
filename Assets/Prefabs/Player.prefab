@@ -107,8 +107,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940241f3a40b0804da840ff796ab3571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6
+  moveSpeed: 5
   gravity: -9.81
+  acceleration: 10
+  turnSmooth: 0.15
   lastFacingDirection: {x: 0, y: 0, z: 1}
 --- !u!114 &1486973358302001549
 MonoBehaviour:
@@ -214,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1276
+    VectorObservationSize: 1029
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -223,9 +225,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: d90fe9101cfe0e14ca6294d17ef2d557, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 2
+  m_BehaviorType: 0
   m_BehaviorName: OvercookedAgent
   TeamId: 0
   m_UseChildSensors: 1
@@ -249,6 +251,7 @@ MonoBehaviour:
   MaxStep: 0
   movement: {fileID: 8548804604295298154}
   interact: {fileID: 1486973358302001549}
+  endOnRecipeMade: 0
 --- !u!114 &8696025570196430843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,14 +273,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2824577724537999100}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Record: 0
   NumStepsToRecord: 0
-  DemonstrationName: AgentStatic
+  DemonstrationName: FixedMovementDemo
   DemonstrationDirectory: Assets/Demos
 --- !u!1 &5786144628535852920
 GameObject:

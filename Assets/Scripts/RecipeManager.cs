@@ -17,7 +17,6 @@ public class RecipeManager : MonoSingleton<RecipeManager>
 
     public List<RecipeData> GetAllRecipes() => allRecipes;
 
-
     [SerializeField] private RecipeData activeRecipe;
     public RecipeData GetActiveRecipe() => activeRecipe;
 
@@ -27,13 +26,20 @@ public class RecipeManager : MonoSingleton<RecipeManager>
     private void OnEnable()
     {
         GameTimer.OnTimeEnd += SelectNewRecipe;
-        OnRecipeCompleted += SelectNewRecipe;
+
+        PlayerAgent.OnEpisodeStart += PlayerAgent_OnEpisodeStart;
     }
 
     private void OnDisable()
     {
         GameTimer.OnTimeEnd -= SelectNewRecipe;
-        OnRecipeCompleted -= SelectNewRecipe;
+
+        PlayerAgent.OnEpisodeStart -= PlayerAgent_OnEpisodeStart;
+    }
+
+    private void PlayerAgent_OnEpisodeStart(object sender, EventArgs e)
+    {
+        SelectNewRecipe();
     }
 
     private void Start()
@@ -147,6 +153,8 @@ public class RecipeManager : MonoSingleton<RecipeManager>
         Debug.Log("Recipe delivered successfully!");
 
         OnRecipeCompleted?.Invoke();
+
+        SelectNewRecipe();
 
         return true;
     }
