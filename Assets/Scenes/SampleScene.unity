@@ -1904,8 +1904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableRecipes:
-  - {fileID: 11400000, guid: 497b02e5b3079764c9013c4e8b59ab6a, type: 2}
-  - {fileID: 11400000, guid: 54bfe90b878b4474c80713d164a797da, type: 2}
+  - {fileID: 11400000, guid: afe70735a229a904ca702545d3466398, type: 2}
   activeRecipe: {fileID: 0}
 --- !u!1 &819504375
 GameObject:
@@ -3881,6 +3880,7 @@ MonoBehaviour:
   ingredientIconContainer: {fileID: 356955659}
   cookingInstructionContainer: {fileID: 1955793057}
   iconImageTransform: {fileID: 4609923986283829027, guid: 150c73a2cec114f4aa9314c90745e75c, type: 3}
+  choppedSpriteIcon: {fileID: 21300000, guid: e7f13a5edd6294e47889b3f09c670939, type: 3}
   friedSpriteIcon: {fileID: 21300000, guid: 96f4209adf980224d8dd9ac2c8a3651a, type: 3}
   cookedSpriteIcon: {fileID: 21300000, guid: 8558586e85e1c0c409671670495ac272, type: 3}
   boiledSpriteIcon: {fileID: 21300000, guid: 3dd9caa5a5bb3d74daa33aca63e32496, type: 3}
@@ -4512,13 +4512,13 @@ SceneRoots:
   m_Roots:
   - {fileID: 1364382726}
   - {fileID: 808741894}
+  - {fileID: 642670677}
   - {fileID: 1821131049}
   - {fileID: 1370478848}
   - {fileID: 1621373987}
   - {fileID: 860715313}
   - {fileID: 1344275368}
   - {fileID: 1620555921}
-  - {fileID: 642670677}
   - {fileID: 1340165587}
   - {fileID: 866893689}
   - {fileID: 1935156199}

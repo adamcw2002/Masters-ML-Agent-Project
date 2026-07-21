@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 # EXTRA
 venv/
+results/
+.claude/

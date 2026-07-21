@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 125607276724e9a4595b010eda19b2f2, type: 3}
   m_Name: Planning
   m_EditorClassIdentifier: 
-  grabCorrectIngredientReward: 0.1
-  correctIngredientToWorkspaceReward: 0.1
+  grabCorrectIngredientReward: 0.15
+  correctIngredientToWorkspaceReward: 0.15
   correctIngredientStateToPlateReward: 0.15
-  createdFinalRecipeOnPlateReward: 0.15
+  createdFinalRecipeOnPlateReward: 0.4
   pickedUpPlateWithFinalRecipe: 0.2
   correctFinalProductDeliveredReward: 2
   binnedIncorrectPlate: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
   grabIncorrectIngredientReward: -0.4
   incorrectIngredientToWorkspaceReward: -0.3
   incorrectRecipeDelivered: -1
-  binnedCorrectRecipe: -0.7
-  addedExtraIngredient: -0.3
-  idleBehaviour: -0.5
-  idleStepThreshold: 300
+  binnedCorrectRecipe: -0.8
+  addedExtraIngredient: -0.5
+  idleBehaviour: -0.4
+  idleStepThreshold: 350

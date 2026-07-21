@@ -30,14 +30,5 @@ tensorboard --logdir results
 
 THIS ONE ------
 
-mlagents-learn config/OvercookedAgent.yaml --run-id=ExplorationPlus_SingleCarrot_FromND --env=Builds/RewardShaping/ExplorationPlus_SingleCarrot/MLAgentProject.exe --num-envs=20 --no-graphics --initialize-from=ExplorationPlus_SingleCarrot_ND
-
-
-
-
-
-
-
-
 
 

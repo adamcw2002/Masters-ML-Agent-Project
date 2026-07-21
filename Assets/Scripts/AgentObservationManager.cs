@@ -40,14 +40,14 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
         float[] observation = new float[50];
         int index = 0;
 
-        // --- Final Product ---
+        // Final Product
         observation[index++] = activeRecipe.finalProductData.GetNormalizedID();
 
         float[] finalStateOneHot = GetOneHotIngredientState(activeRecipe.finalProductState);
         foreach (float val in finalStateOneHot)
             observation[index++] = val;
 
-        // --- Ingredients (baseRequiredIngredients only) ---
+        // Ingredients
         for (int i = 0; i < maxIngredients; i++)
         {
             if (i < activeRecipe.baseRequiredIngredients.Count)
@@ -58,22 +58,25 @@ public class AgentObservationManager : MonoSingleton<AgentObservationManager>
                 IngredientState requiredState = req.requiredState;
                 IngredientState? preconditionState = req.ingredient.GetPreconditionState(requiredState);
 
-                //PRECONDITION STATE
+                //Precondition State
                 float[] oneHotPrecondition = GetOneHotIngredientState(preconditionState);
-                foreach (float val in oneHotPrecondition)
+                foreach (float val in oneHotPrecondition) {
                     observation[index++] = val;
+                }
 
-                //REQUIRED STATE
+                //Required State
                 float[] oneHotRequired = GetOneHotIngredientState(req.requiredState);
-                foreach (float val in oneHotRequired)
+                foreach (float val in oneHotRequired) {
                     observation[index++] = val;
+                }
             }
             else
             {
-                // Pad
+                // Padding
                 observation[index++] = 0f;
-                for (int s = 0; s < stateCount; s++)
+                for (int s = 0; s < stateCount; s++) {
                     observation[index++] = 0f;
+                }
             }
         }
 

@@ -176,7 +176,7 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
     {
         CleanupPreviousWorkspaces();
 
-        // Assign correct values fromm floor plan generator
+        // Assign correct values from floor plan generator
         AssignFloorPlanValues();
 
         // Analyze recipes to determine required appliances and ingredients
@@ -197,7 +197,7 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
             CreateWorkspaceCell(cornerPos, emptyWorkspacePrefab, null, true);
         }
 
-        // Apply the new placement rules
+        // Apply the placement rules
         ApplyPlacementRules(nonCornerBorderPositions);
 
         // Update grid bounds after all workspaces are created
@@ -682,20 +682,20 @@ public class WorkspaceGenerator : MonoSingleton<WorkspaceGenerator>
             {
                 if (ingredient.ingredient.isProduct)
                 {
-                    //FIND RECIPE TO MAKE THIS PRODUCT
+                    //Ignore product
                     continue;
                 }
 
-                if (!requiredIngredientCounts.ContainsKey(ingredient.ingredient))
+                //Add ingredient source to spawning
+                if (!requiredIngredientCounts.ContainsKey(ingredient.ingredient)) {
                     requiredIngredientCounts[ingredient.ingredient] = 1;
+                }
 
-                //requiredIngredientCounts[ingredient.ingredient]++;
-
-                //ADD APPLIANCE FOR OUTPUT STATE
+                //Add appliance to spawning
                 CheckOrAddAppliance(ingredient.requiredState);
 
 
-                //ADD APPLIANCE FOR THE PRECONDITION eg (chopped -> boiled, adds chopping board aswell)
+                //Add appliance for the precondition (chopped => boiled, adds chopping board aswell)
                 IngredientState? preconditionState = ingredient.ingredient.GetPreconditionState(ingredient.requiredState);
                 if (preconditionState.HasValue) CheckOrAddAppliance(preconditionState.Value);
             }

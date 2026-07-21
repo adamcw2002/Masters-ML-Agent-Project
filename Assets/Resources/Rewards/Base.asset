@@ -17,15 +17,15 @@ MonoBehaviour:
   correctIngredientStateToPlateReward: 0.2
   createdFinalRecipeOnPlateReward: 0.2
   pickedUpPlateWithFinalRecipe: 0.2
-  correctFinalProductDeliveredReward: 1
+  correctFinalProductDeliveredReward: 0.2
   binnedIncorrectPlate: 0
-  completingRecipeWithNoMistakes: 0.5
+  completingRecipeWithNoMistakes: 0.2
   timeBonusMultiplier: 1
   giveNormalisedTimeBonus: 1
   grabIncorrectIngredientReward: -0.2
   incorrectIngredientToWorkspaceReward: -0.2
   incorrectRecipeDelivered: -0.2
-  binnedCorrectRecipe: -0.7
+  binnedCorrectRecipe: -0.2
   addedExtraIngredient: -0.2
-  idleBehaviour: -0.6
+  idleBehaviour: -0.2
   idleStepThreshold: 300

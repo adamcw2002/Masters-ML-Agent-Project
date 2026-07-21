@@ -14,6 +14,7 @@ public class RecipeUIManager : MonoBehaviour
 
     [SerializeField] private Transform iconImageTransform;
 
+    [SerializeField] private Sprite choppedSpriteIcon;
     [SerializeField] private Sprite friedSpriteIcon;
     [SerializeField] private Sprite cookedSpriteIcon;
     [SerializeField] private Sprite boiledSpriteIcon;
@@ -62,6 +63,9 @@ public class RecipeUIManager : MonoBehaviour
         Sprite iconSprite = null;
         switch (requiredState)
         {
+            case IngredientState.Chopped:
+                iconSprite = choppedSpriteIcon;
+                break;
             case IngredientState.Fried:
                 iconSprite = friedSpriteIcon;
                 break;

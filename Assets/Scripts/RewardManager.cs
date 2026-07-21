@@ -6,6 +6,7 @@ using UnityEngine;
 public class RewardManager : MonoSingleton<RewardManager>
 {
     [SerializeField] private RewardData rewardData;
+    public RewardData CurrentReward => rewardData;
 
     /*
     [Header("Positive Rewards")]

@@ -66,7 +66,7 @@ public class PlayerAgent : Agent
 
             if (ingredientData == activeRecipeData.finalProductData && e.IngredientItem.CurrentState == activeRecipeData.finalProductState)
             {
-                RewardManager.Instance.AddAgentReward(GameTimer.Instance.GetNormalisedTimeRemaining(), "Time Bonus");
+                RewardManager.Instance.AddAgentReward(GameTimer.Instance.GetNormalisedTimeRemaining() * RewardManager.Instance.CurrentReward.TimeBonusMultiplier, "Time Bonus");
 
                 EndCurrentEpisode();
             }
@@ -115,10 +115,10 @@ public class PlayerAgent : Agent
         GameObject currentInteractable = interact.GetCurrentInteractableGameObject();
         sensor.AddObservation(AgentObservationManager.Instance.GetOneHotTileObservation(currentInteractable, false));
 
-        //Current Recipe - 46 Observations
+        //Current Recipe - 50 Observations
         sensor.AddObservation(AgentObservationManager.Instance.GetCurrentRecipeObservation());
 
-        //Tile Observations - (Range + Range + 1)^2 * 17 Observations
+        //Tile Observations - (Range + Range + 1)^2 * 19 Observations
         int tileRange = 6;
         sensor.AddObservation(AgentObservationManager.Instance.GetTileObservations(transform.position, tileRange));
 
