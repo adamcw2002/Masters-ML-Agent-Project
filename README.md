@@ -3,10 +3,10 @@
 **Adam Wright**<br>
 Submitted for the degree of MSc by Research in Computer Science, University of Lincoln, 2026
 
-Six frameworks are designed and evaluated in procedural kitchen environments inspired by Overcooked (Team17, 2016) using Unity ML-Agents.
+Six frameworks are designed and evaluated in procedural kitchen environments inspired by Overcooked using Unity ML-Agents.
 
 <p align="center">
-  <a href="https://youtu.be/2ZvDS6eM7Yc"><b>▶ Watch the overview video</b></a>
+  <a href="https://youtu.be/2ZvDS6eM7Yc"><b>Showcase Video</b></a>
 </p>
 
 ---
